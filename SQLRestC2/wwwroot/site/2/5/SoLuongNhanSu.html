@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+		.frozen{
+			position:sticky;
+			z-index:999;
+			left:0;
+			width:160px;
+			background:whitesmoke;
+		}
+		.frozen2{
+			position:sticky;
+			z-index:999;
+			left:164px;
+			background:whitesmoke;
+		}
+		tr:hover{
+		  color: darkblue;
+		  background: lightcyan;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="DailyChamCongReport.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+divReport.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<div id="divReport">
+<img src="http://oritholdings.hopto.org/nut/client/2/orit.png" width="200" height="63"/>
+<h1>SỐ LƯỢNG NHÂN SỰ</h1>
+<h2><i id="labThangNam">THÁNG ... NĂM ...</i></h2>
+<h3><i>Đơn vị cung ứng: </i>Công ty Cổ phần Đầu tư ORIT</h3>
+<h3><i id="labDoiTac"></i></h3>
+<br/>
+<table border="1" cellspacing="0" style="width:800px">
+<thead style="position:sticky;z-index:1000;top:0">
+<tr>
+<th rowspan="2">STT</th>
+<th class="frozen" rowspan="2">Chỉ tiêu</th>
+<th colspan="12">Tháng</th>
+</tr>
+<tr>
+<th>T1</th>
+<th>T2</th>
+<th>T3</th>
+<th>T4</th>
+<th>T5</th>
+<th>T6</th>
+<th>T7</th>
+<th>T8</th>
+<th>T9</th>
+<th>T10</th>
+<th>T11</th>
+<th>T12</th>
+</tr>
+</thead>
+<tbody id="tblData"></body>
+</table>
+</div>
+</body>
+</html>

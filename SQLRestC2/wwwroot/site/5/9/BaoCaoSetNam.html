@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="BcSetNam.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+divReport.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<div id="divReport">
+<h1>BÁO CÁO PHÂN BỐ SÉT NĂM <i id="labThangNam"></i></h1>
+<table id="tblData" border="1" cellspacing="0" style="width:800px">
+<tr>
+<th rowspan='2'>Khu vực HN</th>
+<th colspan='12'>Tháng</th>
+<th rowspan='2'>Tổng</th>
+</tr>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+</tr>
+</table><br/>
+<i id="labNgayBaoCao"></i>
+</div>
+</body>
+</html>

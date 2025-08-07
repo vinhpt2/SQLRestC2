@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+		.frozen{
+			position:sticky;
+			z-index:999;
+			left:0;
+			width:160px;
+			background:whitesmoke;
+		}
+		.frozen2{
+			position:sticky;
+			z-index:999;
+			left:164px;
+			background:whitesmoke;
+		}
+		tr:hover{
+		  color: darkblue;
+		  background: lightcyan;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="MonthlyMS02.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+divReport.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<div id="divReport">
+<img src="http://oritholdings.hopto.org:8443/site/2/habeco.png"/>
+<h2>MS02 - BẢNG TỔNG HỢP CHẤM CÔNG THÁNG</h2><h3><i id="labThangNam"></i></h3>
+<h3><i>Khu vực: </i><b id="labThiTruong"></b></h3>
+<h3><i>Đơn vị cung ứng: </i>Công ty Cổ phần Đầu tư ORIT</h3>
+<h3><i>Giám đốc chi nhánh: </i><b id="labGDCN"></b></h3>
+<table border="1" cellspacing="0" style="width:3000px">
+<thead style="position:sticky;z-index:1000;top:0">
+<tr>
+<th rowspan="2">STT</th>
+<th rowspan="2">Team Leader<br/>/Task Force</th>
+<th rowspan="2" class="frozen">Họ và tên NV</th>
+<th rowspan="2">Mã<br/>nhân viên</th>
+<th rowspan="2">Loại hình<br>điểm bán</th>
+<th colspan="5">Địa chỉ làm việc của NV</th>
+<th colspan="31">Ngày công</th>
+<th rowspan="2">Ngày công<br/>thực tế</th>
+<th rowspan="2">Ngày công<br/>giảm trừ</th>
+<th rowspan="2">Tổng<br>ngày công</th>
+<th colspan="6">Loại ngày công</th>
+<th rowspan="2">NV ký<br/>xác nhận</th>
+<th rowspan="2">TL/TF ký<br/>xác nhận</th>
+</tr>
+<tr>
+<th class="frozen2">Tên nhà hàng</th>
+<th>Số nhà</th>
+<th>Đường (tổ, xóm, ...)</th>
+<th>Quận/Huyện</th>
+<th>Tỉnh/Thành</th>
+<th>01</th>
+<th>02</th>
+<th>03</th>
+<th>04</th>
+<th>05</th>
+<th>06</th>
+<th>07</th>
+<th>08</th>
+<th>09</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+<th>16</th>
+<th>17</th>
+<th>18</th>
+<th>19</th>
+<th>20</th>
+<th>21</th>
+<th>22</th>
+<th>23</th>
+<th>24</th>
+<th>25</th>
+<th>26</th>
+<th>27</th>
+<th>28</th>
+<th>29</th>
+<th>30</th>
+<th>31</th>
+<th>KL</th>
+<th>KLO</th>
+<th>N</th>
+<th>NL</th>
+<th>S</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody id="tblData"></tbody>
+</table>
+<i id="labNgayBaoCao"></i><br/>
+<br/>
+<table>
+<tr><td colspan="2"><b><u>Ghi chú</u></b></td></tr>
+<tr><td></td><th>1</th><td colspan="3">1 ngày công làm việc</td><th>NL</th><td colspan="3">Nghỉ lễ, Tết:</td></tr>
+<tr><td></td><th>0.5</th><td colspan="3">1/2 ngày công làm việc</td><th>E</th><td colspan="3">Ngày Điểm bán chưa hoạt động:</td></tr>
+<tr><td></td><th>L</th><td colspan="3">Ngày nghỉ theo quy định</td><th>S</th><td colspan="3">Ngày Điểm bán dừng hoạt động:</td></tr>
+<tr><td></td><th>KL</th><td colspan="3">Ngày nghỉ không lương có lý do (ốm,...)</td></tr>
+<tr><td></td><th>KLO</th><td colspan="3">Ngày nghỉ không lương không lý do</td></tr>
+</table>
+<br/>
+<table width="100%">
+<tr>
+<td colspan="5" align="center"><h3>NGƯỜI LẬP BÁO CÁO CỦA NHÀ CUNG ỨNG</h3></td><td></td><td colspan="10" align="center"><h3>ĐẠI DIỆN NHÀ CUNG ỨNG</h3></td><td></td><td colspan="20" align="center"><h3>QUẢN LÝ TIẾP THỊ THƯƠNG MẠI</h3></td>
+</tr>
+<tr>
+<td colspan="5" align="center"><i>(Ký, ghi rõ họ tên)</i></td><td></td><td colspan="10" align="center"><i>(Ký, ghi rõ họ tên, đóng dấu)</i></td><td></td><td colspan="20" align="center"><i>(Ký, ghi rõ họ tên)</i></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td colspan="5" align="center"></td><td></td><td colspan="10" align="center">PHÓ TỔNG GIÁM ĐỐC</td><td></td><td colspan="20" align="center"></td></tr>
+<tr><td colspan="5" align="center"><b><i>Nguyễn Thị Thanh Mai</i></b></td><td></td><td colspan="10" align="center"><b><i>Nguyễn Thị Việt Hoa</i></b></td><td></td><td colspan="20" align="center"></td></tr>
+</table>
+</div>
+</body>
+</html>

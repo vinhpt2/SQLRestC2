@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="DailySanLuong.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+divReport.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<div id="divReport">
+<h1>SẢN LƯỢNG BÁN <i id="labThangNam"></i></h1>
+<h3><i>Khu vực: </i><b id="labKhuVuc"></b></h3>
+<table id="tbl1" border="1" cellspacing="0" style="width:700px">
+<tr>
+<th colspan="2">NHÃN HIỆU</th>
+<th>TỔNG CỘNG</th>
+<th>BOLD</th>
+<th>LIGHT</th>
+<th>HÀ NỘI PRE</th>
+<th>TRÚC BẠCH</th>
+</tr>
+<tr>
+</table><br/><br/>
+<table id="tbl2" border="1" cellspacing="0" style="width:700px">
+<tr>
+<th colspan="2">NHÃN HIỆU</th>
+<th>TỔNG CỘNG</th>
+<th>BOLD</th>
+<th>LIGHT</th>
+<th>HÀ NỘI PRE</th>
+<th>TRÚC BẠCH</th>
+</tr>
+</table><br/>
+<i id="labNgayBaoCao"></i>
+</div>
+</body>
+</html>

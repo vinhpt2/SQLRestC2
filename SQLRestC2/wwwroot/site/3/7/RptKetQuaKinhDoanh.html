@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+		.frozen{
+			position:sticky;
+			z-index:999;
+			left:0;
+			width:160px;
+			background:whitesmoke;
+		}
+		.frozen2{
+			position:sticky;
+			z-index:999;
+			left:164px;
+			background:whitesmoke;
+		}
+		tr:hover{
+		  color: darkblue;
+		  background: lightcyan;
+		}
+		input{
+			border:none;
+			text-align:right;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="RptSoQuyTienMat.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+body.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<img src="../logo.png" width="32" height="32"/>
+<center>
+<h2>KẾT QUẢ HOẠT ĐỘNG KINH DOANH</h2>
+<h3><i>Ngày: </i><b id="labNgay"></b></h3>
+</center>
+<table id="tblData" border="1px" cellspacing="0px" style="margin:auto">
+<tr>
+<th>CHỈ TIÊU</th>
+<th>MÃ SỐ</th>
+<th>THUYẾT MINH</th>
+<th>KỲ NÀY</th>
+<th>KỲ TRƯỚC</th>
+</tr>
+<tr><td>1. Doanh thu bán hàng và cung cấp dịch vụ</td><td>01</td><td>VI.1</td><td align='right'><b id='lab1'></b></td><td align='right'><input type='number' id='labT1'></td></tr>
+<tr><td>2. Các khoản giảm trừ doanh thu</td><td>02</td><td>VI.2</td><td align='right'><b id='lab2'></b></td><td align='right'><input type='number' id='labT2'></td></tr>
+<tr><td>3. Doanh thu thuần về bán hàng và cung cấp dịch vụ (10 = 01 - 02)</td><td>10</td><td></td><td align='right'><b id='lab3'></b></td><td align='right'><input type='number' id='labT3'></td></tr>
+<tr><td>4. Giá vốn hàng bán</td><td>11</td><td>VI.3</td><td align='right'><b id='lab4'></b></td><td align='right'><input type='number' id='labT4'></td></tr>
+<tr><td>5. Lợi nhuận gộp về bán hàng và cung cấp dịch vụ (20 = 10 - 11)</td><td>20</td><td></td><td align='right'><b id='lab5'></b></td><td align='right'><input type='number' id='labT5'></td></tr>
+<tr><td>6. Doanh thu hoạt động tài chính</td><td>21</td><td>VI.4</td><td align='right'><b id='lab6'></b></td><td align='right'><input type='number' id='labT6'></td></tr>
+<tr><td>7. Chi phí tài chính</td><td>22</td><td>VI.5</td><td align='right'><b id='lab7'></b></td><td align='right'><input type='number' id='labT7'></td></tr>
+<tr><td>8. Chi phí quản lý kinh doanh</td><td>24</td><td>VI.6</td><td align='right'><b id='lab8'></b></td><td align='right'><input type='number' id='labT8'></td></tr>
+<tr><td>9. Lợi nhuận thuần từ hoạt động kinh doanh (30 = 20 + 21 - 22 - 24)</td><td>30</td><td></td><td align='right'><b id='lab9'></b></td><td align='right'><input type='number' id='labT9'></td></tr>
+<tr><td>10. Thu nhập khác</td><td>31</td><td>VI.7</td><td align='right'><b id='lab10'></b></td><td align='right'><input type='number' id='labT10'></td></tr>
+<tr><td>11. Chi phí khác</td><td>32</td><td>VI.8</td><td align='right'><b id='lab11'></b></td><td align='right'><input type='number' id='labT11'></td></tr>
+<tr><td>12. Lợi nhuận khác (40 = 31 - 32)</td><td>40</td><td></td><td align='right'><b id='lab12'></b></td><td align='right'><input type='number' id='labT12'></td></tr>
+<tr><td>13. Tổng lợi nhuận kế toán trước thuế (50 = 30 + 40)</td><td>50</td><td></td><td align='right'><b id='lab13'></b></td><td align='right'><input type='number' id='labT13'></td></tr>
+<tr><td>14. Chi phí thuế TNDN</td><td>51</td><td>VI.9</td><td align='right'><b id='lab14'></b></td><td align='right'><input type='number' id='labT14'></td></tr>
+<tr><td>15. Lợi nhuận sau thuế thu nhập doanh nghiệp (60 = 50 - 51)</td><td>60</td><td></td><td align='right'><b id='lab15'></b></td><td align='right'><input type='number' id='labT15'></td></tr>
+
+</table>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+	</style>
+</head>
+<body>
+<a style="float:right;borderby:1px solid;padding:6px 10px 6px 10px" download="DailyCheckInOut.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+body.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<img src="http://oritholdings.hopto.org/nut/client/2/img/orit.jpg" width="200" height="63"/>
+<h2>CHECK IN-OUT ĐIỂM BÁN THÁNG - <i id="labThangNam"></i></h2>
+<h3><i>Đơn vị cung ứng: </i>Công ty Cổ phần Đầu tư ORIT</h3>
+<h3><i>Chi nhánh: </i><b id="labThiTruong"></b></h3>
+<h3><i>Giám đốc chi nhánh: </i></h3>
+<table id="tblData" border="1px" cellspacing="0px">
+<tr>
+<th rowspan="2">STT</th>
+<th rowspan="2">DMS</th>
+<th rowspan="2">Chi nhánh</th>
+<th rowspan="2">Team Leader</th>
+<th rowspan="2">Họ và tên PG</th>
+<th rowspan="2">Mã nhân viên</th>
+<th rowspan="2">Loại hình điểm bán</th>
+<th colspan="5">Địa chỉ làm việc của PG</th>
+<th rowspan="2">Giờ làm việc</th>
+<th colspan="2">1</th>
+<th colspan="2">2</th>
+<th colspan="2">3</th>
+<th colspan="2">4</th>
+<th colspan="2">5</th>
+<th colspan="2">6</th>
+<th colspan="2">7</th>
+<th colspan="2">8</th>
+<th colspan="2">9</th>
+<th colspan="2">10</th>
+<th colspan="2">11</th>
+<th colspan="2">12</th>
+<th colspan="2">13</th>
+<th colspan="2">14</th>
+<th colspan="2">15</th>
+<th colspan="2">16</th>
+<th colspan="2">17</th>
+<th colspan="2">18</th>
+<th colspan="2">19</th>
+<th colspan="2">20</th>
+<th colspan="2">21</th>
+<th colspan="2">22</th>
+<th colspan="2">23</th>
+<th colspan="2">24</th>
+<th colspan="2">25</th>
+<th colspan="2">26</th>
+<th colspan="2">27</th>
+<th colspan="2">28</th>
+<th colspan="2">29</th>
+<th colspan="2">30</th>
+<th colspan="2">31</th>
+<th rowspan="2">Tổng vi phạm</th>
+</tr>
+<tr>
+<th>Tên nhà hàng</th>
+<th>Số nhà</th>
+<th>Đường (tổ, xóm, ...)</th>
+<th>Quận/Huyện</th>
+<th>Tỉnh/Thành</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+<th>Check in</th>
+<th>Check out</th>
+</tr>
+</table>
+<i id="labNgayBaoCao"></i><br/>
+<br/>
+<table>
+<tr><td colspan="2"><b><u>Ghi chú</u></b></td></tr>
+<tr><td></td><th>x</th><td colspan="3">làm ca thẳng, check điểm đầy đủ</td></tr>
+<tr><td></td><th>xx</th><td colspan="3">làm ca gãy, check điểm đầy đủ</td></tr>
+<tr><td></td><th>0.5</th><td colspan="3">làm ca gãy, 1 lần không check điểm</td></tr>
+<tr><td></td><th>1</th><td colspan="3">làm ca thẳng, 1 lần không check điểm</td></tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,371 @@
+﻿.modaless_underlay{
+    display:none
+}
+.hand-png {
+    background-image: url("hand.png");
+    height: 16px; width: 16px;
+}
+.zoomin-png {
+    background-image : url("zoomin.png");
+    height: 16px; width: 16px;
+}
+.zoomout-png {
+    background-image : url("zoomout.png");
+    height: 16px; width: 16px;
+}
+.info-png {
+    background-image : url("info.png");
+    height: 16px; width: 16px;
+}
+.select-png {
+    background-image : url("select.png");
+    height: 16px; width: 16px;
+}
+.select-edit-png {
+    background-image : url("select-edit.png");
+    height: 16px; width: 16px;
+}
+.unselect-png {
+    background-image : url("unselect.png");
+    height: 16px; width: 16px;
+}
+.zoomselect-png {
+    background-image : url("zoomselect.png");
+    height: 16px; width: 16px;
+}
+.world-png {
+    background-image : url("world.png");
+    height: 16px; width: 16px;
+}
+.next-png {
+    background-image : url("next.png");
+    height: 16px; width: 16px;
+}
+.back-png {
+    background-image : url("back.png");
+    height: 16px; width: 16px;
+}
+.find-png {
+    background-image : url("find.png");
+    height: 16px; width: 16px;
+}
+.toolbar-png {
+    background-image : url("toolbar.png");
+    height: 16px; width: 16px;
+}
+.user-png {
+    background-image : url("user.png");
+    height: 16px; width: 16px;
+}
+.doorout-png {
+    background-image : url("doorout.png");
+    height: 16px; width: 16px;
+}
+.property-png {
+    background-image : url("property.png");
+    height: 16px; width: 16px;
+}
+.disk-png {
+    background-image : url("disk.png");
+    height: 16px; width: 16px;
+}
+.start-png {
+    background-image : url("start.png");
+    height: 16px; width: 16px;
+}
+.stop-png {
+    background-image : url("stop.png");
+    height: 16px; width: 16px;
+}
+.move-png {
+    background-image : url("move.png");
+    height: 16px; width: 16px;
+}
+.editpath-png {
+    background-image : url("editpath.png");
+    height: 16px; width: 16px;
+}
+.pencil-png {
+    background-image : url("pencil.png");
+    height: 16px; width: 16px;
+}
+.copy-png {
+    background-image : url("copy.png");
+    height: 16px; width: 16px;
+}
+.delete-png {
+    background-image : url("delete.png");
+    height: 16px; width: 16px;
+}
+.clear-png {
+    background-image : url("clear.png");
+    height: 16px; width: 16px;
+}
+.pencil-png {
+    background-image : url("pencil.png");
+    height: 16px; width: 16px;
+}
+.map-png {
+    background-image : url("map.png");
+    height: 16px; width: 16px;
+}
+.wait-png {
+    background-image : url("wait.png");
+    height: 16px; width: 16px;
+}
+.border-png {
+    background-image : url("border.png");
+    height: 16px; width: 16px;
+}
+.undo-png {
+    background-image : url("undo.png");
+    height: 16px; width: 16px;
+}
+.redo-png {
+    background-image : url("redo.png");
+    height: 16px; width: 16px;
+}
+.refresh-png {
+    background-image : url("refresh.png");
+    height: 16px; width: 16px;
+}
+.layers-png {
+    background-image : url("layers.png");
+    height: 16px; width: 16px;
+}
+.zone-png {
+    background-image : url("zone.png");
+    height: 16px; width: 16px;
+}
+.legend-png {
+    background-image : url("legend.png");
+    height: 16px; width: 16px;
+}
+.inbox-png {
+    background-image : url("inbox.png");
+    height: 16px; width: 16px;
+}
+.mailbox-png {
+    background-image : url("mailbox.png");
+    height: 16px; width: 16px;
+}
+.outbox-png {
+    background-image : url("outbox.png");
+    height: 16px; width: 16px;
+}
+.table-png {
+    background-image : url("table.png");
+    height: 16px; width: 16px;
+}
+.point-png {
+    background-image : url("point.png");
+    height: 16px; width: 16px;
+}
+.line-png {
+    background-image : url("line.png");
+    height: 16px; width: 16px;
+}
+.polyline-png {
+    background-image : url("polyline.png");
+    height: 16px; width: 16px;
+}
+.polygon-png {
+    background-image : url("polygon.png");
+    height: 16px; width: 16px;
+}
+.circle-png {
+    background-image : url("circle.png");
+    height: 16px; width: 16px;
+}
+.arc-png {
+    background-image : url("arc.png");
+    height: 16px; width: 16px;
+}
+.pin-png {
+    background-image : url("pin.png");
+    height: 16px; width: 16px;
+}
+.eke-png {
+    background-image : url("eke.png");
+    height: 16px; width: 16px;
+}
+.compa-png {
+    background-image : url("compa.png");
+    height: 16px; width: 16px;
+}
+.snap-png {
+    background-image : url("snap.png");
+    height: 16px; width: 16px;
+}
+.vertex-png {
+    background-image : url("vertex.png");
+    height: 16px; width: 16px;
+}
+.edge-png {
+    background-image : url("edge.png");
+    height: 16px; width: 16px;
+}
+.eraser-png {
+    background-image : url("eraser.png");
+    height: 16px; width: 16px;
+}
+.xy-png {
+    background-image : url("xy.png");
+    height: 16px; width: 16px;
+}
+.autopolygon-png {
+    background-image : url("autopolygon.png");
+    height: 16px; width: 16px;
+}
+.split-png {
+    background-image : url("split.png");
+    height: 16px; width: 16px;
+}
+.merge-png {
+    background-image : url("merge.png");
+    height: 16px; width: 16px;
+}
+.reshape-png {
+    background-image : url("reshape.png");
+    height: 16px; width: 16px;
+}
+.logo-png {
+    background-image : url("logo.png");
+    height: 16px; width: 16px;
+}
+.printer-png {
+    background-image : url("printer.png");
+    height: 16px; width: 16px;
+}
+.tree-png {
+    background-image : url("tree.png");
+    height: 16px; width: 16px;
+}
+.home-png {
+    background-image : url("home.png");
+    height: 16px; width: 16px;
+}
+.database-png {
+    background-image : url("database.png");
+    height: 16px; width: 16px;
+}
+.form-png {
+    background-image : url("form.png");
+    height: 16px; width: 16px;
+}
+.target-png {
+    background-image : url("target.png");
+    height: 16px; width: 16px;
+}
+.folder-png {
+    background-image : url("folder.png");
+    height: 16px; width: 16px;
+}
+.thua-png {
+    background-image : url("thua.png");
+    height: 16px; width: 16px;
+}
+.nha-png {
+    background-image : url("nha.png");
+    height: 16px; width: 16px;
+}
+.phuong-png {
+    background-image : url("phuong.png");
+    height: 16px; width: 16px;
+}
+.text-png {
+    background-image : url("text.png");
+    height: 16px; width: 16px;
+}
+.shape-png {
+    background-image : url("shape.png");
+    height: 16px; width: 16px;
+}
+.explode-png {
+    background-image : url("explode.png");
+    height: 16px; width: 16px;
+}
+.label-png {
+    background-image : url("label.png");
+    height: 16px; width: 16px;
+}
+.style-png {
+    background-image : url("style.png");
+    height: 16px; width: 16px;
+}
+.from-png {
+    background-image : url("from.png");
+    height: 16px; width: 16px;
+}
+.list-png {
+    background-image : url("list.png");
+    height: 16px; width: 16px;
+}
+.select_text-png {
+    background-image : url("select_text.png");
+    height: 16px; width: 16px;
+}
+.light-png {
+    background-image : url("light.png");
+    height: 16px; width: 16px;
+}
+.ruler-png {
+    background-image : url("ruler.png");
+    height: 16px; width: 16px;
+}
+.measure-png {
+    background-image : url("measure.png");
+    height: 16px; width: 16px;
+}
+.edit-png {
+    background-image : url("edit.png");
+    height: 16px; width: 16px;
+}
+.buffer-png {
+    background-image : url("buffer.png");
+    height: 16px; width: 16px;
+}
+.approve-png {
+    background-image : url("approve.png");
+    height: 16px; width: 16px;
+}
+.add-png {
+    background-image : url("add.png");
+    height: 16px; width: 16px;
+}
+.page_red-png {
+    background-image : url("page_red.png");
+    height: 16px; width: 16px;
+}
+.magnet-png {
+    background-image : url("magnet.png");
+    height: 16px; width: 16px;
+}
+.add-png {
+    background-image : url("add.png");
+    height: 16px; width: 16px;
+}
+.open-png {
+    background-image : url("open.png");
+    height: 16px; width: 16px;
+}
+.file-png {
+    background-image : url("file.png");
+    height: 16px; width: 16px;
+}
+.shading-png {
+    background-image : url("shading.png");
+    height: 16px; width: 16px;
+}
+.upload-png {
+    background-image : url("upload.png");
+    height: 16px; width: 16px;
+}
+.north-png {
+    background-image : url("north.png");
+    height: 16px; width: 16px;
+}
+.break-png {
+    background-image : url("break.png");
+    height: 16px; width: 16px;
+}

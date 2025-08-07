@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		.box{
+			width:400px;
+			height:400px;
+			borderby:1px solid;
+			overflow:auto
+		}
+		.line{
+			cursor:pointer
+		}
+		.line:hover{
+			background:#F3F6FA;
+		}
+		
+	</style>
+</head>
+<body onload="body_onLoad()">
+	<h3><i>Step 3:</i> Domains of data</h3>
+	<table>
+		<tr><td>Domains</td><td>Datas</td></tr>
+		<tr><td><div class="box"><table width="100%" id="tblDomain"></table></div></td><td><div class="box"><table width="100%" id="tblData"></table></div></td></tr>
+		<tr><td><button onclick="butNewDomain_onClick()">Create new domain</button></td><td><button onclick="butEditValue_onClick()">Edit values</button></td></tr>
+	</table>
+</body>
+<script>
+var _app=parent.Com_SysApplicationWizard.app;
+var _row=null;
+function body_onLoad(){
+	parent.NUT.ds.select({url:parent.NUT.URL+"sysdomain",where:["appid","=",_app.appid]},function(res){
+		for(var i=0;i<res.length;i++){
+			var row=tblDomain.insertRow();
+			row.className="line";
+			row.innerHTML="<td>🔗</td><td>"+res[i].domainname+"</td>";
+			row.tag=res[i];
+			row.onclick=row_onClick;
+			if(i==0)row.onclick();
+		}
+	});
+}
+function row_onClick(){
+	//if(!this.style.backgroundColor){
+		for(var i=0;i<tblDomain.rows.length;i++)
+			tblDomain.rows[i].style.backgroundColor="";
+		this.style.backgroundColor="#B6D5FF";
+		tblData.innerHTML="";
+		var data=JSON.parse(this.tag.domain);
+		for(var i=0;i<data.length;i++){
+			var row=tblData.insertRow();
+			row.className="line";
+			row.innerHTML="<td>"+data[i][0]+"</td><td>"+data[i][1]+"</td>";
+		}
+	//}
+}
+function butNewDomain_onClick(){
+	parent.menu_onClick({item:{tag:9},tempWhere:["appid","=",_app.appid]});
+}
+function butEditValue_onClick(){
+	//parent.menu_onClick({item:{tag:2}});
+}
+</script>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		.box{
+			width:400px;
+			height:400px;
+			borderby:1px solid;
+			overflow:auto
+		}
+		.line{
+			cursor:pointer
+		}
+		.line:hover{
+			background:#F3F6FA;
+		}
+		
+	</style>
+</head>
+<body onload="body_onLoad()">
+	<h3><i>Step 2:</i> Role and User of Application</h3>
+	<table>
+		<tr><td>Roles</td><td>Users</td></tr>
+		<tr><td><div class="box"><table width="100%" id="tblRole"></table></div></td><td><div class="box"><table width="100%" id="tblUser"></table></div></td></tr>
+		<tr><td><button onclick="butNewRole_onClick()">Create new role</button></td><td><button onclick="butNewUser_onClick()">Create new users</button></td></tr>
+	</table>
+</body>
+<script>
+var _app=parent.Com_SysApplicationWizard.app;
+var _row=null;
+function body_onLoad(){
+	parent.NUT.ds.select({url:parent.NUT.URL+"sysrole",where:["siteid","=",_app.siteid]},function(res){
+		for(var i=0;i<res.length;i++){
+			var row=tblRole.insertRow();
+			row.className="line";
+			row.innerHTML="<td><input type='checkbox'/></td><td>"+res[i].rolename+"</td>";
+			row.tag=res[i];
+			row.onclick=row_onClick;
+			if(i==0)row.onclick();
+		}
+	});
+	parent.NUT.ds.select({url:parent.NUT.URL+"sysuser",where:["siteid","=",_app.siteid]},function(res){
+		for(var i=0;i<res.length;i++){
+			var row=tblUser.insertRow();
+			row.className="line";
+			row.innerHTML="<td><input type='checkbox'/></td><td>"+res[i].username+"</td>";
+			row.tag=res[i];
+		}
+	});
+}
+function row_onClick(){
+	//if(!this.style.backgroundColor){
+		for(var i=0;i<tblRole.rows.length;i++)
+			tblRole.rows[i].style.backgroundColor="";
+		this.style.backgroundColor="#B6D5FF";
+		_row=this;
+		parent.NUT.ds.select({url:parent.NUT.URL+"sysaccess",select:"userid",where:["roleid","=",this.tag.roleid]},function(res){
+			var lookupUser={};
+			for(var i=0;i<res.length;i++)lookupUser[res[i].userid]=true;
+			for(var i=0;i<tblUser.rows.length;i++){
+				var row=tblUser.rows[i];
+				row.cells[0].firstChild.checked=lookupUser[row.tag.userid];
+			}
+		});
+	//}
+}
+function butNewRole_onClick(){
+	parent.menu_onClick({item:{tag:6},tempWhere:["appid","=",_app.appid]});
+}
+function butNewUser_onClick(){
+	parent.menu_onClick({item:{tag:2}});
+}
+</script>
+</html>

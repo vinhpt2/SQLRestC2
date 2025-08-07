@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+		.frozen{
+			position:sticky;
+			z-index:999;
+			left:0;
+			width:160px;
+			background:whitesmoke;
+		}
+		.frozen2{
+			position:sticky;
+			z-index:999;
+			left:164px;
+			background:whitesmoke;
+		}
+		tr:hover{
+		  color: darkblue;
+		  background: lightcyan;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="DailyChamCongReport.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+divReport.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<div id="divReport">
+<img src="http://oritholdings.hopto.org/nut/client/2/orit.png" width="200" height="63"/>
+<h2>MS05 - BẢNG CHI TIẾT THANH TOÁN LƯƠNG SALES MAN</h2>
+<h2><i id="labThangNam">THÁNG ... NĂM ...</i></h2>
+<h3><i>Đơn vị cung ứng: </i>Công ty Cổ phần Đầu tư ORIT</h3>
+<h3><i>Khu vực: </i><b id="labThiTruong"></b></h3>
+<table border="1" cellspacing="0" style="width:2400px">
+<thead style="position:sticky;z-index:1000;top:0">
+<tr>
+<th rowspan="2">STT</th>
+<th rowspan="2">Mã<br/>nhân viên</th>
+<th rowspan="2">Số<br/>hồ sơ</th>
+<th rowspan="2" class="frozen">Họ và tên NV</th>
+<th rowspan="2">Kênh<br/>bán hàng</th>
+<th rowspan="2">Người quản lý</th>
+<th rowspan="2" class="frozen2">Chi nhánh</th>
+<th colspan="2">Địa bàn</th>
+<th colspan="2">Lương cơ bản</th>
+<th colspan="4">Tổng phụ cấp</th>
+<th colspan="2">Thưởng KPI</th>
+<th colspan="2">Thưởng Quý</th>
+<th rowspan="2">Tổng cộng</th>
+<th rowspan="2">Sinh nhật</th>
+<th rowspan="2">Chi phí<br/>máy Tab<br/>(4G)</th>
+<th rowspan="2">Thưởng<br/>lễ tết</th>
+<th rowspan="2">Thu nhập<br/>khác</th>
+<th rowspan="2">Tổng<br/>thu nhập</th>
+<th colspan="6">Các khoản giảm trừ</th>
+<th rowspan="2">Tổng<br/>thu nhập</th>
+<th rowspan="2">Truy thu</th>
+<th rowspan="2">Truy lĩnh</th>
+<th rowspan="2">Tạm ứng<br/>phụ cấp</th>
+<th rowspan="2">Lương đã<br/>nhận kỳ 1</th>
+<th rowspan="2">Thực nhận</th>
+</tr>
+<tr>
+<th>Quận/Huyện</th>
+<th>Tỉnh/Thành</th>
+<th>Ngày<br/>công</th>
+<th>Lương<br/>cơ bản</th>
+<th>Xăng xe</th>
+<th>Điện thoại</th>
+<th>Ăn ca</th>
+<th>Tổng<br/>phụ cấp</th>
+<th>KPI</th>
+<th>Tiền<br/>thưởng KPI</th>
+<th>Thưởng<br/>chuyên cần</th>
+<th>Thưởng<br/>vượt KPI</th>
+<th>BHXH<br/>(10.5%)</th>
+<th>Công đoàn<br/>(1%)</th>
+<th>Bản thân</th>
+<th>Người<br/>phụ thuộc</th>
+<th>Thuế<br/>TNCN</th>
+<th>Tổng<br/>giảm trừ</th>
+</tr>
+<tr>
+<th>[0]</th>
+<th>[1]</th>
+<th>[2]</th>
+<th class="frozen">[3]</th>
+<th>[4]</th>
+<th>[5]</th>
+<th class="frozen2">[6]</th>
+<th>[7]</th>
+<th>[8]</th>
+<th>[9]</th>
+<th>[10]</th>
+<th>[11]</th>
+<th>[12]</th>
+<th>[13]</th>
+<th>[14]</th>
+<th>[15]</th>
+<th>[16]</th>
+<th>[17]</th>
+<th>[18]</th>
+<th>[19]</th>
+<th>[20]</th>
+<th>[21]</th>
+<th>[22]</th>
+<th>[23]</th>
+<th>[24]</th>
+<th>[25]</th>
+<th>[26]</th>
+<th>[27]</th>
+<th>[28]</th>
+<th>[29]</th>
+<th>[30]</th>
+<th>[31]</th>
+<th>[32]</th>
+<th>[33]</th>
+<th>[34]</th>
+<th>[35]</th>
+<th>[36]</th>
+</tr>
+</thead>
+<tbody id="tblData"></body>
+</table>
+</div>
+</body>
+</html>

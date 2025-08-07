@@ -1,0 +1,104 @@
+﻿<!DOCTYPE HTML>
+<html class="nut-full">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>ZilCode v2.0</title>
+    <link rel="icon" type="image/png" href="favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="img/index.css" />
+    <link id="cssMain" rel="stylesheet" type="text/css" href="lib/res.css" />
+
+    <link rel="stylesheet" type="text/css" href="img/map/awb.css" />
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/4.32/esri/themes/light/main.css" />
+    <script src="datarock/lib/highcharts.js"></script>
+	<script src="datarock/lib/highcharts-more.js"></script>
+	<script src="lib/zipson.min.js"></script>
+    <script src="js/nut.js"></script>
+    <script type="module" src="js/index.js"></script>
+	<script id="jsMain"></script>
+</head>
+
+<body class="nut-full" style="background:url('backdrop.jpg');background-size:cover" oncontextmenu="return false">
+    <!-- Tuannt -->
+    <div class="login-wrapper">
+        <div id="divLogin" name="frmLogin" class="w2ui-reset w2ui-form login-page1">
+
+            <div class="nut-login-header">
+                <img src="logo.png" class="logo">
+                <h1>Đăng nhập</h1>
+            </div>
+
+            <div class="w2ui-form-box">
+                <div class="w2ui-page page-0">
+                    <div class="w2ui-column-container">
+                        <div class="w2ui-column col-0">
+                            <div class="w2ui-field w2ui-span6">
+                                <label><i class="icon-username"></i> Tên đăng nhập </label>
+                                <div><input id="username" name="username" class="w2ui-input " type="text"
+                                        style="width:120px" tabindex="1">
+                                    <div class="w2ui-field w2ui-field-inline">
+                                        <div> . <input id="sitecode" name="sitecode" class="w2ui-input " type="text"
+                                                style="width:60px" tabindex="2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w2ui-field w2ui-span6">
+                                <label><i class="icon-pass"></i> Mật khẩu </label>
+                                <div>
+                                    <input id="password" name="password" class="w2ui-input " type="password"
+                                        style="width:190px" tabindex="3">
+                                </div>
+                            </div>
+                            <div class="w2ui-field w2ui-span6">
+                                <!-- <label></label> -->
+                                <div>
+                                    <label class="w2ui-box-label">
+                                        <input id="savepass" name="savepass" class="w2ui-input " type="checkbox"
+                                            tabindex="4">
+                                        <span>Ghi nhớ tên đăng nhập</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w2ui-buttons">
+                    <!-- <button name="_Help" class="w2ui-btn " tabindex="5">❓ Help</button> -->
+                    <button name="_Login" class="w2ui-btn " tabindex="6"> Đăng nhập </button>
+                </div>
+
+                <div class="forgot-pass">
+                    <span></span>
+                </div>
+
+                <div class="wp-contact">
+                    <div class="contact">
+                        <i class="icon-phone"></i>
+                        <div>
+                            <span>Hotline:</span>
+                            <span>(+84) 985686063</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-login">
+				<div class="lang">
+					<label for="language">Lựa chọn ngôn ngữ:</label>
+					<select id="cboLang">
+						<option value="vi-VN">🇻🇳</option>
+						<option value="en-US">🇺🇸</option>
+					</select>
+					<select id="cboTheme">
+						<option value="res">🤍</option>
+						<option value="res-dark">🖤</option>
+					</select>
+				</div>
+			</div>
+        </div>
+    </div>
+</body>
+
+</html>

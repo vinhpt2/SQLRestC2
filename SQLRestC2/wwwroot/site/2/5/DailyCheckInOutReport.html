@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+		.frozen{
+			position:sticky;
+			z-index:999;
+			left:0;
+			width:160px;
+			background:whitesmoke;
+		}
+		.frozen2{
+			position:sticky;
+			z-index:999;
+			left:164px;
+			background:whitesmoke;
+		}
+		tr:hover{
+		  color: darkblue;
+		  background: lightcyan;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="DailyCheckInOut.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+body.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<div id="divReport">
+<img src="http://oritholdings.hopto.org:8443/site/2/habeco.png"/>
+<h2>CHECK IN-OUT ĐIỂM BÁN THÁNG - <i id="labThangNam"></i></h2>
+<h3><i>Đơn vị cung ứng: </i>Công ty Cổ phần Đầu tư ORIT</h3>
+<h3><i>Khu vực: </i><b id="labThiTruong"></b></h3>
+<h3><i>Giám đốc chi nhánh: </i><b id="labGDCN"></b></h3>
+<table border="1" cellspacing="0" width="4000px">
+<thead style="position:sticky;z-index:1000;top:0">
+<tr>
+<th rowspan="2">STT</th>
+<th rowspan="2">DMS</th>
+<th rowspan="2">Chi<br/>nhánh</th>
+<th rowspan="2">Team Leader<br/>/Task Force</th>
+<th rowspan="2" class="frozen">Họ và tên NV</th>
+<th rowspan="2">Mã<br/>nhân viên</th>
+<th rowspan="2">Loại hình<br/>điểm bán</th>
+<th colspan="5">Địa chỉ làm việc của NV</th>
+<th rowspan="2">Giờ<br/>làm việc</th>
+<th colspan="2">01</th>
+<th colspan="2">02</th>
+<th colspan="2">03</th>
+<th colspan="2">04</th>
+<th colspan="2">05</th>
+<th colspan="2">06</th>
+<th colspan="2">07</th>
+<th colspan="2">08</th>
+<th colspan="2">09</th>
+<th colspan="2">10</th>
+<th colspan="2">11</th>
+<th colspan="2">12</th>
+<th colspan="2">13</th>
+<th colspan="2">14</th>
+<th colspan="2">15</th>
+<th colspan="2">16</th>
+<th colspan="2">17</th>
+<th colspan="2">18</th>
+<th colspan="2">19</th>
+<th colspan="2">20</th>
+<th colspan="2">21</th>
+<th colspan="2">22</th>
+<th colspan="2">23</th>
+<th colspan="2">24</th>
+<th colspan="2">25</th>
+<th colspan="2">26</th>
+<th colspan="2">27</th>
+<th colspan="2">28</th>
+<th colspan="2">29</th>
+<th colspan="2">30</th>
+<th colspan="2">31</th>
+<th rowspan="2">Tổng<br/>vi phạm</th>
+</tr>
+<tr>
+<th class="frozen2">Tên nhà hàng</th>
+<th>Số nhà</th>
+<th>Đường (tổ, xóm, ...)</th>
+<th>Quận/Huyện</th>
+<th>Tỉnh/Thành</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+<th>Check<br/>in</th>
+<th>Check<br/>out</th>
+</tr>
+</thead>
+<tbody id="tblData"></tbody>
+</table>
+
+<i id="labNgayBaoCao"></i><br/>
+<br/>
+<table>
+<tr><td colspan="2"><b><u>Ghi chú</u></b></td></tr>
+<tr><td></td><th>x</th><td colspan="3">làm ca thẳng, check điểm đầy đủ</td></tr>
+<tr><td></td><th>xx</th><td colspan="3">làm ca gãy, check điểm đầy đủ</td></tr>
+<tr><td></td><th>0.5</th><td colspan="3">làm ca gãy, 1 lần không check điểm</td></tr>
+<tr><td></td><th>1</th><td colspan="3">làm ca thẳng, 1 lần không check điểm</td></tr>
+</table>
+</div>
+</body>
+</html>

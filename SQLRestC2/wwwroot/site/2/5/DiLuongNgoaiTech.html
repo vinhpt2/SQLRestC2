@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="DiLuongNgoaiTech.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+divReport.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<div id="divReport">
+<center>
+<h2>ĐI LƯƠNG NGOÀI TECHCOMBANK NGÀY <i id="labThangNam"></i></h2>
+<table id="tblData" border="1px" cellspacing="0px">
+<caption align="bottom"><i id="labNgayBaoCao"></i></caption>
+<tr>
+<th>Txn Reference<br/>Số tham chiếu</th>
+<th>Amount (VND)<br/>Số tiền chuyển</th>
+<th>Beneficiary Name<br/>Tên người nhận</th>
+<th>Account Number<br/>Tài khoản nhận</th>
+<th>Remarks<br/>Nội dung</th>
+<th>Ben Bank<br/>Ngân hàng chuyển</th>
+<th>Province<br/>Địa bàn</th>
+<th>Branch<br/>Chi nhánh</th>
+<th>Record No<br/>Số hồ sơ</th>
+</tr>
+</table>
+</center>
+</div>
+</body>
+</html>

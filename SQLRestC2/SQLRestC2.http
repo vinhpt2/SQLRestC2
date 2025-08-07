@@ -1,0 +1,6 @@
+@SQLRestC2_HostAddress = http://localhost:5072
+
+GET {{SQLRestC2_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

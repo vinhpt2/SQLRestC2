@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLRestC2", "SQLRestC2\SQLRestC2.csproj", "{B8A5589D-55F2-4937-8DCE-D7BB69439B2D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8A5589D-55F2-4937-8DCE-D7BB69439B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A5589D-55F2-4937-8DCE-D7BB69439B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A5589D-55F2-4937-8DCE-D7BB69439B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A5589D-55F2-4937-8DCE-D7BB69439B2D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {99FF9900-FB60-4293-9436-B36EBEE03383}
+	EndGlobalSection
+EndGlobal

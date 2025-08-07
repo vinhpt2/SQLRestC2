@@ -1,0 +1,73 @@
+﻿.shading-png {
+    content: url("shading.png");
+    height: 16px; width: 16px;
+}
+.hand-png {
+    content: url("hand.png");
+    height: 16px; width: 16px;
+}
+.zoomin-png {
+    content : url("zoomin.png");
+    height: 16px; width: 16px;
+}
+.zoomout-png {
+    content : url("zoomout.png");
+    height: 16px; width: 16px;
+}
+.info-png {
+    content : url("info.png");
+    height: 16px; width: 16px;
+}
+.select-png {
+    content : url("select.png");
+    height: 16px; width: 16px;
+}
+.unselect-png {
+    content : url("unselect.png");
+    height: 16px; width: 16px;
+}
+.world-png {
+    content : url("world.png");
+    height: 16px; width: 16px;
+}
+.next-png {
+    content : url("next.png");
+    height: 16px; width: 16px;
+}
+.back-png {
+    content : url("back.png");
+    height: 16px; width: 16px;
+}
+.pencil-png {
+    content : url("pencil.png");
+    height: 16px; width: 16px;
+}
+.map-png {
+    content : url("map.png");
+    height: 16px; width: 16px;
+}
+.ruler-png {
+    content : url("ruler.png");
+    height: 16px; width: 16px;
+}
+.printer-png {
+    content : url("printer.png");
+    height: 16px; width: 16px;
+}
+.tools-png {
+    content : url("tools.png");
+    height: 16px; width: 16px;
+}
+.paint-png {
+    content : url("paint.png");
+    height: 16px; width: 16px;
+}
+.form-png {
+    content : url("form.png");
+    height: 16px; width: 16px;
+}
+.basemap-png {
+    content: url("basemap.png");
+    height: 16px;
+    width: 16px;
+}

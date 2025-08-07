@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		.box{
+			width:400px;height:400px;border:1px solid;overflow:auto
+		}
+		.line{
+			cursor:pointer
+		}
+		.line:hover{
+			background:#F3F6FA;
+		}
+		
+	</style>
+</head>
+<body onload="body_onLoad()">
+	<h3><i>Step 1:</i> Data will be use in the Application</h3>
+	<table>
+		<tr><td>Services</td><td>Tables</td></tr>
+		<tr><td><div class="box"><table width="100%" id="tblService"></table></div></td><td><div class="box"><table width="100%" id="tblTable"></table></div></td></tr>
+		<tr><td><button onclick="butNewService_onClick()">Register new service</button></td><td><button onclick="butImportTable_onClick()">Import tables from service</button></td></tr>
+	</table>
+</body>
+<script>
+var _app=parent.SysApplicationWizard.app;
+var _row=null;
+function body_onLoad(){
+	parent.NUT.ds.select({url:parent.NUT.URL+"n_service",where:["site","=",_app.siteid]},function(res){
+		for(var i=0;i<res.length;i++){
+			var row=tblService.insertRow();
+			row.className="line";
+			row.innerHTML="<td><input type='checkbox'/></td><td>"+res[i].servicename+"</td>";
+			row.tag=res[i];
+			row.onclick=row_onClick;
+			if(i==0)row.onclick();
+		}
+	});
+}
+function row_onClick(){
+	if(!this.style.backgroundColor){
+		for(var i=0;i<tblService.rows.length;i++)
+			tblService.rows[i].style.backgroundColor="";
+		this.style.backgroundColor="#B6D5FF";
+		_row=this;
+		parent.NUT.ds.select({url:parent.NUT.URL+"n_table",where:["serviceid","=",this.tag.serviceid]},function(res){
+			tblTable.innerHTML="";
+			for(var i=0;i<res.length;i++){
+				var row=tblTable.insertRow();
+				row.className="line";
+				row.innerHTML="<td>⊞</td><td>"+res[i].tablename+"</td>";
+			}
+		});
+	}
+}
+function butNewService_onClick(){
+	parent.menu_onClick({item:{tag:1}});
+}
+function butImportTable_onClick(){
+	if(_row){
+		var records=[_row.tag];
+		var id="SysImportTable";
+		if(parent.window[id]){
+			parent.window[id].run({
+				records:records
+			});
+		} else {
+			var script=parent.document.createElement("script");
+			script.src="client/0/com/"+id+".js";
+			parent.document.head.appendChild(script);
+			script.onload=function(){
+				parent.window[id].run({
+					records:records
+				});
+			}
+		}
+	} else {
+		alert("Select one service please!");
+	}
+}
+</script>
+</html>

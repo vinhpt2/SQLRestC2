@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+	</style>
+</head>
+<body style="font-size:8pt">
+<div id="divReport">
+<table>
+<tr><td>
+<table style="width:100%">
+<tr><td align="center">
+<img src="http://oritholdings.hopto.org/nut/client/2/orit.png" height="24"/>
+</td><td colspan="3" align="center">
+<b style="font-size:10pt">NHẬT KÝ HÀNH TRÌNH NVTT</b><br/>
+<b id="labThangNam"></b><br/>
+<i>Chi nhánh/Thị trường: </i><b id="labThiTruong"></b></h3>
+</td></tr>
+<tr><td>Tên NVTT: </td><td><span id="idHoTen">...................................................................</span></td><td>Tên nhà hàng: </td><td><span id="idTenNhaHang">...................................................................</span></td></tr>
+<tr><td>Team Leader: </td><td><span id="idTL">...................................................................</span></td><td>Địa chỉ nhà hàng: </td><td><span id="idDcNhaHang">...................................................................</span></td></tr>
+<tr><td>Giám sát Khu vực: </td><td><span id="idSalesSup">...................................................................</span></td><td>Mã Điểm bán: </td><td><span id="idMaDiemBan">...................................................................</span></td></tr>
+<tr><td>Giám đốc Kinh doanh vùng: </td><td><span id="idASM">...................................................................</span></td><td></td></tr>
+</table>
+</td>
+<td>
+<table style="width:100%">
+<tr><td colspan="2" align="center">
+<img src="http://oritholdings.hopto.org/nut/client/2/habeco.png" height="38"/>
+</td></tr>
+<tr><td colspan="2" align="center">
+<b>Mẫu số: QT.02/HNB.KD-01/HNB-PG</b>
+</td></tr>
+<tr><td colspan="2" align="center">
+<b>CÔNG TY TNHH MỘT THÀNH VIÊN THƯƠNG MẠI HABECO</b>
+</td></tr>
+<tr><td>Giờ làm việc: </td><td><span id="idGioLam">...................................</span></td></tr>
+<tr><td>Task Force (nếu có): </td><td><span id="idTF">...................................</span></td></tr>
+</table>
+</td></tr>
+<tr><td>
+<table id="tblData" border="1" cellspacing="0" style="border-collapse:collapse">
+<tr>
+<th rowspan="2">Ngày</th>
+<th rowspan="2">Thứ</th>
+<th colspan="6">Số nhập NPP</th>
+<th colspan="6">Tồn đầu ca</th>
+<th colspan="6">Sản lượng bán</th>
+<th colspan="6">Tồn cuối ca</th>
+<th rowspan="2">Xác nhận Nhà hàng</th>
+</tr>
+<tr>
+<th>Bold 20</th>
+<th>Light 20</th>
+<th>Bold lon24</th>
+<th>Light lon24</th>
+<th>Trúc Bạch24</th>
+<th>HN Pre20</th>
+<th>Bold 20</th>
+<th>Light 20</th>
+<th>Bold lon24</th>
+<th>Light lon24</th>
+<th>Trúc Bạch24</th>
+<th>HN Pre20</th>
+<th>Bold 20</th>
+<th>Light 20</th>
+<th>Bold lon24</th>
+<th>Light lon24</th>
+<th>Trúc Bạch24</th>
+<th>HN Pre20</th>
+<th>Bold 20</th>
+<th>Light 20</th>
+<th>Bold lon24</th>
+<th>Light lon24</th>
+<th>Trúc Bạch24</th>
+<th>HN Pre20</th>
+</tr>
+</table>
+</td>
+<td valign="top">
+<table border="1" cellspacing="0" style="border-collapse:collapse">
+<tr><th colspan="4">TỔNG KẾT BÁO CÁO THÁNG</th></tr>
+<tr><th>Sản phẩm</th><th>SL khoán (két/tháng)</th><th>Số bán (két/tháng)</th><th>Chênh lệch</th></tr>
+<tr><td align="center">Bold</td><td align="center"><span id="idKhoanBold"></span></td><td align="center"><span id="idBanBold"></span></td><td align="center"><span id="idChenhBold"></span></td></tr>
+<tr><td align="center">Light</td><td align="center"><span id="idKhoanLight"></span></td><td align="center"><span id="idBanLight"></span></td><td align="center"><span id="idChenhLight"></span></td></tr>
+<tr><td align="center">Trúc Bạch</td><td align="center"><span id="idKhoanTB"></span></td><td align="center"><span id="idBanTB"></span></td><td align="center"><span id="idChenhTB"></span></td></tr>
+<tr><td align="center">Hà Nội Premium</td><td align="center"><span id="idKhoanHN"></span></td><td align="center"><span id="idBanHN"></span></td><td align="center"><span id="idChenhHN"></span></td></tr>
+<tr><th>Tổng Nhãn hàng</th><th><span id="idTongKhoan"></span></th><th><span id="idTongBan"></span></th><th><span id="idTongChenh"></span></th></tr>
+<tr><td align="center">Ngày công chuẩn</td><td colspan="3" align="center">26</td></tr>
+<tr><th>Ngày công thực làm</th><th colspan="3"><b id="idNgayCong"></b></th></tr>
+</table>
+<table style="width:100%">
+<tr><td align="center"><b>NVTT</b><br/><i>(Ký & ghi rõ họ tên)</i><br/><br/><br/><br/><br/><br/><br/><br/><b id="idHoTen2"></b></td><td align="center"><b>TL/TF</b><br/><i>(Ký & ghi rõ họ tên)</i><br/><br/><br/><br/><br/><br/><br/><b id="idTL2"></b></td></tr>
+<tr><td align="center"><b>Giám sát Khu vực</b><br/><i>(Ký & ghi rõ họ tên)</i><br/><br/><br/><br/><br/><br/><br/><b id="idSalesSup2"></b></td><td align="center"><b>GĐKDV/GĐCN</b><br/><i>(Ký & ghi rõ họ tên)</i><br/><br/><br/><br/><br/><br/><br/><b id="idASM2"></b></td></tr>
+<tr><td align="center"><b>Nhà Cung ứng</b><br/><i>(Ký & ghi rõ họ tên)</i><br/><br/><br/><br/><br/><br/><br/><b>Nguyễn Thị Việt Hoa</b></td><td></td></tr>
+</table>
+</td>
+</tr>
+<tr><td>
+<i><u>Lưu ý</u><br/>
+1. Báo cáo chỉ viết bằng 1 loại mực xanh, không tẩy xoá.<br/>
+2. Nộp báo cáo đúng ngày quy định.</i>
+</td>
+</tr>
+<tr><td colspan="2">
+<table width="100%" style="border-top:1px solid;border-collapse:collapse" cellpadding="0px">
+<tr><td>HNB</td><td>Mã hiệu: QT.02/HNB.KD</td><td>Bh/sđ: 4/0</td><td><span>Ngày: 23/12/2021</span></td></tr>
+</table>
+</td><tr>
+</table>
+</div>
+</body>
+</html>

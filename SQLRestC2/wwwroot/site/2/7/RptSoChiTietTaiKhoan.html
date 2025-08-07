@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="RptSoQuyTienMat.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+body.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<img src="http://oritholdings.hopto.org/nut/client/2/orit.png" width="100" height="31"/>
+<center>
+<h2>SỔ CHI TIẾT TÀI KHOẢN</h2>
+<h3><i>Tài khoản: </i><b id="labTaiKhoan"></b>&nbsp;&nbsp;&nbsp;<i>Ngày: </i><b id="labNgay"></b></h3>
+<h3><i>TK đối ứng: </i><b id="labTKDoiUng"></b>&nbsp;&nbsp;&nbsp;<i>Dự án: </i><b id="labDuAn"></b></h3>
+<h3><i>Đối tác: </i><b id="labDoiTac"></b>&nbsp;&nbsp;&nbsp;<i>Nhân viên: </i><b id="labNhanVien"></b></h3>
+</center>
+<table id="tblData" border="1px" cellspacing="0px" style="margin:auto">
+<tr>
+<th rowspan="2">STT</th>
+<th rowspan="2">NGÀY THÁNG</th>
+<th rowspan="2">QUỸ</th>
+<th rowspan="2">CHỨNG TỪ</th>
+<th rowspan="2">NỘI DUNG</th>
+<th rowspan="2">CÔNG TY</th>
+<th colspan="3">SỐ TIỀN</th>
+</tr>
+<tr>
+<th>CÓ</th><th>NỢ</th><th>DƯ</th>
+</tr>
+<tr>
+<td colspan="8"></td><td align='right'><b id="labTonTk"></b></td>
+</tr>
+</table>
+</body>
+</html>

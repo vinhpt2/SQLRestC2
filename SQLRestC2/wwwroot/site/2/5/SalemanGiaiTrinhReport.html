@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="SalemanGiaiTrinh.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+divReport.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<div id="divReport">
+<img src="http://oritholdings.hopto.org/nut/client/2/orit.png" width="200" height="63"/>
+<center>
+<h2>GIẢI TRÌNH SALEMAN THÁNG <i id="labThangNam"></i></h2>
+<table id="tblData" border="1px" cellspacing="0px">
+<caption align="bottom"><i id="labNgayBaoCao"></i></caption>
+<tr>
+<th>STT</th>
+<th>KHU VỰC</th>
+<th>MÃ NHÂN VIÊN</th>
+<th>HỌ TÊN</th>
+<th>NGÀY</th>
+<th>NGÀY CÔNG</th>
+<th>NGUYÊN NHÂN</th>
+<th>LÝ DO</th>
+<th>HÌNH ẢNH</th>
+</tr>
+</table>
+</center>
+</div>
+</body>
+</html>

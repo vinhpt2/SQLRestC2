@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="BcSetNgay.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+divReport.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<div id="divReport">
+<h1>BÁO CÁO PHÂN BỐ SÉT NGÀY <i id="labThangNam"></i></h1>
+<table id="tblData" border="1" cellspacing="0" style="width:1100px">
+<tr>
+<th rowspan='2'>Khu vực HN</th>
+<th colspan='24'>Giờ</th>
+<th rowspan='2'>Tổng</th>
+</tr>
+<tr>
+<th>0h</th>
+<th>1h</th>
+<th>2h</th>
+<th>3h</th>
+<th>4h</th>
+<th>5h</th>
+<th>6h</th>
+<th>7h</th>
+<th>8h</th>
+<th>9h</th>
+<th>10h</th>
+<th>11h</th>
+<th>12h</th>
+<th>13h</th>
+<th>14h</th>
+<th>15h</th>
+<th>16h</th>
+<th>17h</th>
+<th>18h</th>
+<th>19h</th>
+<th>20h</th>
+<th>21h</th>
+<th>22h</th>
+<th>23h</th>
+</tr>
+</table><br/>
+<i id="labNgayBaoCao"></i>
+</div>
+</body>
+</html>

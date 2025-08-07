@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+		.frozen{
+			position:sticky;
+			z-index:999;
+			left:0;
+			width:160px;
+			background:whitesmoke;
+		}
+		.frozen2{
+			position:sticky;
+			z-index:999;
+			left:164px;
+			background:whitesmoke;
+		}
+		tr:hover{
+		  color: darkblue;
+		  background: lightcyan;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="RptSoQuyTienMat.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+body.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<img src="../logo.png" width="32" height="32"/>
+<center>
+<h2>CÔNG NỢ ĐỐI TÁC</h2>
+<h3><i>Ngày: </i><b id="labNgay"></b></h3>
+</center>
+<table id="tblData" border="1px" cellspacing="0px" style="width:800px;margin:auto">
+<tr>
+<th rowspan="2">STT</th>
+<th rowspan="2">MÃ ĐỐI TÁC</th>
+<th colspan="2">ĐẦU KỲ</th>
+<th colspan="2">TRONG KỲ</th>
+<th colspan="2">CUỐI KỲ</th>
+</tr>
+<tr>
+<th>CÓ</th><th>NỢ</th><th>CÓ</th><th>NỢ</th><th>CÓ</th><th>NỢ</th>
+</tr>
+</table>
+</body>
+</html>

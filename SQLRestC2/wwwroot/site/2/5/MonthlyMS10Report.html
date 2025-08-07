@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+		.frozen{
+			position:sticky;
+			z-index:999;
+			left:0;
+			width:160px;
+			background:whitesmoke;
+		}
+		.frozen2{
+			position:sticky;
+			z-index:999;
+			left:164px;
+			background:whitesmoke;
+		}
+		tr:hover{
+		  color: darkblue;
+		  background: lightcyan;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="DailyChamCongReport.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+divReport.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<div id="divReport">
+<img src="http://oritholdings.hopto.org/nut/client/2/orit.png" width="200" height="63"/>
+<h2>MS10 - TỔNG HỢP PHÍ DỊCH VỤ CUNG CẤP NHÂN SỰ NVTT CỐ ĐỊNH + TASK FORCE</h2>
+<h2><i id="labThangNam">THÁNG ... NĂM ...</i></h2>
+<h3><i>Đơn vị cung ứng: </i>Công ty Cổ phần Đầu tư ORIT</h3>
+<h3><i>Khu vực: </i><b id="labThiTruong"></b></h3>
+<table border="1" cellspacing="0" style="width:1200px">
+<thead style="position:sticky;z-index:1000;top:0">
+<tr>
+<th rowspan="2">STT</th>
+<th rowspan="2" class="frozen">Thị trường</th>
+<th rowspan="2">Số lượng NVTT</th>
+<th rowspan="2">Chi phí trả lương<br/>(chi phí<br/>tính phí dịch vụ)</th>
+<th colspan="5">Chi phí không tính phí dịch vụ</th>
+<th rowspan="2">Phí Nhà cung ứng</th>
+<th rowspan="2">Chi phí<br/>(tổng thanh toán<br/>trước thuế)</th>
+<th rowspan="2">Thuế VAT</th>
+<th rowspan="2">Tổng chi phí<br/>(bằng số)</th>
+</tr>
+<tr>
+<th>BHXH</th>
+<th>Công đoàn</th>
+<th>Chi phí hỗ trợ ngày lương cơ bản</th>
+<th>Chi phí hỗ trợ ngày lễ</th>
+<th>Công tác phí TF</th>
+</tr>
+<tr>
+<th>[1]</th>
+<th class="frozen">[2]</th>
+<th>[3]</th>
+<th>[4]</th>
+<th>[5]</th>
+<th>[6]</th>
+<th>[7]</th>
+<th>[8]</th>
+<th>[9]</th>
+<th>[10]</th>
+<th>[11]</th>
+<th>[12]</th>
+<th>[13]</th>
+</tr>
+</thead>
+<tbody id="tblData"></body>
+</table>
+</div>
+</body>
+</html>

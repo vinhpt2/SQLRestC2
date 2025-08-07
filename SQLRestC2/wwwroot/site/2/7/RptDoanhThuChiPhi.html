@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="RptSoQuyTienMat.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+body.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<img src="http://oritholdings.hopto.org/nut/client/2/orit.png" width="100" height="31"/>
+<center>
+<h2>DOANH THU CHI PHÍ</h2>
+<h3><i>Mã quỹ: </i><b id="labQuy"></b>&nbsp;&nbsp;&nbsp;<i>Ngày: </i><b id="labNgay"></b></h3>
+</center>
+<table id="tblData" border="1px" cellspacing="0px" style="margin:auto">
+<tr>
+<th rowspan="2">STT</th>
+<th rowspan="2">MÃ DỰ ÁN</th>
+<th rowspan="2">DOANH THU</th>
+<th rowspan="2">GIẢM TRỪ DT</th>
+<th rowspan="2">DOANH THU THUẦN</th>
+<th rowspan="2">HOA HỒNG - MÔI GIỚI</th>
+<th colspan="5">CHI PHÍ PHÁT SINH</th>
+<th rowspan="2">GIÁ VỐN BÁN HÀNG</th>
+<th rowspan="2">CHI PHÍ BÁN HÀNG</th>
+<th rowspan="2">CHI PHÍ QUẢN LÝ</th>
+<th rowspan="2">CHI PHÍ KHÁC</th>
+<th rowspan="2">LÃI/LỖ</th>
+<th rowspan="2">LỢI NHUẬN/DOANH THU %</th>
+</tr>
+<tr>
+<th>NVL TRỰC TIẾP</th><th>NHÂN CÔNG TRỰC TIẾP</th><th>CP MUA NGOÀI</th><th>CHI PHÍ CHUNG</th><th>CỘNG</th>
+</tr>
+<tr>
+<td colspan="8"></td><td align='right'><b id="labTonQuy"></b></td>
+</tr>
+</table>
+</body>
+</html>

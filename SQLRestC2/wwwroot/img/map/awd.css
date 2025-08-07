@@ -1,0 +1,376 @@
+﻿.eraser-png {
+    background-image: url("eraser.png");
+    height: 24px; width: 24px;
+}
+.hand-png {
+    background-image: url("hand.png");
+    height: 24px; width: 24px;
+}
+.zoomin-png {
+    background-image : url("zoomin.png");
+    height: 24px; width: 24px;
+}
+.zoomout-png {
+    background-image : url("zoomout.png");
+    height: 24px; width: 24px;
+}
+.info-png {
+    background-image : url("info.png");
+    height: 24px; width: 24px;
+}
+.select-png {
+    background-image : url("select.png");
+    height: 24px; width: 24px;
+}
+.select-draw-png {
+    background-image : url("select-draw.png");
+    height: 24px; width: 24px;
+}
+.unselect-png {
+    background-image : url("unselect.png");
+    height: 24px; width: 24px;
+}
+.zoomselect-png {
+    background-image : url("zoomselect.png");
+    height: 24px; width: 24px;
+}
+.world-png {
+    background-image : url("world.png");
+    height: 24px; width: 24px;
+}
+.next-png {
+    background-image : url("next.png");
+    height: 24px; width: 24px;
+}
+.back-png {
+    background-image : url("back.png");
+    height: 24px; width: 24px;
+}
+.find-png {
+    background-image : url("find.png");
+    height: 24px; width: 24px;
+}
+.toolbar-png {
+    background-image : url("toolbar.png");
+    height: 24px; width: 24px;
+}
+.user-png {
+    background-image : url("user.png");
+    height: 24px; width: 24px;
+}
+.doorout-png {
+    background-image : url("doorout.png");
+    height: 24px; width: 24px;
+}
+.property-png {
+    background-image : url("property.png");
+    height: 24px; width: 24px;
+}
+.disk-png {
+    background-image : url("disk.png");
+    height: 24px; width: 24px;
+}
+.start-png {
+    background-image : url("start.png");
+    height: 24px; width: 24px;
+}
+.stop-png {
+    background-image : url("stop.png");
+    height: 24px; width: 24px;
+}
+.move-png {
+    background-image : url("move.png");
+    height: 24px; width: 24px;
+}
+.editpath-png {
+    background-image : url("editpath.png");
+    height: 24px; width: 24px;
+}
+.pencil-png {
+    background-image : url("pencil.png");
+    height: 24px; width: 24px;
+}
+.copy-png {
+    background-image : url("copy.png");
+    height: 24px; width: 24px;
+}
+.delete-png {
+    background-image : url("delete.png");
+    height: 24px; width: 24px;
+}
+.clear-png {
+    background-image : url("clear.png");
+    height: 24px; width: 24px;
+}
+.pencil-png {
+    background-image : url("pencil.png");
+    height: 24px; width: 24px;
+}
+.map-png {
+    background-image : url("map.png");
+    height: 24px; width: 24px;
+}
+.wait-png {
+    background-image : url("wait.png");
+    height: 24px; width: 24px;
+}
+.border-png {
+    background-image : url("border.png");
+    height: 24px; width: 24px;
+}
+.undo-png {
+    background-image : url("undo.png");
+    height: 24px; width: 24px;
+}
+.redo-png {
+    background-image : url("redo.png");
+    height: 24px; width: 24px;
+}
+.refresh-png {
+    background-image : url("refresh.png");
+    height: 24px; width: 24px;
+}
+.layers-png {
+    background-image : url("layers.png");
+    height: 24px; width: 24px;
+}
+.zone-png {
+    background-image : url("zone.png");
+    height: 24px; width: 24px;
+}
+.legend-png {
+    background-image : url("legend.png");
+    height: 24px; width: 24px;
+}
+.inbox-png {
+    background-image : url("inbox.png");
+    height: 24px; width: 24px;
+}
+.mailbox-png {
+    background-image : url("mailbox.png");
+    height: 24px; width: 24px;
+}
+.outbox-png {
+    background-image : url("outbox.png");
+    height: 24px; width: 24px;
+}
+.table-png {
+    background-image : url("table.png");
+    height: 24px; width: 24px;
+}
+.point-png {
+    background-image : url("point.png");
+    height: 24px; width: 24px;
+}
+.line-png {
+    background-image : url("line.png");
+    height: 24px; width: 24px;
+}
+.polyline-png {
+    background-image : url("polyline.png");
+    height: 24px; width: 24px;
+}
+.polygon-png {
+    background-image : url("polygon.png");
+    height: 24px; width: 24px;
+}
+.circle-png {
+    background-image : url("circle.png");
+    height: 24px; width: 24px;
+}
+.arc-png {
+    background-image : url("arc.png");
+    height: 24px; width: 24px;
+}
+.pin-png {
+    background-image : url("pin.png");
+    height: 24px; width: 24px;
+}
+.eke-png {
+    background-image : url("eke.png");
+    height: 24px; width: 24px;
+}
+.compa-png {
+    background-image : url("compa.png");
+    height: 24px; width: 24px;
+}
+.snap-png {
+    background-image : url("snap.png");
+    height: 24px; width: 24px;
+}
+.vertex-png {
+    background-image : url("vertex.png");
+    height: 24px; width: 24px;
+}
+.edge-png {
+    background-image : url("edge.png");
+    height: 24px; width: 24px;
+}
+.eraser-png {
+    background-image : url("eraser.png");
+    height: 24px; width: 24px;
+}
+.xy-png {
+    background-image : url("xy.png");
+    height: 24px; width: 24px;
+}
+.autopolygon-png {
+    background-image : url("autopolygon.png");
+    height: 24px; width: 24px;
+}
+.split-png {
+    background-image : url("split.png");
+    height: 24px; width: 24px;
+}
+.merge-png {
+    background-image : url("merge.png");
+    height: 24px; width: 24px;
+}
+.reshape-png {
+    background-image : url("reshape.png");
+    height: 24px; width: 24px;
+}
+.logo-png {
+    background-image : url("logo.png");
+    height: 24px; width: 24px;
+}
+.printer-png {
+    background-image : url("printer.png");
+    height: 24px; width: 24px;
+}
+.tree-png {
+    background-image : url("tree.png");
+    height: 24px; width: 24px;
+}
+.home-png {
+    background-image : url("home.png");
+    height: 24px; width: 24px;
+}
+.database-png {
+    background-image : url("database.png");
+    height: 24px; width: 24px;
+}
+.form-png {
+    background-image : url("form.png");
+    height: 24px; width: 24px;
+}
+.target-png {
+    background-image : url("target.png");
+    height: 24px; width: 24px;
+}
+.folder-png {
+    background-image : url("folder.png");
+    height: 24px; width: 24px;
+}
+.thua-png {
+    background-image : url("thua.png");
+    height: 24px; width: 24px;
+}
+.nha-png {
+    background-image : url("nha.png");
+    height: 24px; width: 24px;
+}
+.phuong-png {
+    background-image : url("phuong.png");
+    height: 24px; width: 24px;
+}
+.text-png {
+    background-image : url("text.png");
+    height: 24px; width: 24px;
+}
+.shape-png {
+    background-image : url("shape.png");
+    height: 24px; width: 24px;
+}
+.explode-png {
+    background-image : url("explode.png");
+    height: 24px; width: 24px;
+}
+.label-png {
+    background-image : url("label.png");
+    height: 24px; width: 24px;
+}
+.style-png {
+    background-image : url("style.png");
+    height: 24px; width: 24px;
+}
+.from-png {
+    background-image : url("from.png");
+    height: 24px; width: 24px;
+}
+.list-png {
+    background-image : url("list.png");
+    height: 24px; width: 24px;
+}
+.select_text-png {
+    background-image : url("select_text.png");
+    height: 24px; width: 24px;
+}
+.light-png {
+    background-image : url("light.png");
+    height: 24px; width: 24px;
+}
+.ruler-png {
+    background-image : url("ruler.png");
+    height: 24px; width: 24px;
+}
+.measure-png {
+    background-image : url("measure.png");
+    height: 24px; width: 24px;
+}
+.edit-png {
+    background-image : url("edit.png");
+    height: 24px; width: 24px;
+}
+.buffer-png {
+    background-image : url("buffer.png");
+    height: 24px; width: 24px;
+}
+.approve-png {
+    background-image : url("approve.png");
+    height: 24px; width: 24px;
+}
+.add-png {
+    background-image : url("add.png");
+    height: 24px; width: 24px;
+}
+.page_red-png {
+    background-image : url("page_red.png");
+    height: 24px; width: 24px;
+}
+.magnet-png {
+    background-image : url("magnet.png");
+    height: 24px; width: 24px;
+}
+.add-png {
+    background-image : url("add.png");
+    height: 24px; width: 24px;
+}
+.open-png {
+    background-image : url("open.png");
+    height: 24px; width: 24px;
+}
+.file-png {
+    background-image : url("file.png");
+    height: 24px; width: 24px;
+}
+.shading-png {
+    background-image : url("shading.png");
+    height: 24px; width: 24px;
+}
+.upload-png {
+    background-image : url("upload.png");
+    height: 24px; width: 24px;
+}
+.north-png {
+    background-image : url("north.png");
+    height: 24px; width: 24px;
+}
+.break-png {
+    background-image : url("break.png");
+    height: 24px; width: 24px;
+}
+.join-png {
+    background-image : url("join.png");
+    height: 24px; width: 24px;
+}

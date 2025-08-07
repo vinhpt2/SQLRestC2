@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<style>
+		th{
+			background:whitesmoke;
+		}
+		.frozen{
+			position:sticky;
+			z-index:999;
+			left:0;
+			width:160px;
+			background:whitesmoke;
+		}
+		.frozen2{
+			position:sticky;
+			z-index:999;
+			left:164px;
+			background:whitesmoke;
+		}
+		tr:hover{
+		  color: darkblue;
+		  background: lightcyan;
+		}
+	</style>
+</head>
+<body style="font-size:10pt">
+<a style="float:right;border:1px solid;padding:6px 10px 6px 10px" download="RptSoQuyTienMat.xls" onclick="if(!this.href)this.href='data:application/vnd.ms-excel,'+body.innerHTML.replace(/ /g, '%20')">Kết xuất Excel</a>
+<img src="../logo.png" width="32" height="32"/>
+<center>
+<h2>CHI TIẾT CÔNG NỢ ĐỐI TÁC</h2>
+<h3><i>Đối tác: </i><b id="labDoiTac"></b>&nbsp;&nbsp;&nbsp;<i>Ngày: </i><b id="labNgay"></b></h3>
+</center>
+<table id="tblData" border="1px" cellspacing="0px" style="width:1200px;margin:auto">
+<tr>
+<th rowspan="2">STT</th>
+<th rowspan="2">NGÀY THÁNG</th>
+<th rowspan="2">TÀI KHOẢN</th>
+<th rowspan="2">LOẠI</th>
+<th rowspan="2">CHỨNG TỪ</th>
+<th rowspan="2">GHI CHÚ</th>
+<th rowspan="2">ĐỐI TÁC</th>
+<th rowspan="2">DỰ ÁN</th>
+<th colspan="3">SỐ TIỀN</th>
+</tr>
+<tr>
+<th>NỢ</th><th>CÓ</th><th>DƯ</th>
+</tr>
+<tr>
+<td colspan="10"></td><td align='right'><b id="labTon"></b></td>
+</tr>
+</table>
+</body>
+</html>

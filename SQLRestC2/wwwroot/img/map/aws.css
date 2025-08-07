@@ -1,0 +1,68 @@
+﻿.shading-png {
+    background-image: url("shading.png");
+    height: 16px; width: 16px;
+}
+.hand-png {
+    background-image: url("hand.png");
+    height: 16px; width: 16px;
+}
+.zoomin-png {
+    background-image : url("zoomin.png");
+    height: 16px; width: 16px;
+}
+.zoomout-png {
+    background-image : url("zoomout.png");
+    height: 16px; width: 16px;
+}
+.info-png {
+    background-image : url("info.png");
+    height: 16px; width: 16px;
+}
+.select-png {
+    background-image : url("select.png");
+    height: 16px; width: 16px;
+}
+.unselect-png {
+    background-image : url("unselect.png");
+    height: 16px; width: 16px;
+}
+.world-png {
+    background-image : url("world.png");
+    height: 16px; width: 16px;
+}
+.next-png {
+    background-image : url("next.png");
+    height: 16px; width: 16px;
+}
+.back-png {
+    background-image : url("back.png");
+    height: 16px; width: 16px;
+}
+.pencil-png {
+    background-image : url("pencil.png");
+    height: 16px; width: 16px;
+}
+.map-png {
+    background-image : url("map.png");
+    height: 16px; width: 16px;
+}
+.ruler-png {
+    background-image : url("ruler.png");
+    height: 16px; width: 16px;
+}
+.printer-png {
+    background-image : url("printer.png");
+    height: 16px; width: 16px;
+}
+.tools-png {
+    background-image : url("tools.png");
+    height: 16px; width: 16px;
+}
+.paint-png {
+    background-image : url("paint.png");
+    height: 16px; width: 16px;
+}
+.form-png {
+    background-image : url("form.png");
+    height: 16px; width: 16px;
+}

@@ -1,0 +1,210 @@
+.nut-win-title {
+    width:100%;
+    padding: 6px;
+    font-size: 10pt;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.nut-fld-helper {
+    position: absolute;
+    display: inline-block;
+}
+.nut-but-helper {
+    height: 27px;
+    border: none;
+    margin-left: 0px 1px 0px 1px;
+}
+.nut-but-zoom {
+    height: 27px;
+    border: none;
+    margin-left: 0px 1px 0px 1px;
+}
+.nut-fld-image {
+    width: 150px;
+    height: 150px;
+    borderby: 1px solid;
+}
+
+.nut-full {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.nut-close {
+    cursor: pointer;
+}
+
+.nut-close:hover {
+    color: red;
+}
+
+.nut-tile {
+    width: 100px;
+    height: 100px;
+    margin: 6px;
+    padding: 6px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    cursor: pointer;
+    display: inline-table;
+    font-family: helvetica;
+    font-size: 10pt;
+}
+
+.nut-tile:hover {
+    borderby: 2px inset;
+}
+
+.nut-tool {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    cursor: pointer;
+    display: inline-table;
+}
+
+.nut-tool:hover {
+    borderby: 1px inset;
+}
+
+.nut-link {
+    cursor: pointer;
+    padding: 1px;
+}
+
+.nut-link:hover {
+    color:#007AFF;
+}
+
+.nut-box{
+	margin:5px;
+	width:500px;
+	height:580px;
+	border:1px solid;
+	overflow:auto
+}
+
+.nut-img-table:before {
+    content: url("table20.png");
+}
+.nut-img-view:before {
+    content: url("view.png");
+}
+.nut-img-relate:before {
+    content: url("relate.png");
+}
+.nut-img-domain:before {
+    content: url("domain.png");
+}
+.nut-img-form:before {
+    content: url("form.png");
+}
+
+.nut-img-find:before {
+    content: url("find.png");
+}
+
+.nut-img-left:before {
+    content: url("left.png");
+}
+
+.nut-img-right:before {
+    content: url("right.png");
+}
+
+.nut-img-new:before {
+    content: url("new.png");
+}
+
+.nut-img-save:before {
+    content: url("save.png");
+}
+
+.nut-img-cross:before {
+    content: url("cross.png");
+}
+.nut-img-user:before {
+    content: url("user.png");
+}
+
+.nut-img-house {
+    content: url('house.png')
+}
+
+.nut-img-info {
+    content: url('information.png')
+}
+
+.nut-img-bell {
+    content: url('bell.png')
+}
+
+.nut-img-switch {
+    content: url('switch.png')
+}
+
+.nut-img-folder {
+    content: url('folder.png')
+}
+.nut-e-net {
+    content: url('e-net.png')
+}
+.nut-e-assembly {
+    content: url('e-assembly.png')
+}
+.nut-e-line {
+    content: url('e-line.png')
+}
+.nut-e-sline {
+    content: url('e-sline.png')
+}
+.nut-e-device {
+    content: url('e-device.png')
+}
+.nut-e-junction {
+    content: url('e-junction.png')
+}
+.nut-e-pole {
+    content: url('e-pole.png')
+}
+.nut-e-boundary {
+    content: url('e-boundary.png')
+}
+.nut-onoff {
+    -webkit-appearance: none;
+    border-radius: 10px;
+    border: 1px inset;
+    width: 30px;
+    height: 10px;
+}
+
+.nut-img-workflow:before {
+    content: url("workflow.png");
+}
+.nut-img-report:before {
+    content: url("report.png");
+}
+.nut-img-sql:before {
+    content: url("sql.png");
+}
+.nut-img-analyst:before {
+    content: url("analyst.png");
+}
+
+
+/* Tuannt */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#divLogin {
+    top: 0 !important;
+}
+
