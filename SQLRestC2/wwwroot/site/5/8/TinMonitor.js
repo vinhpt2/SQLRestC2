@@ -5,7 +5,7 @@
 		var dmMucDo=NUT.domains[1088].items;
 		var a = NUT.createWindowTitle("TinMonitor", divTitle);
 		a.innerHTML = "Theo dõi Sự cố";
-		a.div.innerHTML = "<div id='divMonTabs'></div><div id='divSuCo' class='nut-full'><table border='1' width='100%' height='90%' style='table-layout: fixed'><caption id='cap'><span style='float:left'><input type='checkbox' checked class='w2ui-input' id='chkBd' onchange='TinMonitor.lyr.visible=this.checked'/><label for='chkBd'>Bản đồ</label></span><label for='cboMucDo'>Mức độ </label>"+NUT.outerCboHTML(dmMucDo,"cboMucDo","Mức độ")+"</caption><tr><td><div id='tongsuco' align='center'>Tổng số sự cố... <img src='img/wait.gif'/></div><div id='sucokhan' align='center'></div></td><td rowspan='3' id='top20'>Tin báo sự cố... <img src='img/wait.gif'/></td></tr><tr><td><div id='mucdosuco'>Mức độ sự cố... <img src='img/wait.gif'/></div></td></tr><tr><td><div id='thongkesuco'>&nbsp;Thống kê... <img src='img/wait.gif'/></div></td></tr></table></div><div id='divDienBien' class='nut-full'><table border='1' width='100%' height='90%' style='table-layout: fixed'><caption id='cap'><label for='cboSuCo'>Sự cố </label><select id='cboSuCo' class='w2ui-input'></select></caption><tr><td style='height:220px'><div id='divVungTimKiem' class='nut-full'></div></td><td rowspan='3' id='topDienbien'></td></tr><tr><td id='formsuco' align='center' style='height:200px'></td></tr><tr><td align='center'><table border='1'><thead><th>Mã</th><th>Tên lực lượng</th><th>Điện thoại</th></thead><tbody id='formlucluong'></tbody></table></td></tr></table></div>";
+		a.div.innerHTML = "<div id='divMonTabs'></div><div id='divSuCo' class='nut-full'><table border='1' width='100%' height='90%' style='table-layout: fixed'><caption id='cap'><span style='float:left'><input type='checkbox' checked class='w2ui-input' id='chkBd' onchange='TinMonitor.lyr.visible=this.checked'/><label for='chkBd'>Bản đồ</label></span><label for='cboMucDo'>Mức độ </label>"+NUT.outerCboHTML(dmMucDo,"cboMucDo","Mức độ")+"</caption><tr><td><div id='tongsuco' align='center'>Tổng số sự cố... <img src='img/wait.gif'/></div><div id='sucokhan' align='center'></div></td><td rowspan='3' id='top20'>Tin báo sự cố... <img src='img/wait.gif'/></td></tr><tr><td><div id='mucdosuco'>Mức độ sự cố... <img src='img/wait.gif'/></div></td></tr><tr><td><div id='thongkesuco'>&nbsp;Thống kê... <img src='img/wait.gif'/></div></td></tr></table></div><div id='divDienBien' class='nut-full'><table border='1' width='100%' height='90%' style='table-layout: fixed'><caption id='cap'><label for='cboSuCo'>Sự cố </label><select id='cboSuCo' class='w2ui-input'></select></caption><tr><td style='height:220px;text-align:center'><h3>Khu vực tìm kiếm</h3><div id='divVungTimKiem' style='width:240px;height:200px'></div></td><td rowspan='3' id='topDienbien'></td></tr><tr><td id='formsuco' align='center' style='height:200px'></td></tr><tr><td align='center'><table border='1'><caption><h3>Lực lượng TKCN</h3></caption><thead><th>Mã</th><th>Tên lực lượng</th><th>Điện thoại</th></thead><tbody id='formlucluong'></tbody></table></td></tr></table></div>";
 		cboMucDo.onchange=TinMonitor.cboMucDo_onChange;
 		cboSuCo.onchange=TinMonitor.cboSuCo_onChange;
 
@@ -30,143 +30,160 @@
 			}
 		})).render(divMonTabs);
 
-		NUT.AGMap.onInit=function(){
-			var opt = {
-				id:"LYR_SUCO",
-				source: [],
-				spatialReference: { wkid: 4326 },
-				fields: [
-					{ name: "id", alias: "ID", type: "oid" },
-					{ name: "mucDo", alias: "Mức độ", type: "string" },
-					{ name: "thoiGianXayRa", alias: "Thời gian xảy ra", type: "date" },
-					{ name: "tenSuCo", alias: "Tên sự cố", type: "string" },
-					{ name: "tenTauBay", alias: "Tên tàu bay", type: "string" },
-					{ name: "duongBay", alias: "Đường bay", type: "string" },
-					{ name: "diaDiemSuCo", alias: "Địa điểm", type: "string" },
-					{ name: "ghiChu", alias: "Ghi chú", type: "string" }
-				],
-				OBJECTIDField: "id",
-				geometryType: "point",
-				popupTemplate: {
-					title: "Sự cố #{id}",
-					content: [
-						{
-							type: "fields",
-							fieldInfos: [
-								{ fieldName: "mucDo", label: "Mức độ" },
-								{ fieldName: "thoiGianXayRa", label: "thoiGianXayRa" },
-								{ fieldName: "tenSuCo", label: "Tên sự cố" },
-								{ fieldName: "tenTauBay", label: "Tên tàu bay" },
-								{ fieldName: "duongBay", label: "Đường bay" },
-								{ fieldName: "diaDiemSuCo", label: "Địa điểm" },
-								{ fieldName: "ghiChu", label: "Ghi chú" }
-							]
-						}
-					]
-				},
-				renderer: {
-					type: "unique-value",
-					field:"mucDo",
-					defaultSymbol: {
-						type: "picture-marker",
-						url: "site/5/8/gray.png",
-						height:'24px',width:'24px'
+		setTimeout( function(){
+			NUT.AGMap.map.loadAll().then(function () {
+				var opt = {
+					id:"LYR_SUCO",
+					title:"Sự cố",
+					source: [],
+					oidOffset:0,
+					spatialReference: { wkid: 4326 },
+					fields: [
+						{ name: "id", alias: "ID", type: "oid" },
+						{ name: "mucDo", alias: "Mức độ", type: "string" },
+						{ name: "thoiGianXayRa", alias: "Thời gian xảy ra", type: "date" },
+						{ name: "tenSuCo", alias: "Tên sự cố", type: "string" },
+						{ name: "tenTauBay", alias: "Tên tàu bay", type: "string" },
+						{ name: "duongBay", alias: "Đường bay", type: "string" },
+						{ name: "diaDiemSuCo", alias: "Địa điểm", type: "string" },
+						{ name: "ghiChu", alias: "Ghi chú", type: "string" }
+					],
+					OBJECTIDField: "id",
+					geometryType: "point",
+					popupTemplate: {
+						title: "Sự cố #{id}",
+						content: [
+							{
+								type: "fields",
+								fieldInfos: [
+									{ fieldName: "mucDo", label: "Mức độ" },
+									{ fieldName: "thoiGianXayRa", label: "thoiGianXayRa" },
+									{ fieldName: "tenSuCo", label: "Tên sự cố" },
+									{ fieldName: "tenTauBay", label: "Tên tàu bay" },
+									{ fieldName: "duongBay", label: "Đường bay" },
+									{ fieldName: "diaDiemSuCo", label: "Địa điểm" },
+									{ fieldName: "ghiChu", label: "Ghi chú" }
+								]
+							}
+						]
 					},
-					uniqueValueInfos: [
-						{
-							value: 'INCERFA',
-							symbol: {
-								type: "picture-marker",
-								url: "site/5/8/blue.gif",
-								height:'24px',width:'24px'
+					renderer: {
+						type: "unique-value",
+						field:"mucDo",
+						defaultSymbol: {
+							type: "picture-marker",
+							url: "site/5/8/gray.png",
+							height:'24px',width:'24px'
+						},
+						uniqueValueInfos: [
+							{
+								value: 'INCERFA',
+								symbol: {
+									type: "picture-marker",
+									url: "site/5/8/blue.gif",
+									height:'24px',width:'24px'
+								},
+								label:"Hồ nghi"
+							},{
+								value: 'ALERFA',
+								symbol: {
+									type: "picture-marker",
+									url: "site/5/8/yellow.gif",
+									height:'24px',width:'24px'
+								},
+								label:"Báo động"
+							},{
+								value: 'DETRESFA',
+								symbol: {
+									type: "picture-marker",
+									url: "site/5/8/red.gif",
+									height:'24px',width:'24px'
+								},
+								label:"Khẩn nguy"
 							}
-						},{
-							value: 'ALERFA',
-							symbol: {
-								type: "picture-marker",
-								url: "site/5/8/yellow.gif",
-								height:'24px',width:'24px'
-							}
-						},{
-							value: 'DETRESFA',
-							symbol: {
-								type: "picture-marker",
-								url: "site/5/8/red.gif",
-								height:'24px',width:'24px'
-							}
-						}
-					]
-				}
-			}
-			TinMonitor.lyr = new NUT.AGMap.FeatureLayer(opt);
-			NUT.AGMap.map.add(TinMonitor.lyr);
-			NUT.AGMap.layers['LYR_SUCO'] = TinMonitor.lyr;
-			
-			var opt2 = {
-				id:"LYR_LUCLUONG",
-				source: [],
-				spatialReference: { wkid: 4326 },
-				fields: [
-					{ name: "id", alias: "ID", type: "oid" },
-					{ name: "maLucLuong", alias: "Mã lực lượng", type: "string" },
-					{ name: "tenLucLuong", alias: "Tên lực lượng", type: "string" },
-					{ name: "soLienLac", alias: "Số liên lạc", type: "string" },
-					{ name: "loaiLucLuong", alias: "Loại lực lượng", type: "string" },
-					{ name: "diaDiem", alias: "Địa điểm", type: "string" },
-					{ name: "soLuongNhanSu", alias: "Số lượng nhân sự", type: "integer" },
-					{ name: "trangThietBi", alias: "Trang thiết bị", type: "string" },
-					{ name: "trangThai", alias: "Trạng thái", type: "string" },
-					{ name: "nhiemVuPhuTrach", alias: "Nhiệm vụ phụ trách", type: "string" }
-				],
-				OBJECTIDField: "id",
-				geometryType: "point",
-				popupTemplate: {
-					title: "Lực lượng #{id}",
-					content: [
-						{
-							type: "fields",
-							fieldInfos: [
-								{ fieldName: "maLucLuong", label: "Mã lực lượng" },
-								{ fieldName: "tenLucLuong", label: "Tên lực lượng" },
-								{ fieldName: "soLienLac", label: "Số liên lạc" },
-								{ fieldName: "loaiLucLuong", label: "Loại lực lượng" },
-								{ fieldName: "diaDiem", label: "Địa điểm" },
-								{ fieldName: "soLuongNhanSu", label: "Số lượng nhân sự" },
-								{ fieldName: "trangThietBi", label: "Trang thiết bị" },
-								{ fieldName: "trangThai", label: "Trạng thái" },
-								{ fieldName: "nhiemVuPhuTrach", label: "Nhiệm vụ phụ trách" }
-							]
-						}
-					]
-				},
-				renderer: {
-					type: "simple",
-					symbol: {
-						type: "simple-marker",
-						color:"magenta",
-						style: "triangle",
-						size:8,
-						outline:null
+						]
 					}
 				}
-			}
-			var lyr2=new NUT.AGMap.FeatureLayer(opt2);
-			NUT.AGMap.map.add(lyr2);
-			NUT.AGMap.layers['LYR_LUCLUONG'] = lyr2;
-			TinMonitor.pullLucLuongData();
-			TinMonitor.pullSuCoData();
+				TinMonitor.lyr = new NUT.AGMap.FeatureLayer(opt);
+				NUT.AGMap.map.add(TinMonitor.lyr);
+				NUT.AGMap.layers['LYR_SUCO'] = TinMonitor.lyr;
+				
+				var opt2 = {
+					id:"LYR_LUCLUONG",
+					title:"Lực lượng",
+					source: [],
+					oidOffset:0,
+					spatialReference: { wkid: 4326 },
+					fields: [
+						{ name: "id", alias: "ID", type: "oid" },
+						{ name: "maLucLuong", alias: "Mã lực lượng", type: "string" },
+						{ name: "tenLucLuong", alias: "Tên lực lượng", type: "string" },
+						{ name: "soLienLac", alias: "Số liên lạc", type: "string" },
+						{ name: "loaiLucLuong", alias: "Loại lực lượng", type: "string" },
+						{ name: "diaDiem", alias: "Địa điểm", type: "string" },
+						{ name: "soLuongNhanSu", alias: "Số lượng nhân sự", type: "integer" },
+						{ name: "trangThietBi", alias: "Trang thiết bị", type: "string" },
+						{ name: "trangThai", alias: "Trạng thái", type: "string" },
+						{ name: "nhiemVuPhuTrach", alias: "Nhiệm vụ phụ trách", type: "string" }
+					],
+					OBJECTIDField: "id",
+					geometryType: "point",
+					popupTemplate: {
+						title: "Lực lượng #{id}",
+						content: [
+							{
+								type: "fields",
+								fieldInfos: [
+									{ fieldName: "maLucLuong", label: "Mã lực lượng" },
+									{ fieldName: "tenLucLuong", label: "Tên lực lượng" },
+									{ fieldName: "soLienLac", label: "Số liên lạc" },
+									{ fieldName: "loaiLucLuong", label: "Loại lực lượng" },
+									{ fieldName: "diaDiem", label: "Địa điểm" },
+									{ fieldName: "soLuongNhanSu", label: "Số lượng nhân sự" },
+									{ fieldName: "trangThietBi", label: "Trang thiết bị" },
+									{ fieldName: "trangThai", label: "Trạng thái" },
+									{ fieldName: "nhiemVuPhuTrach", label: "Nhiệm vụ phụ trách" }
+								]
+							}
+						]
+					},
+					renderer: {
+						type: "simple",
+						symbol: {
+							type: "simple-marker",
+							color:"magenta",
+							style: "triangle",
+							size:8,
+							outline:null
+						}
+					}
+				}
+				var lyr2=new NUT.AGMap.FeatureLayer(opt2);
+				NUT.AGMap.map.add(lyr2);
+				NUT.AGMap.layers['LYR_LUCLUONG'] = lyr2;
+				TinMonitor.pullLucLuongData();
 
-			setInterval(function () {
+				NUT.loading(a.div);
 				TinMonitor.pullSuCoData();
-			}, 600000);
-			
-			TinMonitor.view=new NUT.AGMap.MapView({
-				container: divVungTimKiem,
-				map: {basemap: "topo-vector"},
-				popupEnabled: false,
-				ui: { components: [] }
+
+				setInterval(function () {
+					NUT.loading(a.div);
+					NUT.AGMap.refreshToken(function(){
+						TinMonitor.pullSuCoData();
+					});
+				}, 600000);
+				
+				TinMonitor.view=new NUT.AGMap.MapView({
+					container: divVungTimKiem,
+					map: {basemap: "topo-vector"},
+					popupEnabled: false,
+					ui: { components: [] }
+				});
+				
+				
 			});
-		}
+
+		},5000);
 		
 	},
 	pullLucLuongData: function () {
@@ -259,7 +276,7 @@
 							lines.push(" ✉️ " + (rec.moTaTinBao||"-/-") + " từ " + (rec.nguonTinBao||"-/-") + " lúc " + (rec.thoiGianXayRa?rec.thoiGianXayRa.toLocaleString():"-/-"));
 						}
 					}else NUT.notify("🛑 ERROR: " + res2.result, "red");
-					topDienbien.innerHTML = "<marquee style='height:300px' direction='up' scrollamount='3'>" + lines.join("<br/><br/>") + "</marquee>";
+					topDienbien.innerHTML = "<marquee style='min-height:500px' direction='up' scrollamount='3'>" + lines.join("<br/><br/>") + "</marquee>";
 				});
 			}else NUT.notify("🛑 ERROR: " + res.result, "red");
 		});
@@ -352,7 +369,7 @@
 					line20.push("<img width='20' src='site/5/8/"+rec.status+".png'/> Tin báo " + (rec.moTaTinBao||"-/-") + " tàu bay " + (rec.tenTauBay||"-/-") + " lúc " + (rec.thoiGianXayRa?rec.thoiGianXayRa.toLocaleString():"-/-"));
 					
 				}
-				top20.innerHTML = "<marquee style='min-height:300px' direction='up' scrollamount='3'>" + line20.join("<br/><br/>") + "</marquee>";
+				top20.innerHTML = "<marquee style='min-height:500px' direction='up' scrollamount='3'>" + line20.join("<br/><br/>") + "</marquee>";
 			}else NUT.notify("🛑 ERROR: " + res.result, "red");
 		});
 	},
@@ -364,7 +381,7 @@
 					var rec=res.result[i];
 					lines.push("🏃 " + rec.dienBien + " lúc " + (rec.thoiGianBatDau?rec.thoiGianBatDau.toLocaleString():"-/-"));
 				}
-				topDienbien.innerHTML = "<marquee style='min-height:300px' direction='up' scrollamount='3'>" + lines.join("<br/><br/>") + "</marquee>";
+				topDienbien.innerHTML = "<marquee style='min-height:500px' direction='up' scrollamount='3'>" + lines.join("<br/><br/>") + "</marquee>";
 			}else NUT.notify("🛑 ERROR: " + res.result, "red");
 		});
 	}

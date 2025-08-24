@@ -7,6 +7,7 @@ NUT.w2confirm = w2confirm;
 NUT.w2popup = w2popup;
 NUT.w2prompt = w2prompt;
 var _idx = 0;
+var SQL_ID=4;
 window.onload = function () {
 	var strs=(window.location.search.substring(1)).split("&");
 	for(var i=0;i<strs.length;i++){
@@ -26,15 +27,17 @@ window.onload = function () {
 			panels: [
 				{ type: 'top', size: 38, html: '<div id="divTop" class="nut-full"><img id="imgLogo " height="24" src="favicon.ico"/><i class="nut-link"> SQL Studio 1.0</i></div>' },
 				{ type: 'left', size: NUT.isMobile ? "100%" : 300, resizable: true, html: '<div id="divLeft" class="nut-full"></div>' },
-				{ type: 'main', html: '<div id="divMain" class="nut-full"><div id="divTitle" style="padding:6px;font-size:12pt">'+NUT.appinfo+'</div></div>' }
+				{ type: 'main', html: '<div id="divMain" class="nut-full"><div id="divTitle"  class="nut-win-title">'+NUT.appinfo+'</div></div>' }
 			],
 		})).render(divApp);
+		
 
-		NUT.ds.select({ url: NUT.URL + "n_service",orderby: "seqno",where:["servicetype","=","sqlrest"] }, function (res2) {
-			if (res2.success&&res2.result.length) {
+		NUT.ds.get({ url: NUT.URL_TOKEN + "app/"+SQL_ID+"?setCred=true" }, function (res) {
+			var services=res.result.services;
+			if (services) {
 				var nodes=[];
-				for (var i=0;i<res2.result.length;i++) {
-					var rec = res2.result[i];
+				for (var key in services)if(services.hasOwnProperty(key)) {
+					var rec = services[key];
 					var node = { id: "service_" + rec.serviceid, group: true, expanded: true, icon: "nut-img-database", text: rec.servicename,tag:rec.url,nodes:[]};
 					nodes.push(node);
 					loadSchemaContent(node);
@@ -44,7 +47,7 @@ window.onload = function () {
 					name: "mnuMain",
 					flatButton: true,
 					nodes: nodes,
-					topHTML: "<table><tr><td><input class='w2ui-input' placeholder=" + w2utils.lang("_Search") + "/></td><td><button class='w2ui-btn' onclick='newQueryPage(\"" + rec.url +"\")'>Query</button></td></tr></table>",
+					topHTML: "<table><tr><td><input class='w2ui-input' placeholder=" + w2utils.lang("_Search") + "/></td><td><button class='w2ui-btn' onclick='newQueryPage(\"" + nodes[0].tag +"\")'>Query</button></td></tr></table>",
 					onClick: menu_onClick,
 					onFlat: function (evt) {
 						w2ui.layMain.sizeTo("left", this.flat ? 300 : 45);
@@ -52,7 +55,7 @@ window.onload = function () {
 					}
 				})).render(divLeft);
 				NUT.loading(divLeft);
-			}else NUT.notify("⚠️ No service for SQL", "yellow");
+			}else NUT.notify("⚠️ No service allow SQL Editor!", "yellow");
 		});
 	});
 }
@@ -63,7 +66,7 @@ window.saveNewView = function (nodeid) {
 			var url = node.tag + txtNewViwName.value;
 			if (txtNewViwAlias.value) url += "?alias=" + txtNewViwAlias.value;
 			NUT.loading(divMain);
-			NUT.ds.post({ url: url, data: { body:txtNewViwScript.value } }, function(res) {
+			NUT.ds.get({ url: url, data: { body:txtNewViwScript.value }, method:"POST" }, function(res) {
 				if (res.success) {
 					var node = { id: res.result, text: txtNewViwName.value, icon: "nut-img-view", count: "<a onclick='event.stopPropagation();deleteTableView(" + res.result + ")' title='Delete'>➖</a>", name: txtNewViwName.value, alias: txtNewViwAlias.value, type: "table/" };
 					w2ui.mnuMain.add(nodeid, node);
@@ -93,7 +96,7 @@ window.saveNewTable = function (nodeid) {
 			var url = w2ui.gridNewTbl.tag + txtNewTblName.value;
 			if (txtNewTblAlias.value) url += "?alias=" + txtNewTblAlias.value;
 			NUT.loading(divMain);
-			NUT.ds.post({ url: url, data: data }, function (res) {
+			NUT.ds.get({ url: url, data: data, method:"POST" }, function (res) {
 				if (res.success) {
 					var node = { id: res.result, text: txtNewTblName.value, icon: "nut-img-table", count: "<a onclick='event.stopPropagation();deleteTableView(" + res.result + ")' title='Delete'>➖</a>", name: txtNewTblName.value, alias: txtNewTblAlias.value, type: "table/" };
 					w2ui.mnuMain.add(nodeid, node);
@@ -140,7 +143,7 @@ window.newQueryPage = function (url) {
 						NUT.confirm("The query may MODIFY or DELETE data. Continue?", function (awnser) {
 							if (awnser == "yes") {
 								grid.lock();
-								NUT.ds.post({ url: url + "query", data: { body: grid.tag.value }, method: "PUT" }, function (res) {
+								NUT.ds.get({ url: url + "query", data: { body: grid.tag.value }, method: "PUT" }, function (res) {
 									if (res.success) {
 										grid.columns = [];
 										grid.records = [];
@@ -153,7 +156,7 @@ window.newQueryPage = function (url) {
 						});
 					} else {
 						grid.lock();
-						NUT.ds.post({ url: url + "query", data: { body: grid.tag.value } }, function (res) {
+						NUT.ds.get({ url: url + "query", data: { body: grid.tag.value }, method:"POST" }, function (res) {
 							if (res.success) {
 								if (res.total) {
 									var obj = res.result[0];
@@ -239,7 +242,7 @@ window.newProcedurePage = function (nodeid) {
 		a.innerHTML = "New Procedure";
 	}
 }
-function loadSchemaContent(node) {
+window.loadSchemaContent=function(node) {
 	var pos = node.tag.lastIndexOf("/", node.tag.length - 2);
 	NUT.ds.get({ url: node.tag.substring(0, pos) + "/schema" + node.tag.substring(pos) + "?detail=true"}, function (res) {
 		if (res.success) {
@@ -272,7 +275,7 @@ function loadSchemaContent(node) {
 		} else NUT.notify("⛔ ERROR: " + res.result, "red");
 	});
 }
-function lookupEditType(type)
+window.lookupEditType=function(type)
 {
     var dataType = "text";
 	switch (type) {
@@ -315,7 +318,7 @@ function lookupEditType(type)
 	}
 	return dataType;
 }
-function menu_onClick(evt){
+window.menu_onClick=function(evt){
 	var node = evt.object;
 	var isTable = (node.type == "TABLE");
 	var isProcedure = (node.type == "PROCEDURE");
@@ -366,6 +369,14 @@ function menu_onClick(evt){
 				show: {
 					toolbar: true,
 					footer: true
+				},
+				toolbar:{
+					items: [
+						{ type: 'spacer' },
+						{ type: 'button', id: 'IMP', text: '📥', tooltip: '_Import' },
+						{ type: 'button', id: 'EXP', text: '📤', tooltip: '_Export' }
+					],
+					onClick: importExportXls
 				},
 				onLoad: function (evt) {
 					var data = evt.detail.data;
@@ -530,7 +541,7 @@ function menu_onClick(evt){
 				}
 				NUT.loading(divMain);
 				var grid = this;
-				NUT.ds.post({ url: this.tag + "/alter", data: data }, function (res) {
+				NUT.ds.get({ url: this.tag + "/alter", data: data, method:"POST" }, function (res) {
 					if (res.success) {
 						grid.mergeChanges();
 						NUT.notify(res.result[0] + " columns added, " + res.result[1] + " columns modified, " + res.result[2] + " columns deleted.", "lime");
@@ -563,13 +574,44 @@ function menu_onClick(evt){
 		a.innerHTML=rec.name;
 	});
 }
+window.importExportXls=function(evt){
+	var grid=this.owner;
+	var cols = [];
+	for (var i = 0; i < grid.columns.length; i++)cols.push(grid.columns[i].field);
+	switch(evt.object.id){
+		case "IMP":
+			NUT.importXls(grid.url,cols,function (res) {
+				if (res.success) {
+					grid.reload();
+					NUT.notify("Data imported.", "lime");
+				} else NUT.notify("🛑 ERROR: " + res.result, "red");
+			});
+			break;
+		case "EXP":
+			// define where
+			var where = [];
+			for (var i = 0; i < grid.searchData.length; i++) {
+				var search = grid.searchData[i];
+				where.push(search.operator == "begins" ? [search.field, "like", search.value + "*"] : [search.field, search.operator, search.value]);
+			}
+			var orderby=undefined;
+			if (grid.sortData.length) {
+				var sorts = [];
+				for (var i = 0; i < grid.sortData.length; i++)
+					sorts.push(grid.sortData[i].field + " " + grid.sortData[i].direction);
+				orderby = sorts.join(',');
+			}
+			NUT.exportXls(grid.url,cols,where,orderby);
+			break;
+	}
+}
 window.editViewScript = function (nodeid) {
 	var node = w2ui.mnuMain.get(nodeid);
 	NUT.confirm("MODIFY script of selected "+node.type+"?", function (awnser) {
 		if (awnser == "yes") {
 			var sql = document.getElementById("script_" + nodeid).value;
 			var para = document.getElementById("para_" + nodeid).value;
-			if (sql) NUT.ds.post({ url: node.parent.tag + node.name + "/edit", data: { body: sql, parameter:para } }, function (res) {
+			if (sql) NUT.ds.get({ url: node.parent.tag + node.name + "/edit", data: { body: sql, parameter:para }, method:"POST" }, function (res) {
 				if (res.success) {
 					w2ui.mnuMain.remove(nodeid);
 					NUT.notify(node.type + " Modified.", "lime");

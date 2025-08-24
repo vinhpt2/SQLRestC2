@@ -71,3 +71,8 @@
     height: 16px;
     width: 16px;
 }
+.legend-png {
+    content: url("legend.png");
+    height: 16px;
+    width: 16px;
+}

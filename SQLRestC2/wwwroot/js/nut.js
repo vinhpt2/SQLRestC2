@@ -1,18 +1,18 @@
 var n$ = {
 	user: null,
-	windowid: null,
+	winid: null,
 	extent: null,
 	layer: null,
-	app: null, 
+	app: null,
 	locale: null,
-	phrases:null,
+	phrases: null,
 	workflow: null,
 	now: function () {
 		return (new Date()).toISOString().substr(0, 10);
 	},
 	nowTime: function () {
-		var now=new Date();
-		return now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+" "+now.getHours()+":"+now.getMinutes();
+		var now = new Date();
+		return now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes();
 	},
 	nowDate: function () {
 		return (new Date()).getDate();
@@ -23,22 +23,28 @@ var n$ = {
 	nowYear: function () {
 		return (new Date()).getFullYear();
 	},
-	myLocate:function(){
+	myLocate: function () {
 		//do nothing
 	},
 	//BASE: "https://localhost:7006/"
-	BASE: "https://oritholdings.hopto.org:44326/"
+	BASE: "https://oritholdings.hopto.org:8443/"
 }
 var NUT = {
-	URL: n$.BASE +"rest/zilcode_nut/dbo/data/",
-	URL_DB: n$.BASE +"rest/zilcode_nut/dbo/",
-	URL_UPLOAD: n$.BASE +"rest/upload/",
-	URL_TOKEN: n$.BASE +"rest/token/",
-	//URL_PROXY: n$.BASE +"rest/proxy?",
+	ID:0,
+	URL: n$.BASE + "rest/zilcode_nut/dbo/data/",
+	URL_DB: n$.BASE + "rest/zilcode_nut/dbo/",
+	URL_UPLOAD: n$.BASE + "rest/upload/",
+	URL_SOURCE: n$.BASE + "rest/source/",
+	URL_TOKEN: n$.BASE + "rest/token/",
+	URL_PROXY: n$.BASE + "rest/proxy?",
+	FILE_EXT: [".js", ".docx", ".gif", ".html", ".jpg", ".mdb", ".pdf", ".png", ".txt", ".xlsx", ".zip", ".rar", ".css"],
+	IMAGE_EXT: [".gif", ".jpg", ".png"],
+	TEXT_EXT: [".js", ".html", ".txt", ".css"],
+	DOC_EXT: [".docx", ".pdf", ".xlsx"],
 	shortcut: null,
 	ds: null,
 	access: null,
-	appinfo:null,
+	appinfo: null,
 	apps: {},
 	windows: {},
 	domains: {},
@@ -48,18 +54,18 @@ var NUT = {
 	relates: {},
 	services: {},
 	isMobile: false,
-	isGIS:false,
+	isGIS: false,
 	canva: document.createElement("canvas"),
 	CAN_WIDTH: 600,
 	ERD: {
 		window: ["windowid", "windowname", "windowtype", "appid", "execname", "isopenfind", "translate"],
-		tab: ["tabid", "parenttabid", "tabname", "tablevel", "seqno", "layoutcols", "linkchildfield", "linkparentfield", "linktableid", "whereclause", "orderby", "tableid", "windowid", "relatechildfield", "relateparentfield", "relatetableid", "filterfield", "filterdefault", "noinsert", "noupdate", "nodelete", "isarchive", "islock", "isautosave", "translate", "noselect", "noexport", "archivetype", "isviewonly", "labelspan","workflowid"],
-		field: ["fieldid", "fieldname", "translate", "hideingrid", "hideinform", "hideinfind", "displaylength", "seqno", "isreadonly", "fieldlength", "vformat", "defaultvalue", "isrequire", "isfrozen", "fieldgroup", "tabid", "columnid", "fieldtype", "linktableid", "domainid", "issearchtonghop", "parentfieldid", "wherefieldname", "placeholder", "calculation", "colspan", "rowspan", "mapcolumn", "foreignwindowid", "columnname", "tableid", "whereclause", "bindfieldname", "options", "columntype","linkcolumn"],
-		menu: ["menuid", "menuname", "parentid", "seqno", "translate", "issummary", "appid", "windowid", "siteid", "tabid", "menutype", "execname", "icon","reportid"]
+		tab: ["tabid", "parenttabid", "tabname", "tablevel", "seqno", "layoutcols", "linkchildfield", "linkparentfield", "linktableid", "whereclause", "orderby", "tableid", "windowid", "relatechildfield", "relateparentfield", "relatetableid", "filterfield", "filterdefault", "noinsert", "noupdate", "nodelete", "isarchive", "islock", "isautosave", "translate", "noselect", "noexport", "archivetype", "isviewonly", "labelspan", "workflowid"],
+		field: ["fieldid", "fieldname", "translate", "hideingrid", "hideinform", "hideinfind", "displaylength", "seqno", "isreadonly", "fieldlength", "vformat", "defaultvalue", "isrequire", "isfrozen", "fieldgroup", "tabid", "columnid", "fieldtype", "linktableid", "domainid", "issearchtonghop", "parentfieldid", "wherefieldname", "placeholder", "calculation", "colspan", "rowspan", "mapcolumn", "foreignwindowid", "columnname", "tableid", "whereclause", "bindfieldname", "options", "columntype", "linkcolumn"],
+		menu: ["menuid", "menuname", "parentid", "seqno", "translate", "issummary", "appid", "windowid", "siteid", "tabid", "menutype", "execname", "icon", "reportid"]
 	},
 	GRID_LIMIT: 100,
 	QUERY_LIMIT: 200,
-	DM_NIL:{id:"",text:""},
+	DM_NIL: { id: "", text: "" },
 	z: function (param) {// tag, attribute, children
 		var elm = (param[0] ? document.createElement(param[0]) : this);
 		if (param[1]) for (var key in param[1]) elm[key] = param[1][key];
@@ -106,8 +112,8 @@ var NUT = {
 					var data = res4.result[i];
 					var itm = { id: data[table.columnkey], text: data[table.columndisplay] };
 					dm.items.push(itm);
-					dm.lookup[itm.id] = [itm.id,itm.text];
-					dm.lookdown[itm.text] = [itm.id,itm.text];
+					dm.lookup[itm.id] = [itm.id, itm.text];
+					dm.lookdown[itm.text] = [itm.id, itm.text];
 				}
 				NUT.dmlinks[table.tableid] = dm;
 			} else NUT.notify("🛑 ERROR: " + res4.result, "red");
@@ -125,24 +131,24 @@ var NUT = {
 					var key = NUT.ERD.tab[j];
 					var val = conf.tabs[i][j];
 					tab[key] = val;
-					var table=NUT.tables[val]||{};
+					var table = NUT.tables[val] || {};
 					if (key == "tableid" && val) tab.table = table;
 					if (key == "linktableid" && val) tab.linktable = table;
 					if (key == "relatetableid" && val) tab.relatetable = table;
 				}
-				if(layout){
-					tab.layout=document.createElement("div");
-					tab.layout.innerHTML=layout[tab.tabid];
-					var tables=tab.layout.querySelectorAll("table");
-					for(var t=0;t<tables.length;t++){
+				if (layout) {
+					tab.layout = document.createElement("div");
+					tab.layout.innerHTML = layout[tab.tabid];
+					var tables = tab.layout.querySelectorAll("table");
+					for (var t = 0; t < tables.length; t++) {
 						var table = tables[t];
 						table.border = 0;
-						for(var r=0;r<table.rows.length;r++)for(var c=0;c<table.rows[r].cells.length;c++){
+						for (var r = 0; r < table.rows.length; r++)for (var c = 0; c < table.rows[r].cells.length; c++) {
 							var cell = table.rows[r].cells[c];
 							var div = cell.firstChild;
-							if(div){
-								layoutFields[div.id]=div;
-								div.draggable=false;
+							if (div) {
+								layoutFields[div.id] = div;
+								div.draggable = false;
 								div.lastChild.className = "";
 								var ctrl = div.lastChild.firstChild;
 								if (ctrl.type == "search") ctrl.type = "text";
@@ -156,6 +162,7 @@ var NUT = {
 				lookupTab[tab.tabid] = tab;
 				if (tab.parenttabid) {
 					var parentTab = lookupTab[tab.parenttabid];
+					tab.parentTab=parentTab;
 					parentTab.children.push(tab);
 					if (tab.tablevel > 0) {
 						if (tab.tablevel > parentTab.tablevel) {
@@ -167,7 +174,7 @@ var NUT = {
 					}
 					tab.linktable = NUT.tables[parentTab.tableid];
 					//n-n relationship
-					if(!tab.relatetableid){
+					if (!tab.relatetableid) {
 						var rel = NUT.relates[tab.tableid + "_" + parentTab.tableid] || NUT.relates[parentTab.tableid + "_" + tab.tableid];
 						if (rel) {
 							var child = (rel[0].linktableid == tab.tableid ? rel[0] : rel[1]);
@@ -176,8 +183,8 @@ var NUT = {
 							tab.relatetableid = tab.relatetable.tableid;
 							tab.relatechildfield = child.columnname;
 							tab.relateparentfield = parent.columnname;
-							tab.linkchildfield=child.linkcolumn||tab.table.columnkey;
-							tab.linkparentfield=parent.linkcolumn||parentTab.table.columnkey;
+							tab.linkchildfield = child.linkcolumn || tab.table.columnkey;
+							tab.linkparentfield = parent.linkcolumn || parentTab.table.columnkey;
 						}
 					}
 				}
@@ -198,32 +205,15 @@ var NUT = {
 				if (field.linktableid) {
 					winconf.needCache[field.linktableid + (field.whereclause || "")] = field;
 					//1-n relationship
-					if (!tab.linktableid&&tab.parenttabid) {
+					if (!tab.linktableid && tab.parenttabid) {
 						var parentTab = lookupTab[tab.parenttabid];
 						if (parentTab.tableid == field.linktableid) {
 							tab.linktable = field.linktable;
-							tab.linktableid=field.linktableid;
+							tab.linktableid = field.linktableid;
 							tab.linkchildfield = field.columnname;
-							tab.linkparentfield = field.linkcolumn||parentTab.table.columnkey;
+							tab.linkparentfield = field.linkcolumn || parentTab.table.columnkey;
 						}
 					}
-				}
-				
-				if (tab.workflowid) {
-					var wf = NUT.workflows[tab.workflowid][0];
-					var isStatusCol = (field.columnname == "status");
-					var isRoleCol = (field.columnname == "roleid");
-					var isUserCol = (field.columnname == "userid");
-					var isStepCol = (field.columnname == "stepid");
-
-					if (isRoleCol || isUserCol || isStepCol) field.isreadonly = field.hideinform = field.hideinfind = field.hideingrid = 1;
-					if (isStatusCol) {
-						field.isreadonly = 1;
-						if (wf.status) field.defaultvalue = wf.status;
-					}
-					if (isRoleCol) field.defaultvalue = n$.user.roleid;
-					if (isUserCol) field.defaultvalue = n$.user.userid;
-					if (isStepCol) field.defaultvalue = wf.stepid;
 				}
 			}
 			for (var key in lookupField) if (lookupField.hasOwnProperty(key)) {
@@ -285,13 +275,13 @@ var NUT = {
 				}
 			}
 			winconf.lookupFieldName = lookupFieldName;
-			winconf.lookupField=lookupField;
-			winconf.lookupTab=lookupTab;
+			winconf.lookupField = lookupField;
+			winconf.lookupTab = lookupTab;
 		}
 		return winconf;
 	},
-	createWindowTitle: function (id, divTitle, notClose) {
-		if (n$.windowid) {
+	createWindowTitle: function (id, divTitle, onClose) {
+		if (n$.winid) {
 			for (var i = 0; i < divTitle.childNodes.length; i++) {
 				var node = divTitle.childNodes[i].firstChild;
 				node.style.color = "grey";
@@ -302,14 +292,15 @@ var NUT = {
 			}
 		} else {
 			divTitle.innerHTML = "";
-			n$.windowid = id;
+			n$.winid = id;
 		}
 		divWindow = divTitle.parentNode;
 		for (var i = 1; i < divWindow.childNodes.length; i++)
 			divWindow.childNodes[i].style.display = "none";
 
 		var div = divWindow.z(["div", { className: "nut-full" }]);
-		var span = divTitle.z(["span", {style:"display:inline-block"}]);
+		n$.windiv=div;
+		var span = divTitle.z(["span", { style: "display:inline-block" }]);
 		var a = span.z(["i", {
 			innerHTML: n$.phrases["_Loading"],
 			className: "nut-link",
@@ -324,19 +315,22 @@ var NUT = {
 				for (var i = 0; i < children.length; i++)
 					var node = children[i].firstChild.style.color = "grey";
 				this.style.color = "";
-				n$.windowid = this.tag;
+				n$.winid = this.tag;
+				n$.windiv=this.div;
 			}
 		}]);
-		var prop = { className: "nut-close", innerHTML: (notClose ? " ─   " : " ⛌   "), tag: id }
-		if (!notClose) prop.onclick = function () {
+		var prop = { className: "nut-close", innerHTML: " ⛌   ", tag: id }
+		prop.onclick = function () {
+			if (onClose) if (onClose(this.tag)) return;
 			var title = this.parentNode.parentNode;
 			this.previousElementSibling.div.remove();
 			this.parentNode.remove();
-			if (this.tag == n$.windowid) {
+			if (this.tag == n$.winid) {
 				if (title.childNodes.length) title.childNodes[0].firstChild.onclick();
 				else {
 					divTitle.innerHTML = NUT.appinfo;
-					n$.windowid = null;
+					n$.winid = null;
+					n$.windiv=null;
 				}
 			}
 		}
@@ -389,13 +383,13 @@ var NUT = {
 		return arr;
 	},
 	openDialog: function (opt) {
-		if(!opt.width)opt.width=(NUT.isMobile?360:(NUT.isGIS?720:1080));
-		if(!opt.height)opt.height=640;
+		if (!opt.width) opt.width = (NUT.isMobile ? 360 : (NUT.isGIS ? 540 : 1080));
+		if (!opt.height) opt.height = 640;
 		if (NUT.w2popup.status == "closed") {
 			opt.body = opt.div; NUT.w2popup.open(opt);
-			if(opt.floating)document.getElementsByClassName("w2ui-lock")[0].outerHTML="";
+			if (opt.floating) document.getElementsByClassName("w2ui-lock")[0].outerHTML = "";
 		} else {
-			if(opt.actions)	opt.body = opt.div;
+			if (opt.actions) opt.body = opt.div;
 			else opt.html = opt.div;
 			NUT.w2popup.isMsg = true; NUT.w2popup.message(opt);
 		}
@@ -403,15 +397,15 @@ var NUT = {
 	closeDialog: function () {
 		if (NUT.w2popup.isMsg) {
 			NUT.w2popup.message(); NUT.w2popup.isMsg = false;
-		}else NUT.w2popup.close();
+		} else NUT.w2popup.close();
 	},
 	alert: function (msg) {
 		NUT.w2alert(msg, '_Information');
 	},
 	confirm: function (msg, callback) {
-		NUT.w2confirm("<span style='color:red'>"+msg+"</span>", '_Confirm', callback);
+		NUT.w2confirm("<span style='color:red'>" + msg + "</span>", '_Confirm', callback);
 	},
-	prompt: function (opt, callback) {
+	prompt: function (opt,callback) {
 		NUT.w2prompt(opt).ok(callback);
 	},
 	notify: function (msg, color) {
@@ -425,8 +419,8 @@ var NUT = {
 		} else NUT.w2utils.unlock(NUT.divLoading);
 	},
 	runComponent(com, data) {//data:records,parent,config,gsmap
-		if(com.endsWith(".html")){
-			window.open(com+"?siteid="+n$.user.siteid+"&token="+n$.user.token);
+		if (com.endsWith(".html")) {
+			window.open(com + "?siteid=" + n$.user.siteid + "&token=" + n$.user.token);
 		} else {
 			if (window[com]) {
 				window[com].run(data);
@@ -442,48 +436,48 @@ var NUT = {
 				var select = rec.description;
 				var table = NUT.tables[rec.tableid];
 				var rpt = JSON.parse(rec.contentjson);
-				var groups=[];aggrs=[];
-				for(var i=1;i<rpt.slice.columns.length;i++){
-					var col=rpt.slice.columns[i];
+				var groups = []; aggrs = [];
+				for (var i = 1; i < rpt.slice.columns.length; i++) {
+					var col = rpt.slice.columns[i];
 					groups.push(col.uniqueName);
 				}
-				for(var i=0;i<rpt.slice.rows.length;i++){
-					var col=rpt.slice.rows[i];
+				for (var i = 0; i < rpt.slice.rows.length; i++) {
+					var col = rpt.slice.rows[i];
 					groups.push(col.uniqueName);
 				}
-				for(var i=0;i<rpt.slice.reportFilters.length;i++){
-					var col=rpt.slice.reportFilters[i];
+				for (var i = 0; i < rpt.slice.reportFilters.length; i++) {
+					var col = rpt.slice.reportFilters[i];
 					groups.push(col.uniqueName);
 				}
-				for(var i=0;i<rpt.slice.measures.length;i++){
-					var col=rpt.slice.measures[i];
-					if(col.active!==false)aggrs.push({
-						statisticType:col.aggregation,
-						onStatisticField:col.uniqueName,
-						outStatisticFieldName:col.uniqueName
+				for (var i = 0; i < rpt.slice.measures.length; i++) {
+					var col = rpt.slice.measures[i];
+					if (col.active !== false) aggrs.push({
+						statisticType: col.aggregation,
+						onStatisticField: col.uniqueName,
+						outStatisticFieldName: col.uniqueName
 					});
-					col.aggregation="sum";
+					col.aggregation = "sum";
 				}
 				var win = window.open("../datarock/analyst.html");
 				win.onload = function () {
 					var rock = this._rock;
-					this.divHeader.innerHTML=rec.reportname;
+					this.divHeader.innerHTML = rec.reportname;
 					var divChart = this.divChart;
 					if (table.tabletype == "arcgis") {
-						var lyr=NUT.AGMap.layers[table.maplayer];
-						lyr.queryFeatures({where:"1=1",outStatistics :aggrs,groupByFieldsForStatistics:groups}).then(function (res) {
+						var lyr = NUT.AGMap.layers[table.maplayer];
+						lyr.queryFeatures({ where: "1=1", outStatistics: aggrs, groupByFieldsForStatistics: groups }).then(function (res) {
 							if (res.error) NUT.notify("🛑 ERROR: " + res.error.message, "red");
 							else {
 								var data = [];
-								for (i = 0; i < res.features.length; i++){
-									var feat=res.features[i];
+								for (i = 0; i < res.features.length; i++) {
+									var feat = res.features[i];
 									data.push(feat.attributes);
 								}
 								rpt.dataSource.data = data;
 								rock.setReport(rpt);
 							}
 						});
-					}else NUT.ds.select({ url: table.urlview, limit:100000 }, function (res) {
+					} else NUT.ds.select({ url: table.urlview, limit: 100000 }, function (res) {
 						if (res.success) {
 							var data = [];
 							for (i = 0; i < res.result.length; i++)	data.push(res.result[i]);
@@ -492,13 +486,13 @@ var NUT = {
 						} else NUT.notify("🛑 ERROR: " + res.result, "red");
 					});
 				}
-				
+
 			}
 		});
 	},
 	genGuid(fileName) {
 		var guid = 10000 * Math.random() * Date.now();
-		if(fileName)guid+=fileName.substring(fileName.lastIndexOf("."), fileName.length);
+		if (fileName) guid += fileName.substring(fileName.lastIndexOf("."), fileName.length);
 		return guid;
 	},
 	uploadFile(tableid, recid, files, callback) {
@@ -520,7 +514,7 @@ var NUT = {
 				NUT.canva.height = needResize ? Math.round(this.height * NUT.CAN_WIDTH / this.width) : this.height;
 				ctx.drawImage(this, 0, 0, NUT.canva.width, NUT.canva.height);
 				NUT.canva.toBlob(function (blob) {
-					data.append(imgArr[index].guid||NUT.genGuid(imgArr[index].name), blob);
+					data.append(imgArr[index].guid || NUT.genGuid(imgArr[index].name), blob);
 					if (++index == imgArr.length) {
 						NUT.ds.post({ url: NUT.URL_UPLOAD + n$.user.siteid + "/" + tableid + "/" + recid, data: data }, function (res) {
 							if (callback) callback(res);
@@ -541,7 +535,7 @@ var NUT = {
 					count++;
 				}
 			}
-			if(count)NUT.ds.post({ url: NUT.URL_UPLOAD + n$.user.siteid + "/" + tableid + "/" + recid, data: data }, function (res) {
+			if (count) NUT.ds.post({ url: NUT.URL_UPLOAD + n$.user.siteid + "/" + tableid + "/" + recid, data: data }, function (res) {
 				if (callback) callback(res);
 			});
 		}
@@ -552,7 +546,7 @@ var NUT = {
 		if (isLoadMore) {
 			var tree = NUT.w2ui["link_" + p];
 			p = tree.tag;
-			p.query.offset = search? 0:tree.nodes.length;
+			p.query.offset = search ? 0 : tree.nodes.length;
 			if (search) {
 				var op = (search.includes("%") ? "like" : "=");
 				p.query.where = ["or", [p.conf.table.columncode || p.conf.table.columnkey, op, search], [p.conf.table.columndisplay, op, search]];
@@ -585,7 +579,7 @@ var NUT = {
 				for (var i = 0; i < count; i++) {
 					var rec = res.result[i];
 					var key = rec[p.conf.table.columnkey];
-					var text = "<input type='" + (p.ids ? "checkbox":"radio") + "' name='rad_" + p.conf.table.tableid + "' class='w2ui-input' onclick='return false' id='linkchk_" + key + "' " + (lookupIds[key] ? "checked" : "") + "/> " + rec[p.conf.table.columndisplay] + " - <i>" + rec[p.conf.table.columncode || p.conf.table.columnkey] + "</i>";
+					var text = "<input type='" + (p.ids ? "checkbox" : "radio") + "' name='rad_" + p.conf.table.tableid + "' class='w2ui-input' onclick='return false' id='linkchk_" + key + "' " + (lookupIds[key] ? "checked" : "") + "/> " + rec[p.conf.table.columndisplay] + " - <i>" + rec[p.conf.table.columncode || p.conf.table.columnkey] + "</i>";
 					var node = { id: key, text: text, record: rec };
 					var parentid = rec[p.conf.table.columntree];
 					if (parentid) {
@@ -599,17 +593,16 @@ var NUT = {
 					lookup[key] = node;
 				}
 				var total = count + (p.query.offset || 0);
-				var tree = (NUT.w2ui[id] || new NUT.w2sidebar({
+				var opt={
 					name: id,
-					tag: p,
-					nodes: nodes,
-					topHTML: "<table style='width:100%'><tr><td><input style='width:90%' placeholder='" + NUT.w2utils.lang("_Search") + "' class='w2ui-input' onchange='NUT.linkData(" + p.conf.table.tableid + ",this.value)'/><button class='nut-but-helper' title='_Search' onclick='NUT.linkData(" + p.conf.table.tableid +",this.previousSibling.value)'>&nbsp;🔎&nbsp;</button></td><td><button class='nut-but-helper' title='_Close' onclick='NUT.closeDialog()'>&nbsp;❌&nbsp;</button></td></tr></table>",
-					bottomHTML: "<i style='float:right'>Read: <span id='link_count'>" + total +  "</span><a class='nut-link' onclick='NUT.linkData(" + p.conf.table.tableid + ")'>"+(total<NUT.QUERY_LIMIT?"":". Load More...")+"</a></i>",
+					topHTML: "<table style='width:100%'><tr><td><input style='width:90%' placeholder='" + NUT.w2utils.lang("_Search") + "' class='w2ui-input' onchange='NUT.linkData(" + p.conf.table.tableid + ",this.value)'/><button class='nut-but-helper' title='_Search' onclick='NUT.linkData(" + p.conf.table.tableid + ",this.previousSibling.value)'>&nbsp;🔎&nbsp;</button></td><td><button class='nut-but-helper' title='_Close' onclick='NUT.closeDialog()'>&nbsp;❌&nbsp;</button></td></tr></table>",
+					bottomHTML: "<i style='float:right'>Read: <span id='link_count'>" + total + "</span><a class='nut-link' onclick='NUT.linkData(" + p.conf.table.tableid + ")'>" + (total < NUT.QUERY_LIMIT ? "" : ". Load More...") + "</a></i>",
 					onClick: function (evt) {
 						var node = evt.detail.node;
 						var rec = node.record;
 						var chk = document.getElementById("linkchk_" + node.id);
 						chk.checked = !chk.checked;
+						var p=this.tag;
 						if (p.ids) {
 							if (chk.checked) {//add
 								var recRelate = {};
@@ -631,7 +624,9 @@ var NUT = {
 							if (p.callback) p.callback(rec);
 						}
 					}
-				}));
+				}
+				var tree = (NUT.w2ui[id] || new NUT.w2sidebar(opt));
+				
 				if (isLoadMore) {
 					if (search) tree.nodes = [];
 					tree.add(null, nodes);
@@ -640,13 +635,14 @@ var NUT = {
 				} else {
 					NUT.openDialog({
 						title: "_Link",
-						modal:false,
-						width: (isSimple||NUT.isMobile ? 360:720),
+						modal: false,
+						width: (isSimple || NUT.isMobile ? 360 : 720),
 						height: 660,
 						div: '<div id="' + id + '" class="nut-full"></div>',
 						onOpen: function (evt) {
 							evt.onComplete = function () {
 								tree.nodes = nodes;
+								tree.tag=p;
 								tree.render(document.getElementById(id));
 							}
 						},
@@ -658,18 +654,89 @@ var NUT = {
 			} else NUT.notify("🛑 ERROR: " + res.result, "red");
 		});
 	},
-	outerCboHTML(items,id) {
+	outerCboHTML(items, id) {
 		var cbo = document.createElement("select");
-		if(id)cbo.id = id;
+		if (id) cbo.id = id;
 		cbo.className = "w2ui-input";
-		for (var i = 0; i < items.length;i++) {
+		for (var i = 0; i < items.length; i++) {
 			var opt = document.createElement("option");
-			var itm=items[i];
+			var itm = items[i];
 			opt.value = itm.id;
 			opt.innerHTML = itm.text;
 			cbo.add(opt);
 		}
 		return cbo.outerHTML;
+	},
+	importXls(urledit,columns,callback){
+		var header = columns.join('\t') + "\n";
+		NUT.openDialog({
+			title: "_Import",
+			div: '<textarea cols=' + (header.length + 8 * columns.length) + ' id="txt_Tsv" style="width:100%;height:100%">' + header + '</textarea>',
+			actions: {
+				"_Close": function () { NUT.closeDialog() },
+				"_Update": function () {
+					if (!txt_Tsv.value.includes("'")) {
+						var data = NUT.tsv2arr(txt_Tsv.value);
+						if (data.length) {
+							NUT.ds.update({ url: urledit, data: data, key: columnkey }, callback);
+						} else NUT.notify("⚠️ Empty data!", "yellow");
+					} else NUT.notify("⚠️ Data contains invalid ' character!", "yellow");
+				},
+				"_New": function () {
+					if (!txt_Tsv.value.includes("'")) {
+						var data = NUT.tsv2arr(txt_Tsv.value);
+						if (data.length) {
+							NUT.ds.insert({ url: urledit, data: data }, callback);
+						} else NUT.notify("⚠️ Empty data!", "yellow");
+					} else NUT.notify("⚠️ Data contains invalid ' character!", "yellow");
+				}
+			}
+		});
+	},
+	exportXls(urlview,columns,where,orderby){
+		NUT.openDialog({
+			title: "_Export",
+			width: 360,
+			height: 240,
+			div: "<table style='margin:auto'><tr><td>" + n$.phrases["_Offset"] + ": </td><td><input class='w2ui-input' type='number' id='numOffset' value='0'/></td></tr><tr><td>" + n$.phrases["_Limit"] + ":</b></td><td><input class='w2ui-input' id='numLimit' type='number' value='" + NUT.QUERY_LIMIT + "'/></td></tr></table>",
+			actions: {
+				"_Cancel": function () { NUT.closeDialog() },
+				"_Ok": function () {
+					var win = window.open();
+					var table = win.document.createElement("table");
+					table.id = "tblMain";
+					table.border = 1;
+					table.style = "border-collapse:collapse";
+					table.createCaption().innerHTML = urlview.substring(urlview.lastIndexOf("/")+1).toUpperCase();
+					var row = table.insertRow();
+					for (var i = 0; i < columns.length; i++) {
+						var col = win.document.createElement("th");
+						col.innerHTML = columns[i];
+						row.appendChild(col);
+					}
+					
+					var para = { url: urlview, offset: numOffset.value, limit: numLimit.value, where: where,orderby:orderby };
+					
+					NUT.ds.select(para, function (res) {
+						if (res.success) {
+							for (var i = 0; i < res.result.length; i++) {
+								var rec = res.result[i];
+								var row = table.insertRow();
+								for (var j = 0; j < columns.length; j++) {
+									var cell = row.insertCell();
+									cell.innerHTML = rec[columns[j]];
+								}
+							}
+							var a = win.document.createElement("span");
+							a.style.cssFloat = "right";
+							a.innerHTML = "<button onclick='navigator.clipboard.writeText(tblMain.outerHTML)'>📋 Copy to Excel</button>";
+							win.document.body.appendChild(a);
+							win.document.body.appendChild(table);
+						} else NUT.notify("🛑 ERROR: " + res.result, "red");
+					});
+				}
+			}
+		});
 	}
 }
 

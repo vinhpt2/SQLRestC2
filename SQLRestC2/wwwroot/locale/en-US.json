@@ -38,8 +38,8 @@
     "_Search": "Search %",
     "_Advance": "% Advance",
     "_Find": "🔎 Find",
-    "_New": "📄 Add New",
-    "_NewGeo": "📄 New Geometry",
+    "_New": "📝 Add New",
+    "_NewGeo": "📝 New Geometry",
     "_Update": "🖋️ Update",
     "_Save": "💾 Save",
     "_SaveA": "💾 Save & Archive",
@@ -73,6 +73,10 @@
     "_Note": "Note",
     "_Priority": "Priority",
 	"_Archive": "🕰️ Archive",
-	"_ZoomTo": "Zoom To"
+	"_ZoomTo": "Zoom To",
+	"_Attach":"📎 Attach",
+	"_Upload":"📤 Upload",
+	"_Editor":"Editor",
+	"_Finish":"Finish"
   }
 }

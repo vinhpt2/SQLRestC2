@@ -1,7 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Data;
+using System.Diagnostics.Eventing.Reader;
+using System.Reflection;
+using System.Security.Policy;
 using System.Text.Json;
 
 namespace SQLRestC2.Controllers
@@ -18,14 +28,16 @@ namespace SQLRestC2.Controllers
             Server server = null;
             try
             {
-                server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
-                var db = server.Databases[database];
-                var response = new ResponseJson { success = (db != null) };
+                var isSysDb = database.Equals(Global.database);
+                var user = Global.profiles[this.User.Identity.Name];
+                var cred = user.credentials[database + "." + schema];
+                var response = new ResponseJson
+                { success = cred!=null && (isSysDb || !(user.access.ContainsKey(table) && user.access[table].noselect)) };
                 if (response.success)
                 {
-                    var isSysDb = database.Equals(Global.database);
-                    var user = Global.profiles[this.User.Identity.Name];
-                    response.success = isSysDb || !(user.access.ContainsKey(table) && user.access[table].noselect);
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
+                    var db = server.Databases[database];
+                    response.success = (db != null);
                     if (response.success)
                     {
                         var from = " from " + database + "." + schema + "." + table;
@@ -59,9 +71,9 @@ namespace SQLRestC2.Controllers
                         }
                         else response.result = "SQL INJECTION FOUND! Not safe to executes.";
                     }
-                    else response.result = "User do not have assess right!";
+                    else response.result = "Database '" + database + "' not found!";
                 }
-                else response.result = "Database '" + database + "' not found!";
+                else response.result = "No Credential or no Assess right!";
                 return limit<0?response.result:response;
             }
             catch (Exception ex)
@@ -83,14 +95,16 @@ namespace SQLRestC2.Controllers
             Server server = null;
             try
             {
-                server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
-                var db = server.Databases[database];
-                var response = new ResponseJson { success = (db != null) };
+                var isSysDb = database.Equals(Global.database);
+                var user = Global.profiles[this.User.Identity.Name];
+                var cred = user.credentials[database + "." + schema];
+                var response = new ResponseJson
+                { success = cred != null && (isSysDb || !(user.access.ContainsKey(table) && user.access[table].noselect)) };
                 if (response.success)
                 {
-                    var isSysDb = database.Equals(Global.database);
-                    var user = Global.profiles[this.User.Identity.Name];
-                    response.success = isSysDb || !(user.access.ContainsKey(table) && user.access[table].noselect);
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
+                    var db = server.Databases[database];
+                    response.success = (db != null);
                     if (response.success)
                     {
                         var tb = db.Tables[table, schema];
@@ -120,9 +134,9 @@ namespace SQLRestC2.Controllers
                         }
                         else response.result = "Table/View '" + database + "." + schema + "." + table + "' not found!";
                     }
-                    else response.result = "User do not have assess right!";
+                    else response.result = "Database '" + database + "' not found!";
                 }
-                else response.result = "Database '" + database + "' not found!";
+                else response.result = "No Credential or no Assess right!";
                 return response;
 
             }
@@ -144,14 +158,16 @@ namespace SQLRestC2.Controllers
             Server server = null;
             try
             {
-                server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
-                var db = server.Databases[database];
-                var response = new ResponseJson { success = (db != null) };
+                var isSysDb = database.Equals(Global.database);
+                var user = Global.profiles[this.User.Identity.Name];
+                var cred = user.credentials[database + "." + schema];
+                var response = new ResponseJson
+                { success = cred != null && (isSysDb || !(user.access.ContainsKey(table) && user.access[table].noselect)) };
                 if (response.success)
                 {
-                    var isSysDb = database.Equals(Global.database);
-                    var user = Global.profiles[this.User.Identity.Name];
-                    response.success = !(user.isviewer||(!isSysDb&&user.access.ContainsKey(table)&&user.access[table].noinsert));
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
+                    var db = server.Databases[database];
+                    response.success = (db != null);
                     if (response.success)
                     {
                         var sqls = new String[data.Length];
@@ -194,9 +210,9 @@ namespace SQLRestC2.Controllers
                         }
                         else response.result = "SQL INJECTION FOUND! Not safe to executes.";
                     }
-                    else response.result = "User do not have assess right!";
+                    else response.result = "Database '" + database + "' not found!";
                 }
-                else response.result = "Database '" + database + "' not found!";
+                else response.result = "No Credential or no Assess right!";
                 return response;
 
             }
@@ -218,14 +234,16 @@ namespace SQLRestC2.Controllers
             Server server = null;
             try
             {
-                server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
-                var db = server.Databases[database];
-                var response = new ResponseJson { success = (db != null) };
+                var isSysDb = database.Equals(Global.database);
+                var user = Global.profiles[this.User.Identity.Name];
+                var cred = user.credentials[database + "." + schema];
+                var response = new ResponseJson
+                { success = cred != null && (isSysDb || !(user.access.ContainsKey(table) && user.access[table].noselect)) };
                 if (response.success)
                 {
-                    var isSysDb = database.Equals(Global.database);
-                    var user = Global.profiles[this.User.Identity.Name];
-                    response.success = !(user.isviewer || (!isSysDb && user.access.ContainsKey(table) && user.access[table].noupdate));
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
+                    var db = server.Databases[database];
+                    response.success = (db != null);
                     if (response.success)
                     {
                         var sqls = new String[data.Length];
@@ -315,9 +333,9 @@ namespace SQLRestC2.Controllers
                         }
                         if (response.success) db.ExecuteNonQuery(String.Join(';', sqls));
                     }
-                    else response.result = "User do not have assess right!";
+                    else response.result = "Database '" + database + "' not found!";
                 }
-                else response.result = "Database '" + database + "' not found!";
+                else response.result = "No Credential or no Assess right!";
                 return response;
             }
             catch (Exception ex)
@@ -338,14 +356,16 @@ namespace SQLRestC2.Controllers
             Server server = null;
             try
             {
-                server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
-                var db = server.Databases[database];
-                var response = new ResponseJson { success = (db != null) };
+                var isSysDb = database.Equals(Global.database);
+                var user = Global.profiles[this.User.Identity.Name];
+                var cred = user.credentials[database + "." + schema];
+                var response = new ResponseJson
+                { success = cred != null && (isSysDb || !(user.access.ContainsKey(table) && user.access[table].noselect)) };
                 if (response.success)
                 {
-                    var isSysDb = database.Equals(Global.database);
-                    var user = Global.profiles[this.User.Identity.Name];
-                    response.success = !(user.isviewer || (!isSysDb && user.access.ContainsKey(table) && user.access[table].nodelete));
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
+                    var db = server.Databases[database];
+                    response.success = (db != null);
                     if (response.success)
                     {
                         var sql = "delete " + database + "." + schema + "." + table + " where " + where;
@@ -357,9 +377,9 @@ namespace SQLRestC2.Controllers
                         }
                         else response.result = "SQL INJECTION FOUND! Not safe to executes.";
                     }
-                    else response.result = "User do not have assess right!";
+                    else response.result = "Database '" + database + "' not found!";
                 }
-                else response.result = "Database '" + database + "' not found!";
+                else response.result = "No Credential or no Assess right!";
                 return response;
             }
             catch (Exception ex)
@@ -380,14 +400,16 @@ namespace SQLRestC2.Controllers
             Server server = null;
             try
             {
-                server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
-                var db = server.Databases[database];
-                var response = new ResponseJson { success = (db != null) };
+                var isSysDb = database.Equals(Global.database);
+                var user = Global.profiles[this.User.Identity.Name];
+                var cred = user.credentials[database + "." + schema];
+                var response = new ResponseJson
+                { success = cred != null && (isSysDb || !(user.access.ContainsKey(table) && user.access[table].noselect)) };
                 if (response.success)
                 {
-                    var isSysDb = database.Equals(Global.database);
-                    var user = Global.profiles[this.User.Identity.Name];
-                    response.success = !(user.isviewer || (!isSysDb && user.access.ContainsKey(table) && user.access[table].nodelete));
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
+                    var db = server.Databases[database];
+                    response.success = (db != null);
                     if (response.success)
                     {
                         var tb = db.Tables[table, schema];
@@ -412,9 +434,9 @@ namespace SQLRestC2.Controllers
                         }
                         else response.result = "Table '" + database + "." + schema + "." + table + "' not found!";
                     }
-                    else response.result = "User do not have assess right!";
+                    else response.result = "Database '" + database + "' not found!";
                 }
-                else response.result = "Database '" + database + "' not found!";
+                else response.result = "No Credential or no Assess right!";
                 return response;
 
             }

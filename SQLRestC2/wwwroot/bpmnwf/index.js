@@ -15,6 +15,7 @@ window.onload = function () {
 	}
 	if (n$.theme && n$.theme != "w2ui.min") cssMain.href = "../lib/" + n$.theme + ".css";
 	SqlREST.token = "Bearer " + n$.token;
+	
 	w2utils.locale(n$.locale).then(function (evt) {
 		n$.lang = n$.locale.substring(0, 2);
 		n$.phrases = evt.data.phrases;
@@ -27,16 +28,15 @@ window.onload = function () {
 			panels: [
 				{ type: 'top', size: 38, html: '<i class="nut-link"><img id="imgLogo " width="20" height="20" src="favicon.ico"/> Workflow 1.0</i>' },
 				{ type: 'left', size: 300, resizable: true, html: '<div id="divLeft" class="nut-full"></div>' },
-				{ type: 'main', html: '<div id="divMain" class="nut-full"><div id="divTitle" style="padding:6px;font-size:12pt">' + NUT.appinfo + '</div></div>' },
+				{ type: 'main', html: '<div id="divMain" class="nut-full"><div id="divTitle" class="nut-win-title">' + NUT.appinfo + '</div></div>' },
 				{ type: 'right', size: 200, html: '<div id="divSaveWorkflow" style="display:none"><button id="butSaveWorkflow" class="w2ui-btn" onclick="saveWorkflow()">💾 Save Workflow</button><hr/></div><div id="divRight" class="nut-full"></div>' }
 			],
 		})).render(divApp);
 		NUT.ds.select({ url: NUT.URL + "n_app", order: "orderno", where: ["apptype", "<>", "engine"] },function(res){
 			if(res.success&&res.result.length){
-				var appItems=[],lookup={},nodes=[];
+				var lookup={},nodes=[];
 				for(var i=0;i<res.result.length;i++){
 					var item=res.result[i];
-					appItems.push({id:item.appid,text:item.appname});
 					var node = { id: "app_" + item.appid, text: item.appname + "<span></span><a class='nut-badge' onclick='event.stopPropagation();openWorkflow(" + item.appid + ")' title='New Workflow'>➕</a>", expanded: true, group: true, tag: item.appid, nodes: [] };
 					nodes.push(node);
 					lookup[item.appid]=node;
@@ -169,14 +169,16 @@ window.saveWorkflow=function(){
 									var inserts = [], updates = [], deletes = [];
 									var lookupStep = {};
 									for (var i = 0; i < res.result.length; i++) {
-										var wf = res.result[i];
-										lookupStep[wf.elementid] = true;
-										if (!lookup[wf.elementid]) deletes.push(wf.stepid);
+										var rec = res.result[i];
+										lookupStep[rec.elementid] = rec.stepid;
+										if (!lookup[rec.elementid]) deletes.push(rec.stepid);
 									}
 									for (var i = 0; i < steps.length; i++) {
 										var step = steps[i];
-										if (lookupStep[step.elementid]) updates.push(step);
-										else {
+										if (lookupStep[step.elementid]){
+											step.stepid=lookupStep[step.elementid];
+											updates.push(step);
+										}else {
 											step.workflowid=workflowid;
 											inserts.push(step);
 										}
@@ -187,7 +189,7 @@ window.saveWorkflow=function(){
 									NUT.ds.update({ url: NUT.URL + "n_workflow", data: _bpmn.workflow, key: "workflowid" }, function (res) {
 										if (res.success) {
 											if (deletes.length) NUT.ds.delete({ url: NUT.URL + "n_wfstep", where: ["stepid", "in", deletes] });
-											if (updates.length) NUT.ds.update({ url: NUT.URL + "n_wfstep", data: steps, key:"elementid" });
+											if (updates.length) NUT.ds.update({ url: NUT.URL + "n_wfstep", data: steps, key:"stepid" });
 											if (inserts.length) NUT.ds.insert({ url: NUT.URL + "n_wfstep", data: steps });
 											NUT.notify("Workflow updated.", "lime");
 										} else NUT.notify("🛑 ERROR: " + res.result, "red");

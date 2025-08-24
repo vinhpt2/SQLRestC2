@@ -149,10 +149,9 @@ export class SqlREST {
 			}
 		};
 		xhr.onerror = this.onerror;
-		xhr.open(p.method || "POST", p.url, true);
-		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xhr.open("POST", p.url, true);
 		if (this.token) xhr.setRequestHeader("Authorization", this.token);
-		xhr.send(JSON.stringify(p.data));
+		xhr.send(p.data);
 	}
 	static getText(p, onok) {
 		var xhr = new XMLHttpRequest();

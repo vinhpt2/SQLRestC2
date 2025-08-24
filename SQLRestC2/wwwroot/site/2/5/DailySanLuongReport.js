@@ -46,8 +46,8 @@ var DailySanLuongReport={
 									var oldMaNhanVien=null;
 									var oldMaDiemBan=null;
 									var row=null;
-									var sp=["bold","light","boldl","lightl","trucbachl","hanoiprel","hanoipre"];
-									var spct=["bold","light","trucbach","hanoiprel","hanoipre"];
+									var sp=["keg","bold","light","boldl","lightl","trucbachl","hanoiprel","hanoipre"];
+									var spct=["keg","bold","light","trucbach","hanoiprel","hanoipre"];
 									var td=[true,true,true,true,false,false,false];
 									var dv=[20,20,24,24,24,24,20];
 									var total=[],totalsum=[0,0,0,0,0,0,0],totalct=[0,0,0,0,0,0,0,0,0,0];

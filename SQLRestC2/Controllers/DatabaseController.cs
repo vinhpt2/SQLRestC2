@@ -1,7 +1,12 @@
+using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json.Nodes;
 
 namespace SQLRestC2.Controllers
 {
@@ -18,13 +23,14 @@ namespace SQLRestC2.Controllers
             try
             {
                 var user = Global.profiles[this.User.Identity.Name];
-                var response = new ResponseJson { success = user.issystem };
+                var cred = user.credentials[Global.database+"._"];
+                var response = new ResponseJson { success = user.issystem && cred != null };
                 if (response.success)
                 {
-                    server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
                     response.result = Global.getDatabaseInfo(server, isDetail, isSystem);
                 }
-                else response.result = "User is not System User!";
+                else response.result = "No Credential or not System User";
                 return response;
 
             } catch (Exception ex)
@@ -46,10 +52,11 @@ namespace SQLRestC2.Controllers
             try
             {
                 var user = Global.profiles[this.User.Identity.Name];
-                var response = new ResponseJson { success = user.issystem };
+                var cred = user.credentials[Global.database + "._"];
+                var response = new ResponseJson { success = user.issystem && cred != null };
                 if (response.success)
                 {
-                    server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
                     var obj = server.Databases[name];
                     response.success = (obj != null);
                     if (response.success)
@@ -66,7 +73,7 @@ namespace SQLRestC2.Controllers
                     }
                     else response.result = "Database '" + name + "' not found!";
                 }
-                else response.result = "User is not System User!";
+                else response.result = "No Credential or not System User";
                 return response;
             }
             catch (Exception ex)
@@ -88,10 +95,11 @@ namespace SQLRestC2.Controllers
             try
             {
                 var user = Global.profiles[this.User.Identity.Name];
-                var response = new ResponseJson { success = user.issystem };
+                var cred = user.credentials[Global.database + "._"];
+                var response = new ResponseJson { success = user.issystem && cred != null };
                 if (response.success)
                 {
-                    server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
                     response.success = !server.Databases.Contains(name);
                     if (response.success)
                     {
@@ -101,7 +109,7 @@ namespace SQLRestC2.Controllers
                     }
                     else response.result = "Database '" + name + "' already exists!";
                 }
-                else response.result = "User is not System User!";
+                else response.result = "No Credential or not System User";
                 return response;
             }
             catch (Exception ex)
@@ -122,10 +130,11 @@ namespace SQLRestC2.Controllers
             try
             {
                 var user = Global.profiles[this.User.Identity.Name];
-                var response = new ResponseJson { success = user.issystem };
+                var cred = user.credentials[Global.database + "._"];
+                var response = new ResponseJson { success = user.issystem && cred != null };
                 if (response.success)
                 {
-                    server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
                     var obj = server.Databases[name];
                     response.success = (obj != null);
                     if (response.success)
@@ -134,7 +143,7 @@ namespace SQLRestC2.Controllers
                     }
                     else response.result = "Database '" + name + "' not exists!";
                 }
-                else response.result = "User is not System User!";
+                else response.result = "No Credential or not System User";
                 return response;
             }
             catch (Exception ex)
@@ -155,10 +164,11 @@ namespace SQLRestC2.Controllers
             try
             {
                 var user = Global.profiles[this.User.Identity.Name];
-                var response = new ResponseJson { success = user.issystem };
+                var cred = user.credentials[Global.database + "._"];
+                var response = new ResponseJson { success = user.issystem && cred != null };
                 if (response.success)
                 {
-                    server = new Server(new ServerConnection(Global.server, Global.username, Global.password));
+                    server = new Server(new ServerConnection(Global.server, cred.accessuser, cred.accesspass));
                     var obj = server.Databases[name];
                     response.success = (obj != null);
                     if (response.success)
@@ -167,7 +177,7 @@ namespace SQLRestC2.Controllers
                     }
                     else response.result = "Database '" + name + "' not exists!";
                 }
-                else response.result = "User is not System User!";
+                else response.result = "No Credential or not System User";
                 return response;
             }
             catch (Exception ex)

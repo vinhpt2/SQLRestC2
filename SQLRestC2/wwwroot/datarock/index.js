@@ -27,16 +27,15 @@ window.onload = function () {
 			panels: [
 				{ type: 'top', size: 38, html: '<i class="nut-link"><img id="imgLogo " width="20" height="20" src="favicon.ico"/> DataRock 1.0</i>' },
 				{ type: 'left', size: 300, resizable: true, html: '<div id="divLeft" class="nut-full"></div>' },
-				{ type: 'main', html: '<div id="divMain" class="nut-full"><div id="divTitle" style="padding:6px;font-size:12pt">' + NUT.appinfo + '</div></div>' },
+				{ type: 'main', html: '<div id="divMain" class="nut-full"><div id="divTitle" class="nut-win-title">' + NUT.appinfo + '</div></div>' },
 				{ type: 'preview', size: "40%", resizable: true, html: '<div id="divChart" class="nut-full"></div>' }
 			],
 		})).render(divApp);
 		NUT.ds.select({ url: NUT.URL + "n_app", order: "orderno", where: ["apptype", "<>", "engine"] }, function (res) {
 			if (res.success && res.result.length) {
-				var appItems = [], lookup = {}, nodes = [];
+				var lookup = {}, nodes = [];
 				for (var i = 0; i < res.result.length; i++) {
 					var item = res.result[i];
-					appItems.push({ id: item.appid, text: item.appname });
 					var node = { id: "app_" + item.appid, text: item.appname + "<span></span><a class='nut-badge' onclick='event.stopPropagation();openReport(" + item.appid + ")' title='New Analyst'>➕</a>", expanded: true, group: true, tag: item.appid, nodes: [] };
 					nodes.push(node);
 					lookup[item.appid] = node;
@@ -167,7 +166,7 @@ window.connectTable = function () {
 									var service = lookupService[tbl.serviceid];
 									if (tbl.tabletype == "arcgis") {
 										var url = service.url.split("home/item.html?id=")[0];
-										NUT.ds.post({ url: NUT.URL_PROXY+url + "sharing/rest/oauth2/token?f=json&grant_type=client_credentials&client_id=" + service.accessuser + "&client_secret=" + service.accesspass + "&referer=" + location.origin }, function (res4) {
+										NUT.ds.get({ url: NUT.URL_PROXY+url + "sharing/rest/oauth2/token?f=json&grant_type=client_credentials&client_id=" + service.accessuser + "&client_secret=" + service.accesspass + "&referer=" + location.origin, method:"POST" }, function (res4) {
 											if (res4.error) NUT.notify("🛑 ERROR: " + res4.error.message, "red");
 											else NUT.ds.get({ url: NUT.URL_PROXY + tbl.url + "/query?f=json&where=1=1&outFields=*&token=" + res4.access_token }, function (res3) {
 												if (res3.error) NUT.notify("🛑 ERROR: " + res3.error.message, "red");

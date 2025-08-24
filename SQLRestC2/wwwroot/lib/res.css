@@ -2,11 +2,13 @@
     --spectrum-textfield-text-color-disabled: #0F214Da6;
     --spectrum-textfield-background-color-disabled: #ffffff;
     --spectrum-gray-100-rgb: 50, 50, 50;
-    --spectrum-gray-100: rgba(var(--spectrum-gray-100-rgb));--spectrum-transparent-black-300-rgb: 0, 0, 0;
+    --spectrum-gray-100: rgba(var(--spectrum-gray-100-rgb));
+    --spectrum-transparent-black-300-rgb: 0, 0, 0;
     --spectrum-transparent-black-300-opacity: 1;
     --spectrum-transparent-black-300: rgba(var(--spectrum-transparent-black-300-rgb), var(--spectrum-transparent-black-300-opacity));
     --spectrum-gray-50-rgb: 29, 29, 29;
     --spectrum-gray-50: rgba(var(--spectrum-gray-50-rgb));
+
 
     /* Global */
     /* Login */
@@ -139,7 +141,7 @@
     --spectrum-treeview-item-background-color-hover: #EDEFF5;
     --spectrum-sidenav-content-color-selected: #FFFFFF;
     --spectrum-treeview-item-background-color-quiet-selected: #18367f;
-    --spectrum-treeview-item-background-color-selected: #EDEFF5;
+    --spectrum-treeview-item-background-color-selected: #0A82FFBF;
 
     /* Switch */
     --spectrum-switch-handle-background-color: #ffffff;
@@ -307,6 +309,10 @@ input:-webkit-autofill:active {
 }
 
 /*  */
+.esri-ui-corner-container {
+    inset: 10px 15px 15px 15px !important;
+}
+
 .w2ui-breadcrumb {
     background-color: #d8dee9;
     padding: 10px 30px;
@@ -699,6 +705,30 @@ input[type=checkbox]:not(.w2ui-toggle).top-4:checked::before {
     background-color: var(--spectrum-login-background-color) !important;
 }
 
+#divMain .w2ui-form,
+#divMain .w2ui-form .w2ui-page,
+#divRight .w2ui-form,
+#divRight .w2ui-form .w2ui-page {
+    background-color: var(--spectrum-list-app-background-color) !important;
+}
+
+#divMap {
+    padding: 0px !important;
+}
+
+#divMain>.nut-full {
+    padding: 0px 16px;
+}
+
+#divMain .w2ui-form {
+    border: 0px;
+}
+
+/* #divMain>.nut-full>div:nth-child(2)>.w2ui-tabs { */
+#divMain>.nut-full>div:not(:first-child)>.w2ui-tabs {
+    margin-top: 10px;
+}
+
 .login-wrapper .w2ui-form .w2ui-form-header {
     border: none;
     background-color: var(--spectrum-login-background-color) !important;
@@ -762,7 +792,10 @@ input[type=checkbox]:not(.w2ui-toggle).top-4:checked::before {
     line-height: inherit;
 }
 
-#divLogin[name="frmLogin"] .w2ui-field label {
+#divLogin[name="frmLogin"] .w2ui-field label
+
+/* #divLogin .w2ui-field label */
+    {
     font-size: 15px;
     color: var(--spectrum-text-field-login-color);
 
@@ -775,6 +808,11 @@ input[type=checkbox]:not(.w2ui-toggle).top-4:checked::before {
     padding: 4px;
     width: 145px;
     margin-top: 22px;
+}
+
+#divRight .w2ui-field label,
+#divMain .w2ui-field label {
+    color: var(--spectrum-text-login-color);
 }
 
 #divLogin[name="frmLogin"] .w2ui-field:nth-child(2) label {
@@ -1018,7 +1056,7 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
 }
 
 .login-wrapper #divLogin[name="frmRoleOrg"] .w2ui-field label {
-    font-size: 26px;
+    font-size: 17px;
     color: #0F214D;
 
     display: block;
@@ -1072,7 +1110,8 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
     border-radius: 0px;
 }
 
-#divLogin[name="layMain"] #divApp center {
+#divLogin[name="layMain"] #divApp center,
+#divLogin #divApp center {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -1080,26 +1119,51 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
     grid-gap: 24px;
 }
 
-#divLogin[name="layMain"] #divApp center div {
-    width: 148px;
-    height: 188px;
+#divLogin[name="layMain"] #divApp center>div,
+#divLogin #divApp center>div {
+    /* width: 148px;
+    height: 188px; */
+    width: 116px;
+    height: 147px;
     border-radius: 16px;
     padding: 8px;
     background-color: var(--spectrum-list-app-background-color) !important;
     color: var(--spectrum-list-app-text-color);
     box-shadow: 0 0 0 0.1rem var(--spectrum-list-app-shadow-color);
 
-    font-size: 26px;
+    /* font-size: 18px; */
+    font-size: 15px;
     font-weight: 600;
     text-transform: uppercase;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-around; */
+    text-align: center;
+
 }
 
-#divLogin[name="layMain"] #divApp center div img {
-    width: 132px;
-    height: 132px;
+#divLogin[name="layMain"] #divApp center div img,
+#divLogin #divApp center div img {
+    /* width: 132px;
+    height: 132px; */
+    width: 100px;
+    height: 100px;
     border-radius: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 3px;
     /* border: 1px solid var(--spectrum-popover-border-color); */
+}
+
+#divLogin[name="layMain"] #divApp center div>div,
+#divLogin #divApp center div>div {
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0px 2px;
 }
 
 #divLogin[name="layMain"] #layout_layMain_panel_top {
@@ -1184,11 +1248,15 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    grid-gap: 24px;
+    grid-gap: 20px;
     white-space: normal;
 }
 
-#w2overlay-mnuApps center div {
+#w2overlay-mnuApps center:not(:first-child) {
+    padding: 0px 5px;
+}
+
+#w2overlay-mnuApps center>div {
     border-radius: 16px;
     padding: 8px;
     background-color: var(--spectrum-list-app-background-color) !important;
@@ -1201,12 +1269,50 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
     font-family: "SF Pro";
 }
 
+#w2overlay-mnuApps center:not(:first-child)>div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 75px;
+    font-size: 12px;
+    height: 95px;
+}
+
+#w2overlay-mnuApps center:first-child>div {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #w2overlay-mnuApps center div img {
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     border-radius: 8px;
     /* border: 1px solid var(--spectrum-popover-border-color); */
     margin-bottom: 4px;
+}
+
+#w2overlay-mnuApps center:not(:first-child) div img {
+    /* width: 60px;
+    height: 60px; */
+}
+
+#w2overlay-mnuApps center:first-child div img {
+    max-width: 70%;
+    max-height: 70%;
+}
+
+#w2overlay-mnuApps center:not(:first-child) div div {
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0px 2px;
+    font-size: 9px;
 }
 
 /* Mini Apps */
@@ -1221,12 +1327,17 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
 
 #w2overlay-mnuApps[name="mnuApps"] .w2ui-overlay-body {
     display: block;
-    padding: 16px;
+    /* padding: 16px; */
+    padding: 7px 0px;
     border-radius: 8px;
 }
 
 #w2overlay-mnuApps[name="mnuApps"] .w2ui-overlay-body>div {
     transform: none !important;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 #w2overlay-mnuApps[name="mnuApps"] .w2ui-overlay-body div hr {
@@ -1258,7 +1369,7 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
 
     box-shadow: 0px 0px 0px 0.5px #0000000D;
     box-shadow: 0px 0.5px 2.5px 0px #0000004D;
-    border-radius: 0;
+    /* border-radius: 0; */
     max-width: 185px;
     margin: 9px 44px 9px 8px;
 }
@@ -1290,11 +1401,14 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
 }
 
 #divLogin[name="layMain"] #divLeft .w2ui-node-sub .w2ui-node.w2ui-selected {
-    background: linear-gradient(to right, #0A82FFBF, #0A82FF);
+    /* background: linear-gradient(to right, #0A82FFBF, #0A82FFBF); */
+    background-color: var(--spectrum-treeview-item-background-color-selected) !important;
     color: var(--spectrum-leftbar-text-selected-color);
 }
 
-#divLogin[name="layMain"] #divLeft .w2ui-node-sub .w2ui-node.w2ui-selected .w2ui-node-text {
+#divLogin[name="layMain"] #divLeft .w2ui-node-sub .w2ui-node.w2ui-selected .w2ui-node-text,
+#divLogin #divLeft .w2ui-node-sub .w2ui-node.w2ui-selected .w2ui-node-text,
+#divLogin #divLeft .w2ui-sidebar-body .w2ui-selected .w2ui-node-text {
     color: var(--spectrum-leftbar-text-selected-color) !important;
 }
 
@@ -1319,6 +1433,17 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
 #tbrMap {
     background-color: var(--spectrum-actionbar-popover-background-color);
     border-radius: 16px;
+    /* margin-top: 16px;
+    margin-right: 8px; */
+    /* right: 50% !important; */
+    /* right: 270px !important; */
+    /* -ms-transform: translate(-50%, -50%) !important;
+    transform: translate(50%) !important; */
+    padding: 0px;
+}
+
+#tbrMap .w2ui-toolbar .w2ui-scroll-wrapper {
+    padding: 0px;
 }
 
 #tbrMap .w2ui-scroll-wrapper .w2ui-tb-button.checked,
@@ -1329,23 +1454,30 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
 
 #divRight #divTitle,
 #divTitle {
-    padding: 10px 10px;
+    padding: 3px;
+    /* padding: 10px 16px 10px 30px; */
     display: flex;
     overflow-x: auto;
     white-space: nowrap;
+    user-select: none;
     /* scrollbar-width: thin; */
+}
+
+#divMain #divTitle {
+    padding: 3px 16px 5px 16px;
 }
 
 #divRight #divTitle span,
 #divTitle span {
     padding: 5px;
-    color: #112659;
+    color: #007AFF;
+    font-size: 12px;
 }
 
 #divRight #divTitle span i,
 #divTitle span i {
     font-style: normal;
-    color: #112659;
+    color: #007AFF;
 }
 
 #divRight #divTitle span .nut-link[faded="false"],
@@ -1373,7 +1505,15 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
 #divRight .nut-full textarea,
 #divRight .nut-full input:not([type=button]):not([type=submit]):not([type=checkbox]).w2ui-input,
 #divRight .nut-full textarea.w2ui-input,
-#divRight .nut-full input[type="text"] {
+#divRight .nut-full input[type="text"],
+
+#divMain .nut-full .w2ui-reset input:not([type=button]):not([type=submit]):not([type=checkbox]):not([type=radio]),
+#divMain .nut-full .w2ui-reset select,
+#divMain .nut-full .w2ui-reset textarea,
+#divMain .nut-full textarea,
+#divMain .nut-full input:not([type=button]):not([type=submit]):not([type=checkbox]).w2ui-input,
+#divMain .nut-full textarea.w2ui-input,
+#divMain .nut-full input[type="text"] {
     caret-color: #007AFF
 }
 
@@ -1529,73 +1669,6 @@ input[type=checkbox]:not(.w2ui-toggle):checked {
     color: #0F214D;
 }
 
-#divMonTabs+.nut-full>table,
-#divMonTabs~.nut-full:nth-of-type(2)>table {
-    /* #divMonitor table { */
-    border-color: #E8EBF2;
-    border-collapse: collapse;
-}
-
-#divMonitor table tbody #tongcuset,
-#divMonitor table tbody #top20,
-#divMonitor table tbody #setnguyhiem,
-#divMonitor table tbody #xuhuongset,
-#divMonitor table tbody #thongkeset {
-    font-size: 13px;
-    font-weight: 600;
-    padding: 10px;
-    line-height: 16px;
-}
-
-#divMonitor caption {
-    /* display: flex;
-    align-items: center; */
-    padding: 16px;
-}
-
-#divMonitor caption select {
-    max-width: 168px;
-    width: 100%;
-}
-
-#divMonitor caption>span {
-    display: flex;
-    align-items: center;
-    padding: 2px;
-}
-
-#divMonitor caption>span input {
-    margin-right: 6px;
-}
-
-#divDuLieu #divFindSet {
-    max-height: 150px;
-    height: 100% !important;
-}
-
-#divDuLieu #divFindSet .w2ui-page {
-    position: unset;
-}
-
-#divDuLieu #divFindSet .w2ui-page .w2ui-field label {
-    padding: 0px;
-}
-
-#divDuLieu #divFindSet .w2ui-buttons {
-    padding: 16px;
-}
-
-#divDuLieu #divFindSet .w2ui-buttons button {
-    background-color: #007AFF;
-    max-width: 320px;
-    width: auto;
-}
-
-/* #divRight .nut-full .w2ui-tabs {
-
-} */
-
-
 /*************************************************
   * --- Reset (used for all w2ui widgets)
   * --- The reset is needed to coexist with other CSS
@@ -1654,7 +1727,7 @@ textarea {
     /* border: 1px solid var(--spectrum-table-border-color); */
     border: 0;
     /* color: var(--spectrum-textfield-text-color-focus); */
-    color: #3C3C4399;
+    color: #244085;
     border-radius: 10px;
     /* caret-color: #007AFF */
 }
@@ -1663,7 +1736,7 @@ textarea {
 .w2ui-reset select:focus,
 select:focus .w2ui-reset textarea:focus,
 textarea:focus {
-    color: #3C3C4399;
+    color: #244085;
     /* color: var(--spectrum-textfield-text-color-focus); */
     /* box-shadow: 0 0 0 0.1rem var(--spectrum-background-control-color); */
     /* border-color: var(--spectrum-table-selected-cell-background-color); */
@@ -1761,7 +1834,7 @@ textarea.w2ui-input:focus {
     border-color: var(--spectrum-checkbox-control-color-default);
     /* border-color: var(--spectrum-table-selected-cell-background-color); */
     /* box-shadow: 0 0 0 0.1rem var(--spectrum-checkbox-control-selected-color-default); */
-    /* background-color: white; */
+    background-color: var(--spectrum-background-control-color);
 }
 
 input:not([type=button]):not([type=submit]).w2ui-input:disabled,
@@ -2315,6 +2388,7 @@ button.w2ui-btn.clicked {
     background-color: var(--spectrum-button-background-color-active);
     color: var(--system-spectrum-button-content-color-active);
     border-color: var(--spectrum-button-border-color-active);
+    text-shadow: none;
 }
 
 input[type=button].w2ui-btn:focus:before,
@@ -2530,9 +2604,9 @@ button.w2ui-btn:disabled {
     /* box-shadow: 0px 1px 1px 1px #ffffff; */
 
     color: var(--spectrum-overlay-font-color);
-    background: var(--spectrum-gray-50);
+    background: var(--spectrum-tooltip-background-color);
     border: 1px solid var(--spectrum-divider-background-color);
-    box-shadow: 0px 1px 1px 1px var(--spectrum-gray-50);
+    /* box-shadow: 0px 1px 1px 1px var(--spectrum-tooltip-background-color); */
 }
 
 .w2ui-overlay .w2ui-overlay-body.w2ui-white {
@@ -4118,9 +4192,9 @@ input[type=radio]:checked {
     margin-left: 108px;
 }
 
-.w2ui-field.w2ui-span6>label {
-    width: 120px;
-}
+/* .w2ui-field.w2ui-span6>label {
+    width: 145px;
+} */
 
 .w2ui-field.w2ui-span6>div {
     margin-left: 128px;
@@ -4621,7 +4695,7 @@ option:hover {
     /* color: inherit; */
     background-color: var(--spectrum-background-layer-1-color) !important;
     color: #0F214D !important;
-    box-shadow: 0px 0px 4px 0px var(--spectrum-popover-box-shadow);
+    /* box-shadow: 0px 0px 4px 0px var(--spectrum-popover-box-shadow); */
     border-color: var(--spectrum-table-border-color) !important;
 }
 
@@ -6714,9 +6788,12 @@ option:hover {
     font-weight: 510;
     font-size: 14px;
 
-    padding: 6px 12px;
+    padding: 6px 20px;
     margin: 4px;
     line-height: 12px;
+    /* min-width: 100px; */
+    display: flex;
+    justify-content: center;
 }
 
 .w2ui-tabs .w2ui-scroll-wrapper .w2ui-tab:first-child {

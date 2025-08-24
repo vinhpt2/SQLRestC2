@@ -38,8 +38,8 @@
     "_Search": "Tìm kiếm %",
     "_Advance": "% Nâng cao",
     "_Find": "🔎 Tìm kiếm",
-    "_New": "📄 Thêm mới",
-    "_NewGeo": "📄 Thêm đồ họa",
+    "_New": "📝 Thêm mới",
+    "_NewGeo": "📝 Thêm đồ họa",
     "_Update": "🖋️ Cập nhật",
     "_Save": "💾 Lưu",
     "_SaveA": "💾 Lưu & Lưu trữ",
@@ -73,6 +73,10 @@
     "_Note": "Ghi chú",
     "_Priority": "Ưu tiên",
 	"_Archive": "🕰️ Lịch sử",
-	"_ZoomTo": "Zoom tới"
+	"_ZoomTo": "Zoom tới",
+	"_Attach":"📎 Đính kèm",
+	"_Upload":"📤 Tải lên",
+	"_Editor":"Biên tập",
+	"_Finish":"Kết thúc"
   }
 }

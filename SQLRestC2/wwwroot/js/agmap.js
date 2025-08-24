@@ -21,8 +21,8 @@
 		AGMap.service = para.service;
 		AGMap.div = para.divMap;
 		document.head.z(["script", {
-			src: "https://js.arcgis.com/4.33/", onload: function () {
-				require(["esri/config", "esri/identity/IdentityManager","esri/Map", "esri/WebMap", "esri/views/MapView", "esri/views/draw/Draw", "esri/Graphic", "esri/symbols/support/symbolUtils", "esri/widgets/Editor", "esri/widgets/Measurement", "esri/widgets/Print", "esri/widgets/Locate", "esri/widgets/BasemapGallery", "esri/widgets/ScaleBar", "esri/widgets/LayerList", "esri/layers/FeatureLayer", "esri/geometry/geometryEngine", "esri/geometry/support/webMercatorUtils", "esri/geometry/Extent", "esri/geometry/Point", "esri/geometry/Polyline", "esri/geometry/Polygon", "esri/geometry/Circle", "esri/layers/GraphicsLayer", "esri/geometry/Multipoint"], function (esriConfig, esriId, Map, WebMap, MapView, Draw, Graphic, symbolUtils, Editor, Measurement, Print, Locate, BasemapGallery, ScaleBar,LayerList, FeatureLayer, geometryEngine, webMercatorUtils,Extent, Point, Polyline,Polygon, Circle,GraphicsLayer, Multipoint) {
+			src: "https://js.arcgis.com/4.31/", onload: function () {
+				require(["esri/config", "esri/identity/IdentityManager","esri/Map", "esri/WebMap", "esri/views/MapView", "esri/views/draw/Draw", "esri/Graphic", "esri/symbols/support/symbolUtils", "esri/widgets/Editor", "esri/widgets/Measurement", "esri/widgets/Print", "esri/widgets/Locate", "esri/widgets/BasemapGallery", "esri/widgets/Legend", "esri/widgets/ScaleBar", "esri/widgets/Search", "esri/layers/FeatureLayer", "esri/geometry/geometryEngine", "esri/geometry/support/webMercatorUtils", "esri/geometry/Extent", "esri/geometry/Point", "esri/geometry/Polyline", "esri/geometry/Polygon", "esri/geometry/Circle", "esri/layers/GraphicsLayer", "esri/geometry/Multipoint"], function (esriConfig, esriId, Map, WebMap, MapView, Draw, Graphic, symbolUtils, Editor, Measurement, Print, Locate, BasemapGallery, Legend, ScaleBar,Search, FeatureLayer, geometryEngine, webMercatorUtils,Extent, Point, Polyline,Polygon, Circle,GraphicsLayer, Multipoint) {
 					AGMap.Map=Map;
 					AGMap.MapView=MapView;
 					AGMap.Graphic = Graphic;
@@ -37,6 +37,8 @@
 					AGMap.Polygon = Circle;
 					AGMap.GraphicsLayer=GraphicsLayer;
 					AGMap.Multipoint=Multipoint;
+					AGMap.Search=Search;
+					AGMap.Locate=Locate;
 					var items=[
 						{ type: 'radio', id: "pan", group: 1, icon: "hand-png", tooltip: "_Pan" },
 						{ type: 'break' },
@@ -46,6 +48,7 @@
 						{ type: 'break' },
 						{ type: 'radio', id: "measure", group: 1, icon: "ruler-png", tooltip: "_Measure" },
 						{ type: 'button', id: "basemap", icon: "basemap-png", tooltip: "_Basemap" },
+						{ type: 'button', id: "legend", icon: "legend-png", tooltip: "_Legend" },
 						{ type: 'button', id: "print", icon: "printer-png", tooltip: "_Print" },
 						{ type: 'break' },
 						{ type: 'button', id: "fullextent", icon: "world-png", tooltip: "_FullExtent" }
@@ -55,10 +58,12 @@
 						name: "tbrMap",
 						items: NUT.isMobile?items: [{ type: 'radio', id: "zoomin", group: 1, icon: "zoomin-png", tooltip: "_ZoomIn" },{ type: 'radio', id: "zoomout", group: 1, icon: "zoomout-png", tooltip: "_ZoomOut" }].concat(items).concat([{ type: 'button', id: "backextent", icon: "back-png", tooltip: "_BackExtent" },{ type: 'button', id: "nextextent", icon: "next-png", tooltip: "_NextExtent" }]),
 						onClick(evt) {
-							AGMap.tool = evt.object.id;
-							AGMap.view.popupEnabled = (AGMap.tool == "identify");
 							var style = AGMap.view.container.style;
+
+							AGMap.view.popupEnabled = (evt.object.id == "identify");
+							AGMap.tool = evt.object.id;
 							var action = null;
+
 							switch (AGMap.tool) {
 								case "pan":
 									style.cursor = "grab";
@@ -74,6 +79,7 @@
 								case "identify":
 									style.cursor = "help";
 									AGMap.draw.reset();
+									if(NUT.isMobile)NUT.w2ui.layMain.sizeTo("bottom", "10%");
 									break;
 								case "zoomin":
 									style.cursor = "zoom-in";
@@ -95,7 +101,7 @@
 									AGMap.view.graphics.removeAll();
 									break;
 								case "fullextent":
-									AGMap.view.goTo(n$.windowid ? AGMap.extent.expand(0.5) : AGMap.extent);
+									AGMap.view.goTo(AGMap.extent);
 									break;
 								case "backextent":
 									var ext = AGMap.backStack.pop();
@@ -113,33 +119,52 @@
 									}
 									break;
 								case "measure":
-									var a = NUT.createWindowTitle("measure", divTitle);
-									var widget = new Measurement({
-										container: a.div,
-										view: AGMap.view,
-										activeTool: "distance"
+									var a = NUT.createWindowTitle("measure", divTitle, function(){
+										AGMap.wzMeasurement.clear();
 									});
-									widget.renderNow();
-									a.innerHTML = "Measure";
+									if(a){
+										a.innerHTML = "Measure";
+										AGMap.wzMeasurement = new Measurement({
+											container: a.div,
+											view: AGMap.view,
+											activeTool: "distance"
+										});
+										AGMap.wzMeasurement.renderNow();
+									}
 									break;
 								case "basemap":
 									var a = NUT.createWindowTitle("basemap", divTitle);
-									var widget = new BasemapGallery({
-										container: a.div,
-										view: AGMap.view
-									});
-									widget.renderNow();
-									a.innerHTML = "Basemap";
+									if(a){
+										a.innerHTML = "Basemap";
+										AGMap.wzBasemapGallery = new BasemapGallery({
+											container: a.div,
+											view: AGMap.view
+										});
+										AGMap.wzBasemapGallery.renderNow();
+									}
+									break;
+								case "legend":
+									var a = NUT.createWindowTitle("legend", divTitle);
+									if(a){
+										a.innerHTML = "Legend";
+										AGMap.wzLegend = new Legend({
+											container: a.div,
+											view: AGMap.view
+										});
+										AGMap.wzLegend.renderNow();
+									}
 									break;
 								case "print":
 									var a = NUT.createWindowTitle("print", divTitle);
-									var widget = new Print({
-										container: a.div,
-										view: AGMap.view,
-										printServiceUrl: "https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
-									});
-									widget.renderNow();
-									a.innerHTML = "Print";
+									if(a){
+										a.innerHTML = "Print";
+										AGMap.wzPrint = new Print({
+											container: a.div,
+											view: AGMap.view,
+											printServiceUrl: "https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
+										});
+										AGMap.wzPrint.renderNow();
+									}
 									break;
 							}
 							if (action) {
@@ -173,66 +198,59 @@
 									AGMap.view.graphics.removeAll();
 									var isGeom=AGMap.tool=="point"||AGMap.tool=="polyline"||AGMap.tool=="polygon";
 									var p=evt.vertices;
-									var geom=null;
-									if(AGMap.tool=="circle")geom=new Circle({center:{type:"point",x:p[0][0],y:p[0][1],spatialReference:AGMap.view.spatialReference},radius:Math.sqrt((p[0][0]-p[1][0])*(p[0][0]-p[1][0])+(p[0][1]-p[1][1])*(p[0][1]-p[1][1]))});
-									else geom=isGeom?(AGMap.tool=="point"?{type: AGMap.tool,x:p[0][0],y:p[0][1]}:{type: AGMap.tool,paths:[p],rings:[p]}):new Extent({type: "extent",xmin: p[0][0], ymin: p[0][1], xmax: p[1][0], ymax: p[1][1]});
-									geom.spatialReference=AGMap.view.spatialReference;
-									switch (AGMap.tool) {
-										case "point":
-										case "polyline":
-										case "polygon":
-										case "circle":
-											AGMap.view.graphics.add({
-												geometry: geom,
-												symbol: AGMap.SYMBOL[AGMap.tool]
-											});
-											if(AGMap.callback)AGMap.callback({geometry:geom,vertices:evt.vertices});
-											break;
-										case "zoomin":
-											AGMap.view.goTo(geom);
-											break;
-										case "zoomout":
-											AGMap.view.goTo(geom.expand(AGMap.view.extent.width / geom.width + AGMap.view.extent.height / geom.height));
-											break;
-										case "select":
-											style.cursor = "default";
-											action = AGMap.draw.create("rectangle");
-											AGMap.view.allLayerViews.forEach(function (lyrView) {
-												var layer = lyrView.layer;
-												var where = [];
-												var selectable = layer.selectable;
-												if (layer.type == "subtype-group") {
-													for (var i = 0; i < layer.sublayers.length; i++) {
-														var slyr = layer.sublayers.getItemAt(i);
-														if (slyr.selectable) where.push((slyr.subtypeField||"ASSETGROUP") + "=" + slyr.subtypeCode);
-													}
-													selectable = where.length;
-												}
-												if (selectable) {
-													var query = {
-														geometry: {
-															type: "polygon",
-															rings: [[[geom.xmin, geom.ymin], [geom.xmin, geom.ymax], [geom.xmax, geom.ymax], [geom.xmax, geom.ymin], [geom.xmin, geom.ymin]]],
-															spatialReference: geom.spatialReference
+									if(AGMap.tool=="point"||p.length>1){
+										var geom=null;
+										if(AGMap.tool=="circle")geom=new Circle({center:{type:"point",x:p[0][0],y:p[0][1],spatialReference:AGMap.view.spatialReference},radius:Math.sqrt((p[0][0]-p[1][0])*(p[0][0]-p[1][0])+(p[0][1]-p[1][1])*(p[0][1]-p[1][1]))});
+										else geom=isGeom?(AGMap.tool=="point"?{type: AGMap.tool,x:p[0][0],y:p[0][1]}:{type: AGMap.tool,paths:[p],rings:[p]}):new Extent({type: "extent",xmin: p[0][0], ymin: p[0][1], xmax: p[1][0], ymax: p[1][1]});
+										geom.spatialReference=AGMap.view.spatialReference;
+										switch (AGMap.tool) {
+											case "point":
+											case "polyline":
+											case "polygon":
+											case "circle":
+												AGMap.view.graphics.add({
+													geometry: geom,
+													symbol: AGMap.SYMBOL[AGMap.tool]
+												});
+												if(AGMap.callback)AGMap.callback({geometry:geom,vertices:evt.vertices});
+												break;
+											case "zoomin":
+												AGMap.view.goTo(geom);
+												break;
+											case "zoomout":
+												AGMap.view.goTo(geom.expand(AGMap.view.extent.width / geom.width + AGMap.view.extent.height / geom.height));
+												break;
+											case "select":
+												style.cursor = "default";
+												action = AGMap.draw.create("rectangle");
+												var maplayer=NUT.winconf&&NUT.winconf.tabs[0].table.maplayer;
+												if(maplayer){
+													var layer=AGMap.layers[maplayer];
+													if (layer.visible)AGMap.view.whenLayerView(layer).then(function (lyrView) {
+														var query = {
+															geometry: {
+																type: "polygon",
+																rings: [[[geom.xmin, geom.ymin], [geom.xmin, geom.ymax], [geom.xmax, geom.ymax], [geom.xmax, geom.ymin], [geom.xmin, geom.ymin]]],
+																spatialReference: geom.spatialReference
+															}
 														}
-													}
-													if (where) query.where = where.join(" or ");
-													lyrView.queryObjectIds(query).then(function (oid) {
-														if (layer.highlight) layer.highlight.remove();
-														layer.highlight = lyrView.highlight(oid);
-														layer.highlight.oid = oid;
-														var grid = AGMap.grids[layer.id];
-														if (grid) {
-															grid.selectNone(true);
-															var conf = grid.box.parentNode.parentNode.tag;
-															NUT.NWin.switchFormGrid(conf, grid.select(oid) == 1);
-														}
+														lyrView.queryObjectIds(query).then(function (oid) {
+															if (layer.highlight) layer.highlight.remove();
+															layer.highlight = lyrView.highlight(oid);
+															layer.highlight.oid = oid;
+															var grid = AGMap.grids[layer.id];
+															if (grid) {
+																grid.notSelectMap=true;
+																grid.selectNone(true);
+																var conf = grid.box.parentNode.parentNode.tag;
+																NUT.NWin.switchFormGrid(conf, grid.select(oid) == 1);
+															}
+														});
 													});
-												}
-											});
-											break;
+												}else NUT.notify("⚠️ Open layer's attribute for select!", "yellow");
+												break;
+										}
 									}
-									
 									NUT.w2ui["tbrMap"].onClick({object:{id:AGMap.tool}});
 								})
 							}
@@ -254,15 +272,13 @@
 									container: AGMap.div,
 									map: AGMap.map,
 									popupEnabled: false,
-									ui: { components: ["zoom"] },
+									ui: { components: [] },
 									constraints: { lods: [] }
 								});
+								
 								AGMap.draw = new Draw({ view: AGMap.view });
-								AGMap.view.ui.add("compass","top-right");
-								AGMap.view.ui.add(new Locate({view:AGMap.view}),"top-right");
-								if (NUT.isMobile) AGMap.view.ui.move("zoom", "top-right");
-
-								AGMap.initMap();
+								AGMap.view.when(AGMap.initMap);
+								
 							}).catch(function (err) {
 								NUT.notify("🛑 " + err, "red");
 							});
@@ -292,19 +308,34 @@
 	}
 	static initMap () {
 		NUT.loading();
+		var lookupFind={};
+		for(var i=0;i<NUT.findtables.length;i++){
+			var tbl=NUT.findtables[i];
+			if(tbl.maplayer)lookupFind[tbl.maplayer]=tbl.columnfind;
+		}
 		var mnuMain=NUT.w2ui["mnuMain"];
+		var sources=[];
 		for (var i = 0; i < AGMap.map.allLayers.length; i++) {
 			var lyr = AGMap.map.allLayers.getItemAt(i);
-			lyr.selectable = 0;
 			if (lyr.type == "feature") {
 				lyr.outFields = "*";
 				AGMap.layers[lyr.id] = lyr;
+				var columnfinds=lookupFind[lyr.id];
+				if(columnfinds){
+					var finds=columnfinds.split(",");
+					sources.push({
+						layer:lyr,
+						searchFields:finds,
+						displayField:finds[0],
+						outFields: finds,
+						minSuggestCharacters:2,
+						maxSuggestions:10
+					});
+				}
 			}
 			if (lyr.type == "subtype-group") {
-				lyr.selectable = 1;
 				for (var j = 0; j < lyr.sublayers.length; j++) {
 					var slyr = lyr.sublayers.getItemAt(j);
-					slyr.selectable = 0;
 					AGMap.layers[slyr.id] = slyr;
 				}
 				//add submenu
@@ -314,7 +345,7 @@
 				var nodes = [];
 				for (var j = lyr.sublayers.length - 1; j >= 0; j--) {
 					var slyr = lyr.sublayers.getItemAt(j);
-					var node={id: slyr.id, maplayer: slyr.id, where: [slyr.subtypeField, "=", slyr.subtypeCode], tag: parent.tag, layerTitle: slyr.title, text:slyr.title+"<input type='checkbox' style='float:left' name='" + node.id + "' onclick='event.stopPropagation();NUT.AGMap.layers[this.name].visible=this.checked'"+(slyr.visible?+" checked/>":"/>")};
+					var node={id: slyr.id, maplayer: slyr.id, where: [slyr.subtypeField, "=", slyr.subtypeCode], tag: parent.tag, layerTitle: slyr.title, text:slyr.title};
 					nodes.push(node);
 				}
 				mnuMain.insert(parent.id, null, nodes);
@@ -324,7 +355,6 @@
 		AGMap.map.add(lyr);
 		NUT.AGMap.layers[lyr.id] = lyr;
 		
-		AGMap.extent = AGMap.view.extent;
 		AGMap.view.watch("stationary", function (oldVal, newVal) {
 			if (newVal) {
 				if (AGMap.skipme) AGMap.skipme = false;
@@ -332,24 +362,26 @@
 			}
 		});
 		
-		_txttopsearch.onchange=function(){
-			if(this.value)NUT.AGMap.zoomToCoords([this.value.split(",")] ,"point");
-		}
+		AGMap.search=new AGMap.Search({
+			view:AGMap.view,
+			sources:sources
+		});
+		AGMap.view.ui.add(AGMap.search,"top-left");
+		if (!NUT.isMobile) AGMap.view.ui.add("zoom", "top-left");
+		AGMap.view.ui.add("compass","top-right");
+		AGMap.view.ui.add(new AGMap.Locate({view:AGMap.view}),"top-right");
 		
 		mnuMain.onExpand=function(evt) {
-			var id=evt.object.id;
-			var lyr = AGMap.layers[id];
-			var menu=NUT.w2ui.mnuMain.get(id);
+			var menu=NUT.w2ui.mnuMain.get(evt.object.id);
+			var lyr = AGMap.layers[menu.maplayer];
 			if(lyr){
 				var flat=this.flat;
-				var opt={size:(flat?12:16)};
 				switch (lyr.renderer.type) {
 					case "simple":
-						if(menu.nodes.length==0){
-							AGMap.symbolUtils.renderPreviewHTML(lyr.renderer.symbol, opt).then(function(res){
-								var nodes=[{id: id+"_0", maplayer: id, tag: menu.tag, text:"&nbsp;", icon: res }];
-								NUT.w2ui.mnuMain.insert(id, null, nodes);
-								if(flat)evt.object.items=nodes;
+						if(menu.nodes.length==1){
+							var node=menu.nodes[0];
+							AGMap.symbolUtils.renderPreviewHTML(lyr.renderer.symbol,{size:12}).then(function(res){
+								NUT.w2ui.mnuMain.set(node.id,{icon: res});
 							});
 						}
 						
@@ -357,16 +389,12 @@
 					case "unique-value":
 						if(menu.nodes.length==1){
 							var nodes=[];
-							AGMap.htmlSymbolNodes(lyr.renderer,nodes,opt,function(){
-								for (var i = 0; i < nodes.length; i++) {
-									var node=nodes[i];
-									node.id=id+"_"+i;
-									node.maplayer=id;
-									node.tag=menu.tag;
-								}
-								NUT.w2ui.mnuMain.insert(id, null, nodes);
-								if(flat)evt.object.items=nodes;
+							AGMap.htmlSymbolNodes(menu,lyr.renderer,nodes,function(){
+								NUT.w2ui.mnuMain.add(menu,nodes);
+								if(flat)evt.object.items=evt.object.items.concat(nodes);
+								lyr.originWhere=lyr.definitionExpression;
 							});
+							
 						}
 						break;
 				}
@@ -377,21 +405,48 @@
 			width:4,
 			text:function(node){
 				var handle="";
-				var lyr=AGMap.layers[node.maplayer];
-				if(lyr&&node.nodes.length) handle="</span><input type='checkbox' name='" + node.id + "' onclick='event.stopPropagation();NUT.AGMap.layers[this.name].visible=this.checked'"+(lyr.visible?" checked/>":"/>");
+				var layer=AGMap.layers[node.maplayer];
+				if(layer&&!node.noHandle){
+					var visible=layer.visible;
+					if(node.subvalue){
+						var parent=node.parent;
+						for(var i=1;i<parent.nodes.length;i++){
+							var n=parent.nodes[i];
+							if(n.id==node.id)visible=n.visible;
+						}
+					}
+					handle="<input type='checkbox' "+(node.subvalue?"style='margin-left:12px'":"")+" onclick='event.stopPropagation();NUT.AGMap.visibleLayer("+node.id+",\""+node.maplayer+"\",this.checked,\""+(node.subvalue||"")+"\")'"+(visible?" checked/>":"/>");
+				}
 				return handle;
 			}
 		};
 		mnuMain.refresh();
+		AGMap.extent = AGMap.view.extent;
 		if(AGMap.onInit)AGMap.onInit();
 	}
-	static htmlSymbolNodes(renderer, nodes, opt, callback){
+	static visibleLayer(nodeid,maplayer,visible,subvalue){
+		var layer=AGMap.layers[maplayer];
+		var node=NUT.w2ui.mnuMain.get(nodeid);
+		if(node.subtype){
+			var where=[];	
+			if(layer.originWhere)where.push(layer.originWhere);
+			for(var i=1;i<node.nodes.length;i++){
+				var n=node.nodes[i];
+				if(n.subvalue==subvalue)n.visible=visible;
+				if(!n.visible)where.push(node.subtype+"<>"+n.subvalue);
+			}
+			if(layer.originWhere)where.push(layer.originWhere);
+			layer.definitionExpression=where.join(" and ");
+		}
+		if(!subvalue)layer.visible=visible;
+	}
+	static htmlSymbolNodes(menu, renderer, nodes, callback){
 		var i=nodes.length;
 		if(i<renderer.uniqueValueInfos.length){
 			var inf=renderer.uniqueValueInfos[i];
-			AGMap.symbolUtils.renderPreviewHTML(inf.symbol, opt).then(function(res){
-				nodes.push({icon:res, where: [renderer.field, "=", inf.value], layerTitle: inf.label, text: inf.label});
-				AGMap.htmlSymbolNodes(renderer,nodes,opt,callback);
+			AGMap.symbolUtils.renderPreviewHTML(inf.symbol, {size:12}).then(function(res){
+				nodes.push({id:menu.id+"_"+i,maplayer:menu.maplayer,tag:menu.tag,visible:true, icon:res, where: [renderer.field, "=", inf.value],subvalue:inf.value, layerTitle: inf.label, text: inf.label});
+				AGMap.htmlSymbolNodes(menu, renderer,nodes,callback);
 			});
 		}else callback();
 	}
@@ -424,15 +479,40 @@
 	}
 	static selectByOID(maplayer, oid) {
 		var layer = AGMap.layers[maplayer];
+		oid=[(layer.oidOffset||0)+oid];
 		AGMap.view.whenLayerView(layer.subtypeCode?layer.parent:layer).then(function (lyrView) {
 			if (layer.highlight) layer.highlight.remove();
 			layer.highlight = lyrView.highlight(oid);
 			layer.highlight.oid = oid;
 		});
 	}
-	static filterLayer(maplayer, where) {
-		var layer = AGMap.layers[maplayer];
-		layer.definitionExpression=where;
+	static filterLayer(conf, where) {
+		var layer = AGMap.layers[conf.table.maplayer];
+		if(layer.source){//client-side
+			NUT.ds.select({url:conf.table.urlview,limit:10000,where:where},function(res){
+				if(res.success){
+					var graphics=[];
+					for(var i=0;i<res.result.length;i++){
+						var rec=res.result[i];
+						graphics.push({
+							geometry: {
+								type: "point",
+								x: rec.lng,
+								y: rec.lat
+							},
+							attributes: rec
+						});
+					}
+					layer.queryFeatures({where:"1=1"}).then(function(res2){
+						layer.oidOffset=(layer.oidOffset||0)+res2.features.length;
+						layer.applyEdits({
+							deleteFeatures: res2.features,
+							addFeatures: graphics
+						});
+					});
+				}else NUT.notify("🛑 ERROR: " + res.result, "red");
+			});
+		}else layer.definitionExpression=NUT.ds.decodeSql({where:where});
 	}
 	static selectByQuery(maplayer, query, callback) {
 		var layer = AGMap.layers[maplayer];
@@ -446,14 +526,23 @@
 		});
 	}
 	static showEditor(maplayer) {
-		var a = NUT.createWindowTitle("editor", divTitle);
-		var widget = new AGMap.Editor({
-			container:a.div,
-			view: AGMap.view,
-			layerInfos: [{layer:AGMap.layers[maplayer],enabled:true}]
+		var layerInfos=[];
+		for(var i=0;i<AGMap.map.editableLayers.length;i++){
+			var lyr=AGMap.map.editableLayers.getItemAt(i);
+			layerInfos.push({layer:lyr,enabled:maplayer==lyr.id});
+		}
+		var a = NUT.createWindowTitle("editor", divTitle,function(){
+			AGMap.wzEditor.cancelWorkflow()
 		});
-		widget.renderNow();
-		a.innerHTML = "Editor";
+		if(a){			
+			AGMap.wzEditor = new AGMap.Editor({
+				container:a.div,
+				view: AGMap.view,
+				layerInfos: layerInfos
+			});
+			AGMap.wzEditor.renderNow();
+			a.innerHTML = "Editor";
+		} else AGMap.wzEditor.layerInfos=layerInfos;
 	}
 	static get(p, onok) {
 		var xhr = new XMLHttpRequest();

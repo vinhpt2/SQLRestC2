@@ -1,0 +1,14 @@
+.pin:before{ 
+	content:url("pin.png"); 
+}
+.cross:before{ 
+	content:url("cross.png"); 
+}
+.link{
+	color:blue;
+	cursor:pointer;
+	text-decoration: underline
+}
+.para{
+	margin-bottom:5px;
+}

@@ -13,12 +13,12 @@ var HrmsSanLuongKhoanDuTinh={
 					showClose:false,
 					width:400,
 					height:250,
-					body: '<h2>Nhập sản lượng khoán (két)</h2><table border="1px" cellspacing="0px" style="margin:auto;width:100%;text-align:center"><caption style="background:pink"><b><i>'+n$.user.username+'</i> - Tháng '+(thang+'/'+nam)+'</b></caption><tr><td>Bold</td><td>Light</td><td>TrucBach</td><td>Pre sleek<br/>lon</td><td>HanoiPre<br/>chai</td></tr><tr><td><input type="number" id="num_bold" style="width:50px"></td><td><input type="number" id="num_light" style="width:50px"></td><td><input type="number" id="num_trucbach" style="width:50px"></td><td><input type="number" id="num_hanoiprel" style="width:50px"></td><td><input type="number" id="num_hanoipre" style="width:50px"></td></tr></table>',
+					body: '<h2>Nhập sản lượng khoán (két)</h2><table border="1px" cellspacing="0px" style="margin:auto;width:100%;text-align:center"><caption style="background:pink"><b><i>'+n$.user.username+'</i> - Tháng '+(thang+'/'+nam)+'</b></caption><tr><td>Keg1L</td><td>Bold</td><td>Light</td><td>TrucBach</td><td>Pre sleek<br/>lon</td><td>HanoiPre<br/>chai</td></tr><tr><td><input type="number" id="num_keg" style="width:50px"></td><td><input type="number" id="num_bold" style="width:50px"></td><td><input type="number" id="num_light" style="width:50px"></td><td><input type="number" id="num_trucbach" style="width:50px"></td><td><input type="number" id="num_hanoiprel" style="width:50px"></td><td><input type="number" id="num_hanoipre" style="width:50px"></td></tr></table>',
 					buttons: '<button class="w2ui-btn" onclick="HrmsSanLuongKhoanDuTinh.doKhoanSanLuong()">✔️ Ok</button>'
 				});else{
 					var rec=res.result[0];
 					var sum=rec.bold+rec.light+rec.trucbach+rec.hanoipre+rec.hanoiprel;
-					NUT.alert("<h3>Sản lượng khoán (két)</h3><table border='1px' cellspacing='0px' style='text-align:center;margin:auto'><caption style='background:pink'><b>"+n$.user.username+"<i> - Tháng "+rec.thang+"/"+rec.nam+"</i></b></caption><tr><td><b style='color:brown'>Tổng</b></td><td>Bold</td><td>Light</td><td>TrucBach</td><td>Pre sleek<br/>lon</td><td>HanoiPre<br/>chai</td></tr><tr><td><b style='color:brown'>"+sum+"</b></td><td>"+rec.bold+"</td><td>"+rec.light+"</td><td>"+rec.trucbach+"</td><td>"+rec.hanoiprel+"</td><td>"+rec.hanoipre+"</td></tr></table>");
+					NUT.alert("<h3>Sản lượng khoán (két)</h3><table border='1px' cellspacing='0px' style='text-align:center;margin:auto'><caption style='background:pink'><b>"+n$.user.username+"<i> - Tháng "+rec.thang+"/"+rec.nam+"</i></b></caption><tr><td><b style='color:brown'>Tổng</b></td><td>Keg1L</td></td><td>Bold</td><td>Light</td><td>TrucBach</td><td>Pre sleek<br/>lon</td><td>HanoiPre<br/>chai</td></tr><tr><td><b style='color:brown'>"+sum+"</b></td><td>"+rec.keg+"</td><td>"+rec.bold+"</td><td>"+rec.light+"</td><td>"+rec.trucbach+"</td><td>"+rec.hanoiprel+"</td><td>"+rec.hanoipre+"</td></tr></table>");
 				}
 			}
 		});
@@ -27,6 +27,7 @@ var HrmsSanLuongKhoanDuTinh={
 		var now=new Date();
 		var data={madoitac:n$.user.tag,manhanvien:n$.user.username,nam:now.getFullYear(),thang:now.getMonth()+1};
 		var sum=0;
+		if(num_keg.value>0){data.keg=num_keg.value;sum+=parseInt(data.keg)}
 		if(num_bold.value>0){data.bold=num_bold.value;sum+=parseInt(data.bold)}
 		if(num_light.value>0){data.light=num_light.value;sum+=parseInt(data.light)}
 		if(num_trucbach.value>0){data.trucbach=num_trucbach.value;sum+=parseInt(data.trucbach)}

@@ -1,0 +1,1 @@
+{"Endpoint":"https://atm256905-s3user.vcos.cloudstorage.com.vn","SecretName":"atm256905-s3user","SecretKey":"HP0+6eMq822siVlQSkQnoEEYUxWPwe8X3lGAL19b"}

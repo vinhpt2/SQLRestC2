@@ -5,6 +5,10 @@
     overflow-x: auto;
     scrollbar-width: none;
 }
+.nut-label-chk{
+	display: flex;
+    align-items: center;
+}
 .nut-fld-helper {
     position: absolute;
     display: inline-block;
@@ -120,6 +124,10 @@
     content: url("new.png");
 }
 
+.nut-img-page:before {
+    content: url("page.png");
+}
+
 .nut-img-save:before {
     content: url("save.png");
 }
@@ -146,9 +154,17 @@
 .nut-img-switch {
     content: url('switch.png')
 }
-
+.nut-img-database{
+    content: url('database.png')
+}
+.nut-img-code{
+    content: url('code.png')
+}
 .nut-img-folder {
     content: url('folder.png')
+}
+.nut-img-folder_add {
+    content: url('folder_add.png')
 }
 .nut-e-net {
     content: url('e-net.png')
@@ -181,7 +197,9 @@
     width: 30px;
     height: 10px;
 }
-
+.nut-img-app:before {
+    content: url("app.png");
+}
 .nut-img-workflow:before {
     content: url("workflow.png");
 }
@@ -194,8 +212,48 @@
 .nut-img-analyst:before {
     content: url("analyst.png");
 }
-
-
+.nut-file-js:before{
+	content:url("file/js.png");
+}
+.nut-file-docx:before{
+	content:url("file/docx.png");
+}
+.nut-file-gif:before{
+	content:url("file/gif.png");
+}
+.nut-file-html:before{
+	content:url("file/html.png");
+}
+.nut-file-jpg:before{
+	content:url("file/jpg.png");
+}
+.nut-file-mdb:before{
+	content:url("file/mdb.png");
+}
+.nut-file-pdf:before{
+	content:url("file/pdf.png");
+}
+.nut-file-png:before{
+	content:url("file/png.png");
+}
+.nut-file-txt:before{
+	content:url("file/txt.png");
+}
+.nut-file-xlsx:before{
+	content:url("file/xlsx.png");
+}
+.nut-file-zip:before{
+	content:url("file/zip.png");
+}
+.nut-file-css:before{
+	content:url("file/css.png");
+}
+.nut-file-file:before{
+	content:url("file/file.png");
+}
+.nut-file-folder:before{
+	content:url("file/folder.png");
+}
 /* Tuannt */
 .login-wrapper {
     display: flex;

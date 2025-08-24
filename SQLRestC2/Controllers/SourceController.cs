@@ -1,5 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.SqlServer.Management.Common;
+using Microsoft.SqlServer.Management.Smo;
+using System;
+using System.CodeDom;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics.Eventing.Reader;
+using System.IO;
+using System.Net;
+using System.Security.Policy;
+using System.Text;
+using System.Text.Json;
+using static Azure.Core.HttpHeader;
 
 namespace SQLRestC2.Controllers
 {

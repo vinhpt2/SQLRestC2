@@ -1,0 +1,39 @@
+﻿<!DOCTYPE HTML>
+<html class="nut-full">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+	<title>NUT v2.0</title>
+	<link rel="icon" type="image/png" href="favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="lib/w2ui.min.css">
+	<link rel="stylesheet" type="text/css" href="index.css" />
+    <style>
+        .nut-i-home {
+            content:url('svg/home.svg')
+        }
+        .nut-i-information {
+            content: url('svg/information.svg')
+        }
+        .nut-i-notification {
+            content: url('svg/notification.svg')
+        }
+        .nut-i-switcher {
+            content: url('svg/switcher.svg')
+        }
+	</style>
+	<script src="lib/zipson.min.js"></script>
+
+
+	<script src="lib/bpmnviewer-8.2.2.min.js"></script>
+	<script src="js/nut.js"></script>
+	<script type="module" src="index.js"></script>
+</head>
+<body class="nut-full" style="background:url('backdrop.png');background-size:cover" oncontextmenu="return false">
+
+<!-- Visual Studio Browser Link -->
+<script type="text/javascript" src="/_vs/browserLink" async="async" id="__browserLink_initializationData" data-requestId="bd5af735a11f4860bb93aa359c05b9ab" data-requestMappingFromServer="false" data-connectUrl="http://localhost:61079/da381a5dc2774bee85dc121c3704e7df/browserLink"></script>
+<!-- End Browser Link -->
+<script src="/_framework/aspnetcore-browser-refresh.js"></script></body>
+
+</html>

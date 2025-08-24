@@ -1,5 +1,4 @@
 import { w2ui, w2grid, w2toolbar, w2form, w2tabs } from "../lib/w2ui.es6.min.js";
-import { SqlREST } from "./sqlrest.js";
 
 export class NWin {
 	constructor(id) {
@@ -11,9 +10,9 @@ export class NWin {
 		for (var i = 0; i < conf.tabs.length; i++) {
 			var tabconf = conf.tabs[i];
 			if (tabconf.tablevel == tabLevel) {
-				var divTab = div.z(["div", { id: "tab_" + tabconf.tabid, style: "height:" + (tabconf.maxLevel ? "45%" : "95%"),tag:tabconf}]);
-				var tab = { id: tabconf.tabid, text: NUT.translate(tabconf.translate) || tabconf.tabname,div:divTab };
-				this.buildContent(divTab,tabconf,callback);
+				var divTab = div.z(["div", { id: "tab_" + tabconf.tabid, style: "height:" + (tabconf.maxLevel ? "45%" : "95%"), tag: tabconf }]);
+				var tab = { id: tabconf.tabid, text: NUT.translate(tabconf.translate) || tabconf.tabname, div: divTab };
+				this.buildContent(divTab, tabconf, callback);
 				if (tabconf.tabs.length) {
 					for (var l = tabLevel + 1; l <= tabconf.maxLevel; l++)
 						this.buildWindow(divTab, tabconf, l, callback);
@@ -27,13 +26,13 @@ export class NWin {
 			name: divTabs.id,
 			active: tabs[0].id,
 			tabs: tabs,
-			onClick: function(evt){
-				var id=evt.object.id;
-				for(var i=0;i<this.tabs.length;i++){
-					var tab=this.tabs[i];
-					var divTab=tab.div;
-					divTab.style.display=(tab.id==id)?"":"none";
-					if(tab.id==id)NWin.updateChildGrid(divTab.tag);
+			onClick: function (evt) {
+				var id = evt.object.id;
+				for (var i = 0; i < this.tabs.length; i++) {
+					var tab = this.tabs[i];
+					var divTab = tab.div;
+					divTab.style.display = (tab.id == id) ? "" : "none";
+					if (tab.id == id) NWin.updateChildGrid(divTab.tag);
 				}
 			}
 		})).render(divTabs);
@@ -51,7 +50,7 @@ export class NWin {
 						var dm = { items: [NUT.DM_NIL], lookup: {}, lookdown: {} };
 						for (var i = 0; i < res.result.length; i++) {
 							var data = res.result[i];
-							var item = [data[columnkey],data[columndisplay]];
+							var item = [data[columnkey], data[columndisplay]];
 							dm.items.push({ id: item[0], text: item[1] });
 							dm.lookup[item[0]] = item;
 							dm.lookdown[item[1]] = item;
@@ -66,25 +65,25 @@ export class NWin {
 	}
 
 	buildContent(div, conf, callback) {
-		var lookupField = {},columns = [], searches=[];
+		var lookupField = {}, columns = [], searches = [];
 		for (var i = 0; i < conf.fields.length; i++) {
 			var fldconf = conf.fields[i];
 			lookupField[fldconf.columnname] = fldconf;
 			var alias = NUT.translate(fldconf.translate) || fldconf.fieldname;
-			if(fldconf.isreadonly)alias="<i>"+alias+"</i>";
+			if (fldconf.isreadonly) alias = "<i>" + alias + "</i>";
 			if (!fldconf.hideingrid) {
-				var column = { field: fldconf.columnname, text: alias, size: (fldconf.displaylength||100)+"px", sortable: true, frozen: fldconf.isfrozen, resizable: true, searchable: !fldconf.hideinfind, tag: fldconf };
-				if (fldconf.fieldtype == "int" || fldconf.fieldtype == "number" || fldconf.fieldtype == "currency" || fldconf.fieldtype == "date" || fldconf.fieldtype == "datetime" || fldconf.fieldtype == "percent") column.render = fldconf.fieldtype;
-				else if (fldconf.fieldtype == "file") column.render = function (record,extra) {
+				var column = {field: fldconf.columnname, text: alias, size: (fldconf.displaylength || 100) + "px", sortable: true, frozen: fldconf.isfrozen, resizable: true, searchable: !fldconf.hideinfind, tag: fldconf };
+				if (fldconf.fieldtype == "int" || fldconf.fieldtype == "float" || fldconf.fieldtype == "currency" || fldconf.fieldtype == "date" || fldconf.fieldtype == "datetime" || fldconf.fieldtype == "percent") column.render = fldconf.fieldtype;
+				else if (fldconf.fieldtype == "file") column.render = function (record, extra) {
 					if (extra.value) {
 						var files = JSON.parse(extra.value);
 						for (var j = 0; j < files.length; j++) {
-							files[j] = "<a class='nut-link' target='_blank' href='" + files[j] + "'>[ " + (j+1) + " ]</a>";
+							files[j] = "<a class='nut-link' target='_blank' href='" + files[j] + "'>[ " + (j + 1) + " ]</a>";
 						}
 						return files.toString();
 					} else return extra.value;
 				}
-				var domain=NWin.domainFromConfig(fldconf);
+				var domain = NWin.domainFromConfig(fldconf);
 				if (domain) {
 					column.domain = domain;
 					column.render = function (record, obj) {
@@ -92,26 +91,26 @@ export class NWin {
 						var item = col.domain.lookup[obj.value];
 						var val = (item ? item[1] : obj.value);
 						if (item && item[2]) {
-							val="<span style='color:"+item[2]+"'>"+val+"</span>";
+							val = "<span style='color:" + item[2] + "'>" + val + "</span>";
 						}
 						return val;
 					}
 				}
-				if (!(conf.isviewonly||fldconf.isreadonly)) {
+				if (!(conf.isviewonly || fldconf.isreadonly)) {
 					var type = fldconf.fieldtype;
 					if (fldconf.fieldtype == "textarea") type = "text";
 					if (fldconf.fieldtype == "radio") type = "select";
 					column.editable = { type: type };
-					if (domain)	column.editable.items = domain.items;
+					if (domain) column.editable.items = domain.items;
 				}
 				columns.push(column);
 			}
 		}
-		var fields=NWin.fieldsFromConfig(conf);
-		var index=0;
+		var fields = NWin.fieldsFromConfig(conf);
+		var index = 0;
 		for (var i = 0; i < fields.length; i++) {
-			if(!fields[i].tag.hideinfind){
-				var fld=NUT.clone(fields[i]);
+			if (!fields[i].tag.hideinfind) {
+				var fld = NUT.clone(fields[i]);
 				fld.required = false;
 				fld.html.column = (NUT.isMobile ? 0 : (fld.colspan ? fld.colspan - 1 : index++ % conf.layoutcols));
 				searches.push(fld);
@@ -121,7 +120,7 @@ export class NWin {
 		var divTool = div.z(["div", { id: "tool_" + conf.tabid }]);
 		var divCont = div.z(["div", { id: "cont_" + conf.tabid, className: "nut-full" }]);
 		var divGrid = divCont.z(["div", { id: "grid_" + conf.tabid, className: "nut-full" }]);
-		var divForm = divCont.z(["div",{ id: "form_" + conf.tabid, className: "nut-full" }]);
+		var divForm = divCont.z(["div", { id: "form_" + conf.tabid, className: "nut-full" }]);
 		var recid = conf.table.columnkey;
 
 		opt = {
@@ -131,7 +130,7 @@ export class NWin {
 			limit: NUT.GRID_LIMIT,
 			reorderColumns: true,
 			recid: recid,
-			
+
 			multiSelect: true,
 			markSearch: false,
 			columns: columns,
@@ -139,24 +138,25 @@ export class NWin {
 			onLoad: this.grid_onLoad,
 			onRequest: this.grid_onRequest,
 			onError: this.grid_onError,
-			onChange: this.field_onChange,
-			onDblClick: this.grid_onDblClick
+			onChange: NWin.field_onChange,
+			onDblClick: this.grid_onDblClick,
 		}
+		
 		if (conf.table.maplayer) {
-			opt.contextMenu=[{ id: 'zoom', text: '_ZoomTo', icon: 'nut-img-find' }];
-			opt.onContextMenuClick=function(evt) {
-				if (evt.detail.menuItem.id == "zoom") NUT.AGMap.zoomToSelect(conf.table.maplayer);
+			opt.columns[0].info={icon: 'w2ui-icon-search',style: "float:left"};
+			opt.showBubble=function(row,col,summary){
+				NUT.AGMap.zoomToSelect(conf.table.maplayer);
 			}
 		}
 		if (conf.check) opt.show = { selectColumn: true };
 		var grid = (w2ui[divGrid.id] || new w2grid(opt));
-		grid.searches=searches;
+		grid.searches = searches;
 		grid.render(divGrid);
 		if (recid) {
 			var isArcGIS = (conf.table.tabletype == "arcgis");
 			if (isArcGIS) {
 				grid.url = conf.table.url + "/query";
-				if(NUT.AGMap.token)grid.url+="?token="+NUT.AGMap.token;
+				if (NUT.AGMap.token) grid.url += "?token=" + NUT.AGMap.token;
 				//grid.proxy = NUT.URL_PROXY;
 				if (conf.table.maplayer) NUT.AGMap.grids[conf.table.maplayer] = grid;
 			} else grid.url = conf.table.urlview;
@@ -167,44 +167,43 @@ export class NWin {
 			autosize: false,
 			fields: fields,
 			recid: recid,
-			onChange: this.field_onChange
+			onChange: NWin.field_onChange
 		}
 		var form = (w2ui[divForm.id] || new w2form(opt));
 		if (conf.layout) form.formHTML = conf.layout.outerHTML;
 		form.render(divForm);
-		
-		var viewonly=n$.user.isviewer||conf.table.isreadonly||conf.isviewonly;
+
+		var viewonly = n$.user.isviewer || conf.table.isreadonly || conf.isviewonly;
 		var access = NUT.access[conf.table.tablename] || {};
 		var isArchive = access.isarchive && conf.table.archivetype;
-		var isNewGeo = (conf.table.maplayer && conf.table.tabletype=="table");
 		var items = [{ type: 'check', id: "SWIT", text: '↔️', tooltip: "_Switch" }];
-		if(conf.table.columntree)items.push({ type: 'check', id: "TREE", text: '🌳', tooltip: "_Tree" });
-		items.push({ type: 'button', id: "RELOAD", text: '🔄', tooltip: "_Reload" });
+		if (conf.table.columntree) items.push({ type: 'check', id: "TREE", text: '🌳', tooltip: "_Tree" });
+		items.push({ type: 'button', id: "RELO", text: '🔄', tooltip: "_Reload" });
 		items.push({ type: 'break' });
 		if (!access.noselect) items.push({ type: 'button', id: "FIND", text: '🔎', tooltip: "_Find" });
 		if (callback) items.push({ type: 'button', id: "OK", text: '_Choose', tooltip: "_Choose", callback: callback });
-		if (!viewonly && !access.noinsert) items.push({ type: (isNewGeo ? "menu" : "button"), id: (isNewGeo ? "new" : "NEW"), text: '📄', tooltip: "_New", items: [{ id: "NEW", text: "_New" }, { id: "NEW_GEO", text: "_NewGeo" }] });
-		if (!viewonly&&!access.noupdate) items.push({ type: (isArchive ? "menu" : "button"), id: (isArchive ? "save" : "SAVE"), text: '💾', tooltip: "_Save", items: [{ id: "SAVE", text: "_Save" }, { id: "SAVE_A", text: "_SaveA" }] });
-		if (!viewonly&&!access.nodelete) items.push({ type: (isArchive ? "menu" : "button"), id: (isArchive ? "del" : "DEL"), text: '❌', tooltip: "_Delete", items: [{ id: "DEL", text: "_Delete" }, { id: "DEL_A", text: "_DeleteA" }] });
+		if (!viewonly && !access.noinsert) items.push({ type: "button", id: "NEW", text: '📝', tooltip: "_New" });
+		if (!viewonly && !access.noupdate) items.push({ type: (isArchive ? "menu" : "button"), id: (isArchive ? "save" : "SAVE"), text: '💾', tooltip: "_Save", items: [{ id: "SAVE", text: "_Save" }, { id: "SAVE_A", text: "_SaveA" }] });
+		if (!viewonly && !access.nodelete) items.push({ type: (isArchive ? "menu" : "button"), id: (isArchive ? "del" : "DEL"), text: '❌', tooltip: "_Delete", items: [{ id: "DEL", text: "_Delete" }, { id: "DEL_A", text: "_DeleteA" }] });
 		items.push({ type: 'break' });
-		if (conf.table.hasattach) items.push({ type: 'button', id: "ATTA", text: '📎', tooltip: "_Attach" });
-		if (!viewonly&&!access.noupdate && conf.relatetableid) items.push({ type: 'button', id: "LINK", text: '🔗', tooltip: "_Link" });
-		if (!viewonly&&access.islock && conf.table.columnlock) items.push({ type: 'button', id: "LOCK", text: '🔒', tooltip: "_Lock/Unlock" });
+		if (conf.table.hasattach && !viewonly && !access.noattach) items.push({ type: 'button', id: "ATTA", text: '📎', tooltip: "_Attach" });
+		if (!viewonly && !access.noupdate && conf.relatetableid) items.push({ type: 'button', id: "LINK", text: '🔗', tooltip: "_Link" });
+		if (!viewonly && access.islock && conf.table.columnlock) items.push({ type: 'button', id: "LOCK", text: '🔒', tooltip: "_Lock/Unlock" });
 		if (isArchive) items.push({ type: 'button', id: "ARCH", text: '🕰️', tooltip: "_Archive" });
-		if(conf.filterfield){
-			var filterfields=JSON.parse(conf.filterfield);
-			if(conf.filterdefault){//where filter
-				var filterdefaults=JSON.parse(conf.filterdefault);
-				for(var i=0;i<filterfields.length;i++){
-					items.push({type:'radio',id:"FLT_"+i,text:filterdefaults[i],group:0,tag:filterfields[i]});
+		if (conf.filterfield) {
+			var filterfields = JSON.parse(conf.filterfield);
+			if (conf.filterdefault) {//where filter
+				var filterdefaults = JSON.parse(conf.filterdefault);
+				for (var i = 0; i < filterfields.length; i++) {
+					items.push({ type: 'radio', id: "FLT_" + i, text: filterdefaults[i], group: 0, tag: filterfields[i] });
 				}
-			}else{
-				for(var i=0;i<filterfields.length;i++){
+			} else {
+				for (var i = 0; i < filterfields.length; i++) {
 					var key = filterfields[i][0];
 					var val = filterfields[i][1];
 					if (typeof val == "string" && val.startsWith("n$.")) val = eval(val);
-					
-					var fld=lookupField[key]
+
+					var fld = lookupField[key]
 					var values = [{ id: "", text: "-/-" }];
 					var dm = fld.domainid ? NUT.domains[fld.domainid] : NUT.dmlinks[fld.linktableid + (fld.whereclause || "")];
 					for (var j = 0; j < dm.items.length; j++) {
@@ -212,7 +211,7 @@ export class NWin {
 						values.push({ id: itm.id, text: itm.text });
 					}
 					var item = {
-						type: 'menu-radio', id: key, items: values, tooltip:fld.filename, text(itm) {
+						type: 'menu-radio', id: key, items: values, tooltip: fld.filename, text(itm) {
 							return itm.selected || itm.id;
 						}
 					}
@@ -227,12 +226,12 @@ export class NWin {
 			}
 			items.push({ type: 'break' });
 		}
-		
+
 		items.push({ type: 'spacer', id: "SPACE" });
 		var lookup = {};
 		for (var i = 0; i < conf.menus.length; i++) {
 			var menu = conf.menus[i];
-			var item = { type: (menu.issummary?'check':'button'), id: menu.menuid, text: menu.menuname, tooltip: menu.description, tag: menu.execname, rpt:menu.reportid };
+			var item = { type: (menu.issummary ? 'check' : 'button'), id: menu.menuid, text: menu.menuname, tooltip: menu.description, tag: menu.execname, rpt: menu.reportid };
 			if (menu.parentid) {
 				var parent = lookup[menu.parentid];
 				if (parent) {
@@ -246,8 +245,8 @@ export class NWin {
 			lookup[menu.menuid] = item;
 		}
 		items.push({ type: 'break' });
-		if (!viewonly&&!(access.noselect || access.noupdate)) items.push({ type: 'button', id: "XLS_IM", text: '📥', tooltip: "_Import" });
-		if (!access.noexport) items.push({ type: 'button', id: "XLS_EX", text: '📤', tooltip: "_Export" });
+		if (!viewonly && !(access.noselect || access.noupdate)) items.push({ type: 'button', id: "IMP", text: '📥', tooltip: "_Import" });
+		if (!access.noexport) items.push({ type: 'button', id: "EXP", text: '📤', tooltip: "_Export" });
 		items.push({ type: 'break' });
 		items.push({ type: 'button', id: "PREV", text: '⬅️', tooltip: "_Previous", step: -1 });
 		items.push({ type: 'button', id: "NEXT", text: '➡️', tooltip: "_Next", step: +1 });
@@ -262,61 +261,68 @@ export class NWin {
 			onClick: this.tool_onClick
 		})).render(divTool);
 
-		if (!conf.parenttabid&&recid) grid.reload();
+		if (!conf.parenttabid && recid) grid.reload();
 	}
-	static domainFromConfig(fldconf){
+	static domainFromConfig(fldconf) {
 		var domain = null;
-		if (fldconf.columntype!="key"&&fldconf.columnname == "siteid")domain = NUT.domains[0];
-		if (!domain && (fldconf.fieldtype == "select" || fldconf.fieldtype == "list") ) {
-			domain = fldconf.domainid ? NUT.domains[fldconf.domainid]: NUT.dmlinks[fldconf.linktableid + (fldconf.whereclause||"")];
+		if (fldconf.columntype != "key" && fldconf.columnname == "siteid") domain = NUT.domains[0];
+		if (!domain && (fldconf.fieldtype == "select" || fldconf.fieldtype == "list")) {
+			domain = fldconf.domainid ? NUT.domains[fldconf.domainid] : NUT.dmlinks[fldconf.linktableid + (fldconf.whereclause || "")];
 		}
 		return domain;
 	}
-	static fieldsFromConfig(conf){
+	static fieldsFromConfig(conf) {
 		var fields = [], index = 0, group = null, colGroup = null;
 		conf.default = {};
-		if (!conf.layoutcols) conf.layoutcols = (NUT.isGIS?2:3);
-		for (var i = 0; i < conf.fields.length; i++){
-			var fldconf=conf.fields[i];
-			if(fldconf.columntype!="key"){
-				if (fldconf.columnname == "siteid")conf.default.siteid = n$.user.siteid;
+		if (conf.workflowid) {
+			var wf = NUT.workflows[conf.workflowid][0];
+			if (wf.status) conf.default.status = wf.status;
+			conf.default.roleid = n$.user.roleid;
+			conf.default.userid = n$.user.userid;
+			conf.default.stepid = wf.stepid;
+		}
+		if (!conf.layoutcols) conf.layoutcols = (NUT.isGIS ? 2 : 3);
+		for (var i = 0; i < conf.fields.length; i++) {
+			var fldconf = conf.fields[i];
+			if (fldconf.columntype != "key") {
+				if (fldconf.columnname == "siteid") conf.default.siteid = n$.user.siteid;
 				if (fldconf.columnname == "appid") conf.default.appid = n$.app.appid;
 				if (fldconf.columnname == "orgid") conf.default.orgid = n$.orgid;
 			}
-			if (fldconf.defaultvalue){
-				if(fldconf.defaultvalue=="n$.myLocate()"){
-					var colname=fldconf.columnname;
-					navigator.geolocation.getCurrentPosition(function(evt){
-						conf.default[colname]=evt.coords.longitude+","+evt.coords.latitude;
+			if (fldconf.defaultvalue) {
+				if (fldconf.defaultvalue == "n$.myLocate()") {
+					var colname = fldconf.columnname;
+					navigator.geolocation.getCurrentPosition(function (evt) {
+						conf.default[colname] = evt.coords.longitude + "," + evt.coords.latitude;
 					});
 				} else conf.default[fldconf.columnname] = (typeof fldconf.defaultvalue == "string" && fldconf.defaultvalue.startsWith("n$.") ? eval(fldconf.defaultvalue) : fldconf.defaultvalue);
 			}
-			if(!fldconf.hideinform) {
+			if (!fldconf.hideinform) {
 				var alias = NUT.translate(fldconf.translate) || fldconf.fieldname;
-				if(fldconf.isreadonly)alias="<i>"+alias+"</i>";
-				
-				var field = { field: fldconf.columnname, type: fldconf.fieldtype, required: fldconf.isrequire, disabled: conf.isviewonly||fldconf.isreadonly, label: alias, html: { label: alias, column: (NUT.isMobile ? 0 : (fldconf.colspan ? fldconf.colspan - 1 : index++ % conf.layoutcols)), attr: "tabindex=0" },options:fldconf.options||{}, tag: fldconf  };
-				var labspan = conf.labelspan || (NUT.isGIS ? -1 : null);
+				if (fldconf.isreadonly) alias = "<i>" + alias + "</i>";
+
+				var field = { field: fldconf.columnname, type: fldconf.fieldtype, required: fldconf.isrequire, disabled: conf.isviewonly || fldconf.isreadonly, label: alias, html: { label: alias, column: (NUT.isMobile ? 0 : (fldconf.colspan ? fldconf.colspan - 1 : index++ % conf.layoutcols)), attr: "tabindex=0" }, options: fldconf.options || {}, tag: fldconf };
+				var labspan = conf.labelspan || (NUT.isGIS&&!NUT.isMobile ? -1 : null);
 				if (labspan) {
 					field.html.span = labspan;
 					field.html.style = "margin-left:16px";
 				}
-				if (!fldconf.parentfieldid){
-					var domain=NWin.domainFromConfig(fldconf);
-					if(domain)field.options.items=domain.items;
+				if (!fldconf.parentfieldid) {
+					var domain = NWin.domainFromConfig(fldconf);
+					if (domain) field.options.items = domain.items;
 				}
 				if (fldconf.displaylength) field.html.attr += " style='width:" + fldconf.displaylength + "px'";
-				var isGeom=fldconf.fieldtype == "point"||fldconf.fieldtype == "polyline"||fldconf.fieldtype == "polygon";
+				var isGeom = fldconf.fieldtype == "point" || fldconf.fieldtype == "polyline" || fldconf.fieldtype == "polygon";
 				if (fldconf.fieldtype == "search") {
-					field.html.text = "<span class='nut-fld-helper'><button class='nut-but-helper' onclick='NUT.NWin.helper_onClick(this.parentNode.previousSibling,{fieldtype:\""+fldconf.fieldtype+"\",tabid:"+ fldconf.tabid +",linktableid:"+ fldconf.linktableid+",linkcolumn:\""+(fldconf.linkcolumn||"")+"\",whereclause:\""+(fldconf.whereclause||"")+"\"})'>&nbsp;✏️&nbsp;</button><label>-/-</label></span>";
+					field.html.text = "<span class='nut-fld-helper'><button class='nut-but-helper' onclick='NUT.NWin.helper_onClick(this.parentNode.previousSibling,{fieldtype:\"" + fldconf.fieldtype + "\",tabid:" + fldconf.tabid + ",linktableid:" + fldconf.linktableid + ",linkcolumn:\"" + (fldconf.linkcolumn || "") + "\",whereclause:\"" + (fldconf.whereclause || "") + "\"})'>&nbsp;✏️&nbsp;</button><label>-/-</label></span>";
 					if (!fldconf.displaylength) field.html.attr += " style='width:40%'";
 				} else if (fldconf.fieldtype == "file") {
 					if (!fldconf.displaylength) field.html.attr += " style='width:100%'";
-				}else if (fldconf.fieldtype == "array"||fldconf.fieldtype == "map"||isGeom) {
-					field.type="text";
-					field.html.text = "<span class='nut-fld-helper'><button class='nut-but-helper' onclick='NUT.NWin.helper_onClick(this.parentNode.previousSibling,{fieldtype:\""+fldconf.fieldtype+"\",tabid:"+ fldconf.tabid +",alias:\""+field.label+"\",isreadonly:"+(conf.isviewonly||fldconf.isreadonly)+"})'>&nbsp;✏️&nbsp;</button>"+(isGeom?"<button class='nut-but-zoom' onclick='NUT.NWin.zoom_onClick(this.parentNode.previousSibling,{fieldtype:\""+fldconf.fieldtype+"\",tabid:"+ fldconf.tabid +",alias:\""+field.label+"\",isreadonly:"+(conf.isviewonly||fldconf.isreadonly)+"})'>&nbsp;🔍&nbsp;</button>":"")+"</span>";
+				} else if (fldconf.fieldtype == "array" || fldconf.fieldtype == "map" || isGeom) {
+					field.type = "text";
+					field.html.text = "<span class='nut-fld-helper'><button class='nut-but-helper' onclick='NUT.NWin.helper_onClick(this.parentNode.previousSibling,{fieldtype:\"" + fldconf.fieldtype + "\",tabid:" + fldconf.tabid + ",alias:\"" + field.label + "\",isreadonly:" + (conf.isviewonly || fldconf.isreadonly) + "})'>&nbsp;✏️&nbsp;</button>" + (isGeom ? "<button class='nut-but-zoom' onclick='NUT.NWin.zoom_onClick(this.parentNode.previousSibling,{fieldtype:\"" + fldconf.fieldtype + "\",tabid:" + fldconf.tabid + ",alias:\"" + field.label + "\",isreadonly:" + (conf.isviewonly || fldconf.isreadonly) + "})'>&nbsp;🔍&nbsp;</button>" : "") + "</span>";
 				}
-				
+
 				if (fldconf.placeholder) field.html.attr += " placeholder='" + fldconf.placeholder + "'";
 				if (fldconf.fieldlength) field.html.attr += " maxlength=" + fldconf.fieldlength;
 				if (fldconf.vformat) field.html.attr += " pattern='" + fldconf.vformat + "'";
@@ -335,35 +341,34 @@ export class NWin {
 		}
 		return fields;
 	}
-	static showNewDialog(conf,forEdit){
-		var fields=NWin.fieldsFromConfig(conf);
+	static showNewDialog(conf, forEdit) {
+		var fields = NWin.fieldsFromConfig(conf);
 		var grid = w2ui["grid_" + conf.tabid];
-		var parentKey = grid&&grid.parentRecord ? grid.parentRecord[conf.linkparentfield]:null;
+		var parentKey = grid && grid.parentRecord ? grid.parentRecord[conf.linkparentfield] : null;
 		if (conf.linktable) conf.default[conf.linkchildfield] = parentKey;
-		var id = (forEdit?"edit_":"new_") + conf.tabid;
+		var id = (forEdit ? "edit_" : "new_") + conf.tabid;
 		NUT.openDialog({
-			title: forEdit?"_Update":"_New",
-			floating:NUT.isGIS,
+			title: forEdit ? "_Update" : "_New",
+			floating: NUT.isGIS,
 			div: '<div id="' + id + '" class="nut-full"></div>',
 			onOpen(evt) {
 				evt.onComplete = function () {
 					var div = document.getElementById(id);
-					var frmNew = (w2ui[id] || new w2form({
+					var opt={
 						name: id,
 						fields: fields,
-						onChange: this.field_onChange,
-						record: forEdit||conf.default,
+						onChange: NWin.field_onChange,
 						actions: {
 							"_Close": function () {
 								NUT.closeDialog();
 							},
-							[forEdit?"_Update":"_New"]: function (evt) {
-								if(forEdit)	{
-									var hasChanged=NWin.saveEditData(frmNew,grid,forEdit?"SAVE":"NEW");
+							[forEdit ? "_Update" : "_New"]: function (evt) {
+								if (forEdit) {
+									var hasChanged = NWin.saveEditData(frmNew, grid, forEdit ? "SAVE" : "NEW");
 									if (hasChanged) {
 										if (!conf.isForm) grid.mergeChanges();
 									} else NUT.notify("⚠️ No change!", "yellow");
-								}else {
+								} else {
 									if (this.validate(true).length) return;
 									var recRelate = null;
 									if (conf.parenttabid) {
@@ -410,8 +415,8 @@ export class NWin {
 											}
 											NUT.notify("Record inserted.", "lime");
 											data[columnkey] = newid;
-											
-											if(grid)grid.add(data, true);
+
+											if (grid) grid.add(data, true);
 											//grid.select(newid);
 											if (recRelate) {
 												recRelate[conf.relatechildfiled] = data[conf.linkchildfield];
@@ -427,7 +432,9 @@ export class NWin {
 								}
 							}
 						}
-					}));
+					}
+					var frmNew = (w2ui[id] || new w2form(opt));
+					frmNew.record=forEdit || conf.default;
 					if (conf.layout) frmNew.formHTML = conf.layout.outerHTML;
 					frmNew.render(div);
 				}
@@ -437,10 +444,10 @@ export class NWin {
 	tool_onClick(evt) {
 		var item = evt.detail.item;
 		var subitem = evt.detail.subItem;
-		
+
 		var conf = this.box.parentNode.tag;
 		var grid = w2ui["grid_" + conf.tabid];
-		
+
 		if (subitem && !subitem.text.startsWith("_")) {
 			if (subitem.id === "") {//all
 				for (var i = 0; i < grid.searchData.length; i++) {
@@ -455,19 +462,19 @@ export class NWin {
 					records: grid.get(grid.getSelection()),
 					parent: grid.parentRecord,
 					config: conf,
-					checked:subitem.checked
+					checked: subitem.checked
 				});
 			} else {//filter
 				var search = grid.getSearchData(item.id);
 				if (search) search.value = subitem.id;
 				else grid.searchData.push({ field: item.id, operator: "=", value: subitem.id });
-				if(conf.table.tabletype=="arcgis"){
-					var where=[];
-					for(var i=0;i<grid.searchData.length;i++){
-						var clause=grid.searchData[i];
-						where.push(clause.field + clause.operator + clause.value);
+				if (conf.table.maplayer) {
+					var where = [];
+					for (var i = 0; i < grid.searchData.length; i++) {
+						var clause = grid.searchData[i];
+						where.push([clause.field, clause.operator, clause.value]);
 					}
-					if(where.length)NUT.AGMap.filterLayer(conf.table.maplayer,where.join(" and "));
+					if (where.length) NUT.AGMap.filterLayer(conf, where);
 				}
 			}
 			grid.reload();
@@ -478,12 +485,12 @@ export class NWin {
 					records: grid.get(grid.getSelection()),
 					parent: grid.parentRecord,
 					config: conf,
-					checked:item.checked
+					checked: item.checked
 				});
-			else if(item.rpt)NUT.runReport(item.rpt);
+			else if (item.rpt) NUT.runReport(item.rpt);
 			else {
 				var columnkey = conf.table.columnkey;
-				var columnlock=conf.table.columnlock;
+				var columnlock = conf.table.columnlock;
 				var form = w2ui["form_" + conf.tabid];
 				var timeArchive = null;
 				switch (item.id) {
@@ -497,7 +504,7 @@ export class NWin {
 					case "TREE":
 						NWin.switchTree(conf, !item.checked);
 						break;
-					case "RELOAD":
+					case "RELO":
 						grid.reload();
 						break;
 					case "PREV":
@@ -519,15 +526,15 @@ export class NWin {
 						var id = "find_" + conf.tabid;
 						NUT.openDialog({
 							title: "_Find",
-							div:'<div id="'+id + '" class="nut-full"></div>',
+							floating: NUT.isGIS,
+							div: '<div id="' + id + '" class="nut-full"></div>',
 							onOpen(evt) {
 								evt.onComplete = function () {
 									var div = document.getElementById(id);
 									(w2ui[id] || new w2form({
 										name: id,
 										fields: grid.searches,
-										record:conf.default,
-										onChange: this.field_onChange,
+										onChange: NWin.field_onChange,
 										actions: {
 											"_Close": function () {
 												NUT.closeDialog();
@@ -554,9 +561,6 @@ export class NWin {
 							}
 						});
 						break;
-					case "NEW_G":
-						NUT.AGMap.showEditor(conf.table.maplayer);
-						break;
 					case "NEW":
 						if (conf.table.tabletype == "arcgis") NUT.AGMap.showEditor(conf.table.maplayer);
 						else NWin.showNewDialog(conf);
@@ -564,58 +568,45 @@ export class NWin {
 					case "SAVE_A":
 						timeArchive = new Date();
 					case "SAVE":
-						var lock=false;
-						if(columnlock&&conf.isForm){
-							var item=NUT.domains[conf.table.lockdomainid].lookup[form.record[columnlock]];
-							lock=item&&item[3];
-						}
-						if (lock)NUT.alert("⚠️ Can not update locked data", "yellow");
-						else {
-							var hasChanged=NWin.saveEditData(form,grid,"SAVE",timeArchive);
-							if (hasChanged) {
-								if (!conf.isForm) grid.mergeChanges();
-							} else NUT.notify("⚠️ No change!", "yellow");
-						}
+						var hasChanged = NWin.saveEditData(form, grid, "SAVE", timeArchive);
+						if (hasChanged) {
+							if (!conf.isForm) grid.mergeChanges();
+						} else NUT.notify("⚠️ No change!", "yellow");
 						break;
 					case "DEL_A":
-						timeArchive = w2prompt({ label: "Archive Time", value: new Date() });
-						if (!timeArchive) break;
+						NUT.prompt({label:"Archive Time", value:new Date()},function(val){
+							timeArchive=val;
+						});
+						//if (!timeArchive) break;
 					case "DEL":
-						NUT.confirm('<span style="color:red">DELETE selected record?</span>', function (awnser) {
-							if (awnser == "yes") {
-
+						NUT.confirm('DELETE selected record?', function (awnser) {
+							if (awnser == "Yes"||awnser == "yes") {
 								var recid = conf.isForm ? [form.record[columnkey]] : grid.getSelection();
 								if (conf.beforechange) {
 									if (conf.onchange) NUT.runComponent(conf.onchange, { action: item.id, recid: recid, config: conf });
 								} else {
 									if (recid) {
-										var callback = function (res) {
+										//grid.autoLoad=false;/*not reload on delete*/
+										if (conf.table.tabletype == "arcgis") NUT.AGMap.submit({ url: conf.table.url + "/deleteFeatures?f=json", data: "objectIds=" + recid }, function(res){
+											if(res.error)NUT.notify("🛑 ERROR: " + res.error.message, "red");
+											else NUT.notify(res.deleteResults.length + " record(s) deleted.", "lime");
+										});
+										else NUT.ds.delete({ url: conf.table.urledit, where: [columnkey, "in", recid] }, function(res){
 											if (res.success) {
-												if (timeArchive) NWin.archiveRecord(conf.tableid, recid,"DELETE", conf.isForm ? form.record : grid.get(recid), timeArchive);
+												if (timeArchive) NWin.archiveRecord(conf.tableid, recid, "DELETE", conf.isForm ? form.record : grid.get(recid), timeArchive);
 												grid.total -= recid.length;
 												for (var k = 0; k < recid.length; k++)grid.remove(recid[k]);
 												NUT.notify(recid.length + " record(s) deleted.", "lime");
 
 												if (conf.onchange) NUT.runComponent(conf.onchange, { action: item.id, recid: recid, config: conf });
 											} else NUT.notify("⛔ ERROR: " + res.result, "red");
-										}
-										//grid.autoLoad=false;/*not reload on delete*/
-										if (conf.table.tabletype == "arcgis") NUT.AGMap.submit({ url: conf.table.url + "/deleteFeatures?f=json", data: "objectIds=" + recid }, callback);
-										else NUT.ds.delete({ url: conf.table.urledit, where: [columnkey, "in", recid] }, callback);
+										});
 									} else NUT.notify("⚠️ No selection!", "yellow");
 								}
 							}
 						});
 						break;
-					case "ATTA":
-						if (grid.record) {
-							NUT.ds.get({ url: NUT.URL_UPLOAD + n$.user.siteid + "/" + conf.tableid + "/" + grid.record[conf.table.columnkey] }, function (res) {
-								if (res.success) {
-									alert(res);
-								} else NUT.notify("🛑 ERROR: " + res.result, "red");
-							});
-						}
-						break;
+
 					case "LINK":
 						var query = { url: conf.table.urlview, orderby: conf.orderby || conf.table.columndisplay, limit: NUT.QUERY_LIMIT }
 						if (conf.whereclause) query.where = JSON.parse(conf.whereclause);
@@ -623,7 +614,7 @@ export class NWin {
 							ids: grid.getSearchData(columnkey).value,
 							query: query,
 							conf: conf,
-							parentKey: (grid.parentRecord ? grid.parentRecord[conf.linkparentfield]:null),
+							parentKey: (grid.parentRecord ? grid.parentRecord[conf.linkparentfield] : null),
 							callback: function () { grid.reload() }
 						}
 						NUT.linkData(p);
@@ -639,108 +630,42 @@ export class NWin {
 						}
 						grid.reload();
 						break;
-					case "XLS_IM":
-						var columnnames = [];
-						for (var i = 0; i < conf.fields.length; i++)
-							columnnames.push(conf.fields[i].columnname);
-						var header = columnnames.join('\t') + "\n";
-						NUT.openDialog({
-							title: "_Import",
-							div: '<textarea cols=' + (header.length + 8 * columnnames.length) + ' id="txt_Tsv" style="width:100%;height:100%">' + header + '</textarea>',
-							actions: {
-								"_Close": function () { NUT.closeDialog() },
-								"_Update": function () {
-									if (!txt_Tsv.value.includes("'")) {
-										var data = NUT.tsv2arr(txt_Tsv.value);
-										if (data.length) {
-											NUT.ds.update({ url: conf.table.urledit, data: data, key: columnkey }, function (res) {
-												if (res.success) {
-													grid.reload();
-													NUT.notify("Data updated.", "lime");
-												} else NUT.notify("🛑 ERROR: " + res.result, "red");
-											});
-										} else NUT.notify("⚠️ Empty data!", "yellow");
-									} else NUT.notify("⚠️ Data contains invalid ' character!", "yellow");
-								},
-								"_New": function () {
-									if (!txt_Tsv.value.includes("'")) {
-										var data = NUT.tsv2arr(txt_Tsv.value);
-										if (data.length) {
-											NUT.ds.insert({ url: conf.table.urledit, data: data }, function (res) {
-												if (res.success) {
-													grid.reload();
-													NUT.notify("Data inserted.", "lime");
-												} else NUT.notify("🛑 ERROR: " + res.result, "red");
-											});
-										} else NUT.notify("⚠️ Empty data!", "yellow");
-									} else NUT.notify("⚠️ Data contains invalid ' character!", "yellow");
-								}
-							}
+					case "IMP":
+						var cols = [];
+						for (var i = 0; i < conf.fields.length; i++)cols.push(conf.fields[i].columnname);
+						NUT.importXls(conf.table.urledit,cols,function (res) {
+							if (res.success) {
+								grid.reload();
+								NUT.notify("Data updated.", "lime");
+							} else NUT.notify("🛑 ERROR: " + res.result, "red");
 						});
 						break;
-					case "XLS_EX":
-						NUT.openDialog({
-							title: "_Export",
-							width: 360,
-							height: 240,
-							div: "<table style='margin:auto'><tr><td>" + n$.phrases["_Offset"] + ": </td><td><input class='w2ui-input' type='number' id='numOffset' value='0'/></td></tr><tr><td>" + n$.phrases["_Limit"] +":</b></td><td><input class='w2ui-input' id='numLimit' type='number' value='"+NUT.QUERY_LIMIT+"'/></td></tr></table>",
-							actions: {
-								"_Cancel": function () { NUT.closeDialog() },
-								"_Ok": function () {
-									var win = window.open();
-									var table = win.document.createElement("table");
-									table.id = "tblMain";
-									table.border = 1;
-									table.style = "border-collapse:collapse";
-									var caption = table.createCaption();
-									caption.innerHTML = conf.tabname;
-									var row = table.insertRow();
-									for (var i = 0; i < grid.columns.length; i++) {
-										var col = win.document.createElement("th");
-										col.innerHTML = grid.columns[i].text;
-										row.appendChild(col);
-									}
-									// define where
-									var where = [];
-									if (conf.menuWhere) where.push(conf.menuWhere);
-									if (conf.whereclause) where.push(JSON.parse(conf.whereclause));
-									for (var i = 0; i < grid.searchData.length; i++) {
-										var search = grid.searchData[i];
-										where.push(search.operator == "begins" ? [search.field, "like", search.value + "*"] : [search.field, search.operator, search.value]);
-									}
-									var para = { url: conf.table.urlview, offset: numOffset.value, limit: numLimit.value, where: where };
-									if (grid.sortData.length) {
-										var sorts = [];
-										for (var i = 0; i < grid.sortData.length; i++)
-											sorts.push(grid.sortData[i].field + " " + grid.sortData[i].direction);
-										para.orderby = sorts.join(',');
-									}
-									NUT.ds.select(para, function (res) {
-										if (res.success) {
-											for (var i = 0; i < res.result.length; i++) {
-												var rec = res.result[i];
-												var row = table.insertRow();
-												for (var j = 0; j < grid.columns.length; j++) {
-													var cell = row.insertCell();
-													cell.innerHTML = rec[grid.columns[j].field];
-												}
-											}
-											var a = win.document.createElement("span");
-											a.style.cssFloat = "right";
-											a.innerHTML = "<button onclick='navigator.clipboard.writeText(tblMain.outerHTML)'>📋 Copy to Excel</button>";
-											win.document.body.appendChild(a);
-											win.document.body.appendChild(table);
-										} else NUT.notify("🛑 ERROR: " + res.result, "red");
-									});
-								}
-							}
-						});
+					case "EXP":
+						var cols = [];
+						for (var i = 0; i < conf.fields.length; i++)cols.push(conf.fields[i].columnname);
+
+						// define where
+						var where = [];
+						if (conf.menuWhere) where.push(conf.menuWhere);
+						if (conf.whereclause) where.push(JSON.parse(conf.whereclause));
+						for (var i = 0; i < grid.searchData.length; i++) {
+							var search = grid.searchData[i];
+							where.push(search.operator == "begins" ? [search.field, "like", search.value + "*"] : [search.field, search.operator, search.value]);
+						}
+						var orderby=undefined;
+						if (grid.sortData.length) {
+							var sorts = [];
+							for (var i = 0; i < grid.sortData.length; i++)
+								sorts.push(grid.sortData[i].field + " " + grid.sortData[i].direction);
+							orderby = sorts.join(',');
+						}
+						NUT.exportXls(conf.table.urlview,cols,where,orderby);
 						break;
 					case "LOCK":
 						var record = conf.isForm ? form.record : grid.record;
 						var label = record[columnlock] ? "🔓 Unlock" : "🔒 Lock";
-						NUT.confirm(label + ' selected record?',function(awnser){
-							if (awnser=='Yes') {
+						NUT.confirm(label + ' selected record?', function (awnser) {
+							if (awnser == 'Yes'||awnser == "yes") {
 								var data = {};
 								data[columnlock] = record[columnlock] ? false : true;
 								NUT.ds.update({ url: conf.table.urledit, data: data, where: [columnkey, "=", record[columnkey]] }, function (res) {
@@ -765,13 +690,13 @@ export class NWin {
 											var div = document.getElementById(id);
 											(w2ui[id] || new w2grid({
 												name: id,
-												recid:'archiveid',
+												recid: 'archiveid',
 												columns: [
 													{ field: 'archiveid', text: 'ID', sortable: true },
 													{ field: 'archivetype', text: 'Type', sortable: true },
 													{ field: 'archivetime', text: 'Time', sortable: true },
 													{
-														field: 'archivejson', text: 'Archive',size:300, sortable: true, info: {
+														field: 'archivejson', text: 'Archive', size: 300, sortable: true, info: {
 															render: function (rec, idx, col) {
 																var obj = JSON.parse(rec.archivejson);
 																var str = "<table border='1px'><caption><b>" + rec.archivetype + "</b></caption>"
@@ -793,12 +718,20 @@ export class NWin {
 							} else NUT.notify("🛑 ERROR: " + res.result, "red");
 						});
 						break;
+					case "ATTA":
+						if (grid.record) {
+							var recid = grid.record[conf.table.columnkey];
+							var base = n$.user.siteid + "/" + conf.tableid + "/" + recid + "/";
+							NUT.FMan.showAttach(NUT.URL_UPLOAD, base,"/media/");
+						}
+						break;
 				}
 			}
 		}
 	}
-	static saveEditData(form,grid,action,timeArchive){
-		var conf=form.box.parentNode.parentNode.tag;
+	
+	static saveEditData(form, grid, action, timeArchive) {
+		var conf = form.box.parentNode.parentNode.tag;
 		if (conf.isForm & form.validate(true).length) return false;
 		var changes = conf.isForm ? [form.getChanges()] : grid.getChanges();
 		var hasChanged = false;
@@ -826,7 +759,13 @@ export class NWin {
 				if (conf.beforechange) {
 					if (conf.onchange) NUT.runComponent(conf.onchange, { action: action, recid: recid, data: data, config: conf });
 				} else {
-					var callback = function (res) {
+					if (conf.table.tabletype == "arcgis") {
+						data[conf.table.columnkey] = recid;
+						NUT.AGMap.submit({ url: conf.table.url + "/updateFeatures?f=json", data: "features="+JSON.stringify([{ attributes: data }]) }, function(res){
+							if(res.error)NUT.notify("🛑 ERROR: " + res.error.message, "red");
+							else NUT.notify(res.updateResults.length + " record(s) updated.", "lime");
+						});
+					} else NUT.ds.update({ url: conf.table.urledit, where: [conf.table.columnkey, "=", recid], data: data }, function(res){
 						if (res.success) {
 							if (files.length) NUT.uploadFile(conf.tableid, recid, files);//upload file
 							if (timeArchive) NWin.archiveRecord(conf.tableid, recid, action, data, timeArchive);
@@ -835,33 +774,29 @@ export class NWin {
 
 							if (conf.onchange) NUT.runComponent(conf.onchange, { action: action, recid: recid, data: data, config: conf });
 						} else NUT.notify("🛑 ERROR: " + res.result, "red");
-					}
-					if (conf.table.tabletype == "arcgis") {
-						data[conf.table.columnkey] = recid;
-						NUT.AGMap.submit({ url: conf.table.url + "/updateFeatures?f=json", data: "features=" + JSON.stringify([{ attributes: data }]) }, callback);
-					} else NUT.ds.update({ url: conf.table.urledit, where: [conf.table.columnkey, "=", recid], data: data }, callback);
+					});
 				}
 				hasChanged = true;
 			}
 		}
 		return hasChanged;
 	}
-	field_onChange(evt) {
+	static field_onChange(evt) {
 		var conf = null;
 		var field = evt.detail.field;
-		var current =evt.detail.value.current;
+		var current = evt.detail.value.current;
 		if (field) {//form
 			conf = this.get(field).tag;
 			if (conf.fieldtype == "search") {
 				var label = this.get(field).el.nextElementSibling.lastElementChild;
-				if (label) NUT.ds.select({ url: conf.linktable.urlview, select: conf.linktable.columndisplay, where: [conf.linktable.columncode||conf.linktable.columnkey, "=", current] }, function(res) {
-					label.innerHTML = res.success&&res.result.length? res.result[0][conf.linktable.columndisplay]:"-/-";
+				if (label) NUT.ds.select({ url: conf.linktable.urlview, select: conf.linktable.columndisplay, where: [conf.linktable.columncode || conf.linktable.columnkey, "=", current] }, function (res) {
+					label.innerHTML = res.success && res.result.length ? res.result[0][conf.linktable.columndisplay] : "-/-";
 				});
 			}
 			if (conf.domainid) {
 				var domain = NUT.domains[conf.domainid];
 				var item = domain.lookup[current];
-				if (item&&item[2])this.get(field).el.style.color=item[2];
+				if (item && item[2]) this.get(field).el.style.color = item[2];
 			}
 		} else {
 			conf = this.columns[evt.detail.column].tag;
@@ -896,12 +831,12 @@ export class NWin {
 
 		// define where
 		var where = [];
-		if (tabconf.menuWhere)where.push(tabconf.menuWhere);
-		if (tabconf.whereclause)where.push(JSON.parse(tabconf.whereclause));
+		if (tabconf.menuWhere) where.push(tabconf.menuWhere);
+		if (tabconf.whereclause) where.push(JSON.parse(tabconf.whereclause));
 
 		if (tabconf.workflowid) {
 			where.push(["roleid", "=", n$.user.roleid]);
-			where.push(["userid", "in", [0,n$.user.userid]]);
+			where.push(["userid", "in", [0, n$.user.userid]]);
 		}
 		if (postData.search) {
 			var clauses = [postData.searchLogic.toLowerCase()];
@@ -912,35 +847,35 @@ export class NWin {
 				if (op == "like") {
 					if (!val.includes("%")) val = "%" + val + "%";
 				} else if (op == "between") {
-					val = (this.operatorsMap[search.type] == "date"? "'" + val.join("' and '") + "'":val.join(" and "));
+					val = (this.operatorsMap[search.type] == "date" ? "'" + val.join("' and '") + "'" : val.join(" and "));
 				} else if (val && val.includes && val.includes("%")) op = "like";
-				clauses.push([search.field, op,val]);
+				clauses.push([search.field, op, val]);
 			}
 			if (clauses.length) where.push(clauses);
 		}
 		if (postData.select) where.push(postData.select);
 
-		reqData.where = where.length? NUT.ds.decodeSql({ where:where.length==1?where[0]:where },true):"1=1";
-		
+		reqData.where = where.length ? NUT.ds.decodeSql({ where: where.length == 1 ? where[0] : where }, true) : "1=1";
+
 		evt.detail.postData = reqData;
 		this.postData = reqData;
-			
+
 		if (tabconf.table.tabletype == "arcgis") {
 			//reqData = { resultRecordCount: postData.limit, resultOffset: postData.offset, f: "geojson", outFields: "*", returnGeometry: false };
-			var query={ num: reqData.limit, start: reqData.offset, where:reqData.where, outFields: ["*"] }
-			if(reqData.orderby)query.orderByFields=[reqData.orderby];
-			
-			var lyr=NUT.AGMap.layers[tabconf.table.maplayer];
-			var grid=this;
-			grid.lock(undefined,true);
-			lyr.queryFeatureCount(query).then(function(total){
+			var query = { num: reqData.limit, start: reqData.offset, where: reqData.where, outFields: ["*"] }
+			if (reqData.orderby) query.orderByFields = [reqData.orderby];
+
+			var lyr = NUT.AGMap.layers[tabconf.table.maplayer];
+			var grid = this;
+			grid.lock(undefined, true);
+			lyr.queryFeatureCount(query).then(function (total) {
 				lyr.queryFeatures(query).then(function (res) {
 					grid.unlock();
 					if (res.error) NUT.notify("🛑 ERROR: " + res.error.message, "red");
 					else {
-						var records=[];
-						for(var i=0;i<res.features.length;i++)records.push(res.features[i].attributes);
-						grid.requestComplete({success:true,result:records,total:total},"load",function(){},function(){},function(){});
+						var records = [];
+						for (var i = 0; i < res.features.length; i++)records.push(res.features[i].attributes);
+						grid.requestComplete({ success: true, result: records, total: total }, "load", function () { }, function () { }, function () { });
 					}
 				});
 			});
@@ -951,10 +886,10 @@ export class NWin {
 		var conf = this.box.parentNode.parentNode.tag;
 		var data = evt.detail.data;
 		var records = data.result;
-		
+
 		//chuan hoa time
-		if(records.length){
-			var isGeoTable=(conf.table.tabletype=="arcgis");
+		if (records.length) {
+			var isGeoTable = (conf.table.tabletype == "arcgis");
 			for (var i = 0; i < conf.fields.length; i++) {
 				var fldconf = conf.fields[i];
 				var datatype = fldconf.fieldtype;
@@ -962,52 +897,52 @@ export class NWin {
 				if (datatype == "date" || datatype == "time" || datatype == "datetime") {
 					var len = (datatype == "date" ? 10 : (datatype == "time" ? 5 : 16));
 					for (var j = 0; j < records.length; j++) {
-						var rec=records[j];
-						var val=rec[columnname];
-						if(val){
+						var rec = records[j];
+						var val = rec[columnname];
+						if (val) {
 							val = (isGeoTable ? new Date(val).toISOString() : val);
 							if (val) rec[columnname] = (len == 16 ? val.substring(0, len).replace("T", " ") : val.substring(0, len));
 						}
 					}
 				}
 			}
-			if(conf.table.columnlock){
-				var dm=NUT.domains[conf.table.lockdomainid];
-				if(dm)for (var j = 0; j < records.length; j++) {
-					var rec=records[j]
-					var item=dm.lookup[rec[conf.table.columnlock]];
-					if(item&&item[3])rec.w2ui={editable:false,style:'font-style:italic'};
+			if (conf.table.columnlock) {
+				var dm = NUT.domains[conf.table.lockdomainid];
+				if (dm) for (var j = 0; j < records.length; j++) {
+					var rec = records[j]
+					var item = dm.lookup[rec[conf.table.columnlock]];
+					if (item && item[3]) rec.w2ui = { editable: false };
 				}
 			}
 		}
-		
-		
-		var total = data.total||0;
+
+
+		var total = data.total || 0;
 		evt.detail.data.status = data.success ? "success" : "error";
 		evt.detail.data.records = records;
 		var select = this.getSelection().length;
 		evt.onComplete = function () {
 			if (total) {
-				if(select==0&&!conf.check){
+				if (select == 0 && !conf.check) {
 					this.select(records[0][this.recid]);
-					this.record=records[0];
+					this.record = records[0];
 				}
-				if (total == 1){
+				if (total == 1) {
 					w2ui["tool_" + conf.tabid].check("SWIT");
-					NWin.updateFormRecord(conf,this.record,this.parentRecord);
+					NWin.updateFormRecord(conf, this.record, this.parentRecord);
 				}
-			}			
+			}
 			NWin.switchFormGrid(conf, total == 1);
-			document.getElementById("rec_" + conf.tabid).innerHTML = total?1:0;
+			document.getElementById("rec_" + conf.tabid).innerHTML = total ? 1 : 0;
 			document.getElementById("total_" + conf.tabid).innerHTML = total;
 		}
 	}
 	static zoom_onClick(input, obj) {
-		NUT.AGMap.zoomToCoords(JSON.parse(input.value),obj.fieldtype);
+		NUT.AGMap.zoomToCoords(JSON.parse(input.value), obj.fieldtype);
 	}
 	static helper_onClick(input, obj) {
-		var form = w2ui[(NUT.w2popup.status=="open"?"new_":"form_") + obj.tabid];
-		switch(obj.fieldtype){
+		var form = w2ui[(NUT.w2popup.status == "open" ? "new_" : "form_") + obj.tabid];
+		switch (obj.fieldtype) {
 			case "search":
 				var table = NUT.tables[obj.linktableid];
 				var query = { url: table.urlview, orderby: table.columndisplay, limit: NUT.QUERY_LIMIT }
@@ -1015,13 +950,13 @@ export class NWin {
 				var p = {
 					id: input.value,
 					query: query,
-					conf: {table:table,linkcolumn:obj.linkcolumn},
+					conf: { table: table, linkcolumn: obj.linkcolumn },
 					callback: function (rec) {
 						if (rec) {
 							var val = rec[obj.linkcolumn || table.columnkey];
 							form.rememberOriginal();
 							form.setValue(input.id, val);
-							form.onChange({detail: {field: input.id,value: { current: val}}});
+							form.onChange({ detail: { field: input.id, value: { current: val } } });
 						}
 					}
 				}
@@ -1030,82 +965,82 @@ export class NWin {
 			case "point":
 			case "polyline":
 			case "polygon":
-				var isGeom=true;
+				var isGeom = true;
 			case "array":
 			case "map":
-				var isMap=(obj.fieldtype=="map");
-				var id="fld_"+input.id;
-				var record=[];
-				if(input.value)record[input.id]=JSON.parse(input.value);
-				var fields=NUT.openDialog({
+				var isMap = (obj.fieldtype == "map");
+				var id = "fld_" + input.id;
+				var record = [];
+				if (input.value) record[input.id] = JSON.parse(input.value);
+				var fields = NUT.openDialog({
 					title: "✏️ " + obj.alias,
 					width: 400,
 					height: 360,
-					floating:true,
+					floating: true,
 					div: '<div id="' + id + '" class="nut-full"></div>',
-					onClose(evt){
-						if(isGeom)NUT.AGMap.view.graphics.removeAll();
+					onClose(evt) {
+						if (isGeom) NUT.AGMap.view.graphics.removeAll();
 					},
 					onOpen(evt) {
 						evt.onComplete = function () {
 							var div = document.getElementById(id);
-							if(w2ui[id]){
-								w2ui[id].record=record;
+							if (w2ui[id]) {
+								w2ui[id].record = record;
 								w2ui[id].render(div);
-							}else {
-								var actions={
-									"_Close":function(){NUT.closeDialog()},
+							} else {
+								var actions = {
+									"_Close": function () { NUT.closeDialog() },
 									"_Update": function (evt) {
-										if(!obj.isreadonly){
-											var val=this.record[input.id];
-											if(val._order)delete val._order;
-											if(!isMap)for(var i=0;i<val.length;i++){
-												var v=val[i];
-												var items=Array.isArray(v)?v:v.split(",");
-												if(isGeom)for(var j=0;j<items.length;j++)items[j]=parseFloat(items[j]);
-												val[i]=(items.length==1?items[0]:items);
+										if (!obj.isreadonly) {
+											var val = this.record[input.id];
+											if (val._order) delete val._order;
+											if (!isMap) for (var i = 0; i < val.length; i++) {
+												var v = val[i];
+												var items = Array.isArray(v) ? v : v.split(",");
+												if (isGeom) for (var j = 0; j < items.length; j++)items[j] = parseFloat(items[j]);
+												val[i] = (items.length == 1 ? items[0] : items);
 											}
 											form.rememberOriginal();
-											form.setValue(input.id,JSON.stringify(val));
+											form.setValue(input.id, JSON.stringify(val));
 											//form.onChange({detail: {field: input.id,value: { current: val}}});
 											NUT.closeDialog();
 										}
-										
+
 									}
 								};
-								if(obj.fieldtype=="point"){
-									actions["⛯ GPS"]=function(){
-										navigator.geolocation.getCurrentPosition(function(evt){
+								if (obj.fieldtype == "point") {
+									actions["⛯ GPS"] = function () {
+										navigator.geolocation.getCurrentPosition(function (evt) {
 											form.rememberOriginal();
-											form.setValue(input.id,JSON.stringify([[evt.coords.longitude,evt.coords.latitude]]));
+											form.setValue(input.id, JSON.stringify([[evt.coords.longitude, evt.coords.latitude]]));
 											//form.onChange({detail: {field: input.id,value: { current: val}}});
 											NUT.closeDialog();
 										});
 									}
 								}
-								
-								var html={ label: obj.alias,span:isMap?-1:6,key:{text:" = ",attr:'placeholder="key" style="width:120px"'}};
-								if(isMap)html.value={attr:'placeholder="value"'};
-								if(isGeom){
-									html.value={attr:'placeholder="x, y"'};
-									actions["📍"]=function(){
-										NUT.AGMap.callback=function(res){
-											var data=[];
-											for(var i=0;i<res.vertices.length;i++){
-												var rec=res.vertices[i];
-												var xy=NUT.AGMap.webMercatorUtils.xyToLngLat(rec[0],rec[1])
-												data.push([xy[0].toFixed(6),xy[1].toFixed(6)]);
+
+								var html = { label: obj.alias, span: isMap ? -1 : 6, key: { text: " = ", attr: 'placeholder="key" style="width:120px"' } };
+								if (isMap) html.value = { attr: 'placeholder="value"' };
+								if (isGeom) {
+									html.value = { attr: 'placeholder="x, y"' };
+									actions["📍"] = function () {
+										NUT.AGMap.callback = function (res) {
+											var data = [];
+											for (var i = 0; i < res.vertices.length; i++) {
+												var rec = res.vertices[i];
+												var xy = NUT.AGMap.webMercatorUtils.xyToLngLat(rec[0], rec[1])
+												data.push([xy[0].toFixed(6), xy[1].toFixed(6)]);
 											}
-											var dlg=NUT.w2ui[id];
-											dlg.setValue(input.id,data);
+											var dlg = NUT.w2ui[id];
+											dlg.setValue(input.id, data);
 										}
-										NUT.w2ui["tbrMap"].onClick({object:{id:obj.fieldtype}});
+										NUT.w2ui["tbrMap"].onClick({ object: { id: obj.fieldtype } });
 									};
 								}
-								
+
 								(new w2form({
 									name: id,
-									fields: [{ field: input.id, type: (isMap?"map":"array"), disabled:obj.isreadonly, html: html}],
+									fields: [{ field: input.id, type: (isMap ? "map" : "array"), disabled: obj.isreadonly, html: html }],
 									record: record,
 									actions: actions
 								})).render(div);
@@ -1125,50 +1060,59 @@ export class NWin {
 			lab.innerHTML = this.get(selid, true) + 1;
 			lab.tag = conf.table.columnkey + "=" + selid;
 			if (this.record) {
-				n$.record = this.record;
-				n$.parent = this.parentRecord;
-				NWin.updateFormRecord(conf, this.record, this.parentRecord);
+				//n$.record = this.record;
+				//n$.parent = this.parentRecord;
+				NWin.updateFormRecord(conf,this.record,this.parentRecord);
 				for (var i = 0; i < conf.children.length; i++)
-					NWin.updateChildGrid(conf.children[i], this.record);
+					NWin.updateChildGrid(conf.children[i],this.record,this.parentRecord);
 			}
+			NWin.updateTabLock(conf,this.record);
 			this.oldid = selid;
 			if (conf.table.maplayer) {
-				/*var where = "";
-				for (var i = 0; i < conf.fields.length; i++) {
-					var field = conf.fields[i];
-					if (field.mapcolumn && this.record[field.mapcolumn]) {
-						var clause = field.mapcolumn + "=" + this.record[field.mapcolumn];
-						where += where ? " and " + clause : clause;
-					}
-				}
-				var lyrconf = GSMap.getLayerConfig(conf.maplayer);
-				if (where) GSMap.zoomToFeature(lyrconf.maporder, lyrconf.layername, where);*/
-				evt.onComplete = function () {
-					if (conf.table.maplayer) NUT.AGMap.selectByOID(conf.table.maplayer, this.getSelection());
+				if (!this.notSelectMap) evt.onComplete = function () {
+					if (conf.table.maplayer) NUT.AGMap.selectByOID(conf.table.maplayer, conf.table.tabletype=="arcgis"?selid:this.getSelection(true)[0]+1);
 					else {//link by mapcolumns
 						var where = [];
 						var indexs = this.getSelection(true);
 						for (var i = 0; i < indexs.length; i++) {
-							var record = this.records[indexs[i]];
+							var rec = this.records[indexs[i]];
 							for (var j = 0; j < conf.fields.length; j++) {
 								var fldconf = conf.fields[j];
-								if (fldconf.mapcolumn) where.push(fldconf.mapcolumn + "='" + record[fldconf.columnname]+"'");
+								if (fldconf.mapcolumn) where.push(fldconf.mapcolumn + "='" + rec[fldconf.columnname] + "'");
 							}
 						}
-						if (where.length) NUT.AGMap.selectByQuery(conf.table.maplayer, {where:where.join(" and ")});
+						if (where.length) NUT.AGMap.selectByQuery(conf.table.maplayer, { where: where.join(" and ") });
 					}
 				}
+				else this.notSelectMap = false;
 			}
 		}
 	}
-	static updateFormRecord(conf,record,parentRecord){
+	
+	static updateTabLock(conf,record){
+		var isParentLock=conf.parentTab&&conf.parentTab.isLock;
+		var isLock=record[conf.table.columnlock];
+		if(conf.table.lockdomainid){
+			var item = NUT.domains[conf.table.lockdomainid].lookup[isLock];
+			isLock = item && item[3];
+		}
+
+		var tbr=w2ui["tool_"+conf.tabid];
+		conf.isLock=isLock||isParentLock;
+		if(conf.isLock){
+			if(isParentLock)tbr.disable("save","SAVE","del","DEL","new","NEW");
+			else tbr.disable("save","SAVE","del","DEL");
+		}else tbr.enable("save","SAVE","del","DEL","new","NEW");
+	}
+	
+	static updateFormRecord(conf, record, parentRecord) {
 		var form = w2ui["form_" + conf.tabid];
 		form.clear();
 		form.record = record;
 		form.parentRecord = parentRecord;
 		form.refresh();
 		//fire onchange
-		for(var i=0;i<form.fields.length;i++){
+		for (var i = 0; i < form.fields.length; i++) {
 			var field = form.fields[i];
 			var key = field.field;
 			if (field.type == "file") {
@@ -1189,21 +1133,22 @@ export class NWin {
 					}
 				}
 			}
-			if (field.type == "search" || field.type == "select" ||field.tag.children.length)form.onChange({ detail: { field: key, value: { current: record[key] } } });
+			if (field.type == "search" || field.type == "select" || field.tag.children.length) form.onChange({ detail: { field: key, value: { current: record[key] } } });
 		}
 	}
-	static updateChildGrid(conf, record) {
+
+	static updateChildGrid(conf, record,updateChildGrid) {
 		var grid = w2ui["grid_" + conf.tabid];
 		if (record) {
 			grid.needUpdate = true;
 			grid.parentRecord = record;
 		}
-		
+
 		if (grid.needUpdate && !grid.box.parentNode.parentNode.style.display) {
 			var parentKey = grid.parentRecord[conf.linkparentfield];
 			var search = grid.getSearchData(conf.linkchildfield);
 			if (conf.relatetable) {//lien ket n-n
-				NUT.ds.select({ url: conf.relatetable.urlview, select: conf.relatechildfield, where: [conf.relateparentfield, "=", parentKey], limit:NUT.QUERY_LIMIT }, function (res) {
+				NUT.ds.select({ url: conf.relatetable.urlview, select: conf.relatechildfield, where: [conf.relateparentfield, "=", parentKey], limit: NUT.QUERY_LIMIT }, function (res) {
 					if (res.success) {
 						var ids = [];
 						for (var i = 0; i < res.result.length; i++) {
@@ -1226,8 +1171,8 @@ export class NWin {
 		}
 	}
 	static updateChildFields(conf, record, parentRecord) {
-		for(var i=0;i<conf.children.length;i++){
-			var fldconf=conf.children[i];
+		for (var i = 0; i < conf.children.length; i++) {
+			var fldconf = conf.children[i];
 			var form = w2ui["form_" + fldconf.tabid];
 			var grid = w2ui["grid_" + fldconf.tabid];
 			if (fldconf.fieldtype == "select") {
@@ -1238,7 +1183,7 @@ export class NWin {
 				var key = fldconf.linktableid + where;
 				var domain = NUT.dmlinks[key];
 				if (domain) {
-					field.options.items=domain.items;
+					field.options.items = domain.items;
 					form.refresh();
 					if (column.editable) {
 						column.editable.items = domain.items;
@@ -1249,7 +1194,7 @@ export class NWin {
 					var columndisplay = fldconf.linktable.columndisplay || columnkey;
 					NUT.ds.select({ url: fldconf.linktable.urlview, select: [columnkey, columndisplay], where: where }, function (res) {
 						if (res.success) {
-							domain = {	items: [NUT.DM_NIL], lookup: {}, lookdown: {} };
+							domain = { items: [NUT.DM_NIL], lookup: {}, lookdown: {} };
 							for (var i = 0; i < res.result.length; i++) {
 								var data = res.result[i];
 								var item = { id: data[columnkey], text: data[columndisplay] };
@@ -1258,7 +1203,7 @@ export class NWin {
 								domain.lookdown[item.text] = item;
 							}
 							NUT.dmlinks[key] = domain;
-							field.options.item=domain.items;
+							field.options.item = domain.items;
 							form.refresh();
 							if (column.editable) {
 								column.editable.items = domain.items;
@@ -1268,49 +1213,49 @@ export class NWin {
 					});
 				}
 			}
-			if(fldconf.calculation){
-				var _v=[];
-				for(var v=0;v<fldconf.calculationInfos.length;v++){
-					var info=fldconf.calculationInfos[v];
-					if(info.func)//childs
-						_v[v]=this.calculateChilds(info);
-					else if(info.tab)//parent
-						_v[v]=parentRecord[info.field];
-					else _v[v]=record[info.field];
+			if (fldconf.calculation) {
+				var _v = [];
+				for (var v = 0; v < fldconf.calculationInfos.length; v++) {
+					var info = fldconf.calculationInfos[v];
+					if (info.func)//childs
+						_v[v] = this.calculateChilds(info);
+					else if (info.tab)//parent
+						_v[v] = parentRecord[info.field];
+					else _v[v] = record[info.field];
 				}
-				var	value=eval(fldconf.calculation);
-				form.record[fldconf.columnname]=value;
+				var value = eval(fldconf.calculation);
+				form.record[fldconf.columnname] = value;
 				form.refresh(fldconf.columnname);
 				//w2ui["grid_"+fldconf.tabid].grid.refresh();
-				this.updateChildFields(fldconf,form.record,form.parentRecord);
+				this.updateChildFields(fldconf, form.record, form.parentRecord);
 			}
-			if(fldconf.displaylogic){
-				var value=eval(fldconf.displaylogic);
+			if (fldconf.displaylogic) {
+				var value = eval(fldconf.displaylogic);
 				//if(panel.fields){//is form
 				var el = form.get(fldconf.columnname).el;
-					el.style.display=value?"":"none";
-					el.parentNode.previousElementSibling.style.display=el.style.display;
+				el.style.display = value ? "" : "none";
+				el.parentNode.previousElementSibling.style.display = el.style.display;
 				//}else value?panel.showColumn(fldconf.columnname):panel.hideColumn(fldconf.columnname);
 			}
 		}
 	}
-	calculateChilds(info){
-		var records=w2ui["grid_"+info.tab].records;
-		var result=(info.func=="min"?Number.MAX_VALUE:(info.func=="max"?Number.MIN_VALUE:0));
-		for(var i=0;i<records.length;i++){
-			value=records[i][info.field];
-			switch (info.func){
+	calculateChilds(info) {
+		var records = w2ui["grid_" + info.tab].records;
+		var result = (info.func == "min" ? Number.MAX_VALUE : (info.func == "max" ? Number.MIN_VALUE : 0));
+		for (var i = 0; i < records.length; i++) {
+			value = records[i][info.field];
+			switch (info.func) {
 				case "avg":
-				case "sum":result+=value;break;
-				case "count":result++;break;
-				case "min":if(value<result)result=value;break;
-				case "max":if(value>result)result=value;break;
+				case "sum": result += value; break;
+				case "count": result++; break;
+				case "min": if (value < result) result = value; break;
+				case "max": if (value > result) result = value; break;
 			}
 		}
-		if(info.func=="avg")result/=res.length;
+		if (info.func == "avg") result /= res.length;
 		return result;
 	}
-	
+
 	grid_onDblClick(evt) {
 		if (NUT.isObjectEmpty(this.columns[evt.detail.column].editable)) {
 			var conf = this.box.parentNode.parentNode.tag;
@@ -1319,49 +1264,49 @@ export class NWin {
 		}
 	}
 	static switchFormGrid(conf, isForm) {
-		var form=w2ui["form_"+conf.tabid];
-		var grid=w2ui["grid_"+conf.tabid];
-		form.box.style.display = isForm ?"":"none";
-		grid.box.style.display = isForm ?"none":"";
+		var form = w2ui["form_" + conf.tabid];
+		var grid = w2ui["grid_" + conf.tabid];
+		form.box.style.display = isForm ? "" : "none";
+		grid.box.style.display = isForm ? "none" : "";
 		isForm ? form.resize() : grid.resize();
 		conf.isForm = isForm;
 	}
 	static switchTree(conf, isTree) {
-		var form=w2ui["form_"+conf.tabid];
-		var grid=w2ui["grid_"+conf.tabid];
-		if(isTree){
-			var lookup={};var parents=[];var lookupParent={};
-			var records=grid.records;
-			for(var i=0;i<records.length;i++)lookup[records[i].recid]=records[i];
-			for(var i=0;i<records.length;i++){
-				var rec=records[i];var key=rec[conf.table.columntree];
-				var parent=lookup[key];
-				if(parent){
-					if(!parent.w2ui)parent.w2ui={children:[]};
+		var form = w2ui["form_" + conf.tabid];
+		var grid = w2ui["grid_" + conf.tabid];
+		if (isTree) {
+			var lookup = {}; var parents = []; var lookupParent = {};
+			var records = grid.records;
+			for (var i = 0; i < records.length; i++)lookup[records[i].recid] = records[i];
+			for (var i = 0; i < records.length; i++) {
+				var rec = records[i]; var key = rec[conf.table.columntree];
+				var parent = lookup[key];
+				if (parent) {
+					if (!parent.w2ui) parent.w2ui = { children: [] };
 					parent.w2ui.children.push(rec);
-					if(!lookupParent[key]){
+					if (!lookupParent[key]) {
 						parents.push(parent);
-						lookupParent[key]=parent;
+						lookupParent[key] = parent;
 					}
 				}
 			}
-			grid.records=parents;
-			grid.total=grid.records.length;
+			grid.records = parents;
+			grid.total = grid.records.length;
 			grid.refresh();
-		}else grid.reload();
+		} else grid.reload();
 		conf.isTree = isTree;
 	}
-	static archiveRecord(tableid,recid,action,archive,time){
-		var data={
-			archivetype:action,
-			archivetime:time,
-			archivejson:JSON.stringify(archive),
-			recordid:recid,
-			tableid:tableid,
-			siteid:n$.user.siteid
+	static archiveRecord(tableid, recid, action, archive, time) {
+		var data = {
+			archivetype: action,
+			archivetime: time,
+			archivejson: JSON.stringify(archive),
+			recordid: recid,
+			tableid: tableid,
+			siteid: n$.user.siteid
 		};
-		NUT.ds.insert({url:NUT.URL+"n_archive",data:data},function(res){
-			if (res.success)NUT.notify("Record archived.","lime");
+		NUT.ds.insert({ url: NUT.URL + "n_archive", data: data }, function (res) {
+			if (res.success) NUT.notify("Record archived.", "lime");
 			else NUT.notify("🛑 ERROR: " + res.result, "red");
 		});
 	}

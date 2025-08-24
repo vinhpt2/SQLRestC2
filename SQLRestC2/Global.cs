@@ -37,6 +37,12 @@ namespace SQLRestC2
         public Dictionary<int, Dictionary<String, Object>> orgs;
         public Dictionary<int, Dictionary<String, Object>> apps;
         public Dictionary<String, Access> access;
+        public Dictionary<String, Credential> credentials;
+    }
+    public class Credential
+    {
+        public String accessuser;
+        public String accesspass;
     }
     public static class Global
     {
